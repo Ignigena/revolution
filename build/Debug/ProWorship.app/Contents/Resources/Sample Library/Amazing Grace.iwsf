@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>amazing grace
+how sweet the sound </string>
+		<string>that saved a wretch like me!</string>
+		<string>I once was lost
+but now am found</string>
+		<string>was blind
+but now I see</string>
+		<string></string>
+		<string>'twas grace that taught
+my heart to fear</string>
+		<string>and grace my fears relieved</string>
+		<string>how precious did
+that grace appear </string>
+		<string>the hour I first believed</string>
+		<string></string>
+		<string>through many dangers
+toils and snares</string>
+		<string>I have already come</string>
+		<string>'tis grace hath brought
+me safe thus far</string>
+		<string>and grace will lead me home</string>
+		<string></string>
+		<string>the Lord has promised
+good to me</string>
+		<string>his word my hope secures</string>
+		<string>he will my shield
+and portion be</string>
+		<string>as long as life endures</string>
+		<string></string>
+		<string>yea when this flesh
+and heart shall fail</string>
+		<string>and mortal life shall cease</string>
+		<string>I shall possess
+within the veil</string>
+		<string>a life of joy and peace</string>
+		<string></string>
+		<string>the world shall soon
+dissolve like snow</string>
+		<string>the sun refuse to shine</string>
+		<string>but God who called
+me here below</string>
+		<string>shall be forever mine</string>
+		<string></string>
+		<string>when we've been there
+ten thousand years</string>
+		<string>bright shining as the sun</string>
+		<string>we've no less days to sing God's praise </string>
+		<string>than when we'd first begun</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>Amazing Grace</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

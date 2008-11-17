@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>away in a manger
+no crib for a bed</string>
+		<string>the little Lord Jesus
+laid down His sweet head</string>
+		<string>the stars in the sky
+looked down where He lay</string>
+		<string>the little Lord Jesus
+asleep on the hay</string>
+		<string></string>
+		<string>the cattle are lowing
+the Baby awakes</string>
+		<string>but little Lord Jesus
+no crying He makes</string>
+		<string>I love thee Lord Jesus
+look down from the sky</string>
+		<string>and stay by my cradle
+till morning is nigh</string>
+		<string></string>
+		<string>be near me Lord Jesus
+I ask Thee to stay</string>
+		<string>close by me forever
+and love me I pray</string>
+		<string>bless all the dear children
+in Thy tender care</string>
+		<string>and fit us for Heaven
+to live with Thee there</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>Away in a Manger</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

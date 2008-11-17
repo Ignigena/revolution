@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>blessed assurance
+Jesus is mine</string>
+		<string>o what a foretaste
+of glory divine</string>
+		<string>heir of salvation
+purchase of God</string>
+		<string>born of His Spirit
+washed in His blood</string>
+		<string></string>
+		<string>this is my story
+this is my song</string>
+		<string>praising my Saviour
+all the day long</string>
+		<string>this is my story
+this is my song</string>
+		<string>praising my Saviour
+all the day long</string>
+		<string></string>
+		<string>perfect submission
+perfect delight</string>
+		<string>visions of rapture
+now burst on my sight</string>
+		<string>angels descending
+bring from above</string>
+		<string>echoes of mercy
+whispers of love</string>
+		<string></string>
+		<string>this is my story
+this is my song</string>
+		<string>praising my Saviour
+all the day long</string>
+		<string>this is my story
+this is my song</string>
+		<string>praising my Saviour
+all the day long</string>
+		<string></string>
+		<string>perfect submission
+all is at rest</string>
+		<string>I in my Saviour
+am happy and blest</string>
+		<string>watching and waiting
+looking above</string>
+		<string>filled with His goodness
+lost in His love</string>
+		<string></string>
+		<string>this is my story
+this is my song</string>
+		<string>praising my Saviour
+all the day long</string>
+		<string>this is my story
+this is my song</string>
+		<string>praising my Saviour
+all the day long</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>Blessed Assurance</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

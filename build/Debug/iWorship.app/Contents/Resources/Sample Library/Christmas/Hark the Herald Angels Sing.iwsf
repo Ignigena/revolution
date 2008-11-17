@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>hark the herald angels sing</string>
+		<string>glory to the newborn King</string>
+		<string>peace on earth and mercy mild</string>
+		<string>God and sinners reconciled</string>
+		<string>joyful all ye nations rise</string>
+		<string>join the triumph of the skies</string>
+		<string>with the angelic host proclaim</string>
+		<string>Christ is born in bethlehem</string>
+		<string>hark the herald angels sing</string>
+		<string>glory to the newborn King</string>
+		<string></string>
+		<string>Christ by highest heav'n adored</string>
+		<string>Christ the everlasting Lord</string>
+		<string>late in time behold Him come</string>
+		<string>offspring of a virgin's womb</string>
+		<string>veiled in flesh the Godhead see</string>
+		<string>hail the incarnate Deity</string>
+		<string>pleased as man with man to dwell</string>
+		<string>Jesus our Emmanuel</string>
+		<string>hark the herald angels sing</string>
+		<string>glory to the newborn King</string>
+		<string></string>
+		<string>hail the heav'n-born Prince of Peace</string>
+		<string>hail the Son of Righteousness</string>
+		<string>light and life to all He brings</string>
+		<string>ris'n with healing in His wings</string>
+		<string>mild He lays His glory by</string>
+		<string>born that man no more may die</string>
+		<string>born to raise the sons of earth</string>
+		<string>born to give them second birth</string>
+		<string>hark the herald angels sing</string>
+		<string>glory to the newborn King</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>Hark the Herald Angels Sing</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>silent night
+holy night</string>
+		<string>all is calm
+all is bright</string>
+		<string>round yon virgin
+mother and child</string>
+		<string>holy infant
+so tender and mild</string>
+		<string>sleep in heavenly peace</string>
+		<string>sleep in heavenly peace</string>
+		<string></string>
+		<string>silent night
+holy night</string>
+		<string>shepherds quake
+at the sight</string>
+		<string>glories stream
+from heaven afar</string>
+		<string>heavenly hosts
+sing alleluia</string>
+		<string>Christ the Saviour
+is born</string>
+		<string>Christ the Saviour
+is born</string>
+		<string></string>
+		<string>silent night
+holy night</string>
+		<string>Son of God
+love's pure light</string>
+		<string>radiant beams
+from Thy holy face</string>
+		<string>with the dawn
+of redeeming grace</string>
+		<string>Jesus, Lord at Thy birth</string>
+		<string>Jesus, Lord at Thy birth</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>Silent Night</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

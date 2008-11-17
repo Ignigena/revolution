@@ -1,0 +1,3 @@
+/Users/albertmartin/Development/Revolution/MyDocument.m:654: warning: incomplete implementation of class 'MyDocument'
+/Users/albertmartin/Development/Revolution/MyDocument.m:654: warning: method definition for '-listener:didAcceptConnection:' not found
+/Users/albertmartin/Development/Revolution/MyDocument.m:654: warning: class 'MyDocument' does not fully implement the 'TCPListenerDelegate' protocol

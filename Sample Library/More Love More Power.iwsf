@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>more love
+more power</string>
+		<string>more of You in my life</string>
+		<string>more love
+more power</string>
+		<string>more of You in my life</string>
+		<string></string>
+		<string>I will worship You with all of my heart</string>
+		<string>and I will worship You
+with all of my mind</string>
+		<string>and I will worship You with all of my strength</string>
+		<string>for you are my Lord</string>
+		<string>You are my Lord</string>
+		<string></string>
+		<string>more faith
+more passion</string>
+		<string>more of You in my life</string>
+		<string>more faith
+more passion</string>
+		<string>more of You in my life</string>
+		<string></string>
+		<string>I will worship You
+with all of my heart</string>
+		<string>and I will worship You
+with all of my mind</string>
+		<string>and I will worship You
+with all of my strength</string>
+		<string>for You are my Lord</string>
+		<string>You are my Lord</string>
+		<string></string>
+		<string>more love
+more power</string>
+		<string>more of You in my life</string>
+		<string>more love
+more power</string>
+		<string>more of You in my life</string>
+		<string></string>
+		<string>I will worship You
+with all of my heart</string>
+		<string>and I will worship You
+with all of my mind</string>
+		<string>and I will worship You
+with all of my strength</string>
+		<string>for You are my Lord</string>
+		<string>You are my Lord</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>More Love More Power</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Default Layout</key>
+	<dict>
+		<key>ConditionalReq</key>
+		<dict>
+			<key>Alignment</key>
+			<string>0</string>
+			<key>Layout</key>
+			<string>0</string>
+			<key>FontFace</key>
+			<string>0</string>
+			<key>FontStyle</key>
+			<string>0</string>
+			<key>FontSize</key>
+			<string>0</string>
+		</dict>
+		<key>PosX</key>
+		<string>0</string>
+		<key>PosY</key>
+		<string>0</string>
+		<key>PosH</key>
+		<string>0</string>
+		<key>PosW</key>
+		<string>0</string>
+		<key>OverrideAlignment</key>
+		<string>0</string>
+		<key>OverrideLayout</key>
+		<string>0</string>
+		<key>OverrideFontFace</key>
+		<string>0</string>
+		<key>OverrideFontStyle</key>
+		<string>0</string>
+		<key>OverrideFontSize</key>
+		<string>0</string>
+	</dict>
+	
+</dict>
+</plist>

@@ -1,0 +1,53 @@
+{
+    IBClasses = (
+        {
+            CLASS = CFullScreenWindow; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {sender = id; }; 
+            SUPERCLASS = NSWindow; 
+        }, 
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {CLASS = HUDPanel; LANGUAGE = ObjC; SUPERCLASS = NSPanel; }, 
+        {CLASS = IWTableView; LANGUAGE = ObjC; SUPERCLASS = NSTableView; }, 
+        {
+            CLASS = MUPhotoView; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {delegate = id; }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            ACTIONS = {removeFromPlaylist = id; }; 
+            CLASS = MyDocument; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                docSlideScroller = id; 
+                docSlideViewer = id; 
+                documentWindow = id; 
+                playlistTable = id; 
+                worshipTitleBar = id; 
+            }; 
+            SUPERCLASS = NSDocument; 
+        }, 
+        {CLASS = Presenter; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {CLASS = SlideController; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            CLASS = SlideViewer; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                delegate = id; 
+                mainPresenterView = id; 
+                presentationWindowContents = id; 
+                presenterView = id; 
+            }; 
+            SUPERCLASS = NSView; 
+        }, 
+        {
+            CLASS = ToolbarMain; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {slideViewer = id; toolbarWindow = id; }; 
+            SUPERCLASS = NSObject; 
+        }, 
+        {CLASS = WorshipTitle; LANGUAGE = ObjC; SUPERCLASS = NSTextField; }
+    ); 
+    IBVersion = 1; 
+}

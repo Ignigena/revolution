@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Flags</key>
+	<array>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+		<string></string>
+	</array>
+	<key>Font Family</key>
+	<string>TriplexSansBold</string>
+	<key>Presenter Alignment</key>
+	<string>2</string>
+	<key>Presenter Layout</key>
+	<string>1</string>
+	<key>Slides</key>
+	<array>
+		<string>joy to the world
+the Lord is come</string>
+		<string>let earth receive her King</string>
+		<string>let every heart prepare Him room</string>
+		<string>and heaven and nature sing</string>
+		<string>and heaven and nature sing</string>
+		<string>and heaven, and heaven and nature sing</string>
+		<string></string>
+		<string>joy to the world, the Saviour reigns</string>
+		<string>let men their songs employ</string>
+		<string>while fields and floods
+rocks, hills and plains</string>
+		<string>repeat the sounding joy</string>
+		<string>repeat the sounding joy</string>
+		<string>repeat, repeat the sounding joy.</string>
+		<string></string>
+		<string>no more let sins and sorrows grow</string>
+		<string>nor thorns infest the ground</string>
+		<string>he comes to make His blessings flow</string>
+		<string>far as the curse is found</string>
+		<string>far as the curse is found</string>
+		<string>far as, far as the curse is found</string>
+		<string></string>
+		<string>He rules the world with truth and grace</string>
+		<string>and makes the nations prove</string>
+		<string>the glories of His righteousness</string>
+		<string>and wonders of His love</string>
+		<string>and wonders of His love</string>
+		<string>and wonders, wonders of His love</string>
+		<string></string>
+	</array>
+	<key>Song Title</key>
+	<string>Joy to the World</string>
+	<key>Transition Speed</key>
+	<string>1.000000</string>
+</dict>
+</plist>

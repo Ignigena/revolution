@@ -1,0 +1,33 @@
+{
+    IBClasses = (
+        {CLASS = FirstResponder; LANGUAGE = ObjC; SUPERCLASS = NSObject; }, 
+        {
+            ACTIONS = {setFormattingDefaults = id; toggleActivePreferenceView = id; }; 
+            CLASS = PreferencesController; 
+            LANGUAGE = ObjC; 
+            OUTLETS = {
+                activeContentView = NSView; 
+                displayPreferenceView = NSView; 
+                formattingFontBorder = NSTextField; 
+                formattingFontBorderColour = NSColorWell; 
+                formattingFontColour = NSColorWell; 
+                formattingFontFamily = NSPopUpButton; 
+                formattingFontSize = NSComboBox; 
+                generalPreferenceView = NSView; 
+                networkPreferenceView = NSView; 
+                personalPreferenceView = NSView; 
+                presenterPreviewView = Presenter; 
+                updatePreferenceView = NSView; 
+            }; 
+            SUPERCLASS = NSWindowController; 
+        }, 
+        {CLASS = Presenter; LANGUAGE = ObjC; SUPERCLASS = NSView; }, 
+        {
+            ACTIONS = {checkForUpdates = id; }; 
+            CLASS = SUUpdater; 
+            LANGUAGE = ObjC; 
+            SUPERCLASS = NSObject; 
+        }
+    ); 
+    IBVersion = 1; 
+}
