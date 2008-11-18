@@ -79,10 +79,6 @@
 	[fontSizeTextBox setFlipped: NO];
 	[fontSizeTextBox drawInRect: NSMakeRect(379,4,61,20) fromRect: NSMakeRect(0,0,61,20) operation: NSCompositeSourceOver fraction: 1.0];
 	
-	NSImage *fontPopUpButton = [NSImage imageNamed:@"FontPopUpButton"];
-	[fontPopUpButton setFlipped: NO];
-	[fontPopUpButton drawInRect: NSMakeRect(219,4,150,20) fromRect: NSMakeRect(0,0,150,20) operation: NSCompositeSourceOver fraction: 1.0];
-	
 	[alignmentLeftButton setState: alignmentLeftButtonState];
 	[alignmentCentreButton setState: alignmentCentreButtonState];
 	[alignmentRightButton setState: alignmentRightButtonState];
