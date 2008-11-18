@@ -10,7 +10,6 @@
 #import "NSImage+QuickLook.h"
 #import "IPAddress.h"
 
-
 @interface DVDEvent : NSObject
 {
 	DVDEventCode mEventCode;
@@ -26,7 +25,6 @@
 - (UInt32) eventData2;
 
 @end
-
 
 @implementation DVDEvent
 
@@ -88,14 +86,14 @@
 	//	presentationWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 	//}
 	
-	/*mainPresenterView = [[Presenter alloc] initWithFrame: screenArea];
+		mainPresenterView = [[Presenter alloc] initWithFrame: screenArea];
 	
-	// Initialize the window containing the text layer
-	[presentationWindow setLevel:NSScreenSaverWindowLevel+4];
-	[presentationWindow setOpaque:NO];
-	[presentationWindow setBackgroundColor:[NSColor clearColor]];
-	[presentationWindow setContentView: mainPresenterView];
-	[presentationWindow orderFront:nil];*/
+		// Initialize the window containing the text layer
+		[presentationWindow setLevel:NSScreenSaverWindowLevel+4];
+		[presentationWindow setOpaque:NO];
+		[presentationWindow setBackgroundColor:[NSColor clearColor]];
+		[presentationWindow setContentView: mainPresenterView];
+		[presentationWindow orderFront:nil];
 		
 		// Initialize the Quartz composition
 		/*qcPresentationBackground = [[QCView alloc] init];
@@ -145,6 +143,7 @@
 		[dvdPlayerWindow setLevel:NSScreenSaverWindowLevel-1];
 
 	}
+	
 	// Beta expiration code ... REMOVE IN FINAL RELEASE!
 	/*NSDate * today = [NSDate date];
 	NSDate * targetDate = [NSDate dateWithString:@"2007-12-04 00:00:00 -0500"];
@@ -202,10 +201,10 @@
 	// Register for notifications
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidMount:) name:NSWorkspaceDidMountNotification object:NULL];
 	
-	RemoteControlContainer* container = [[RemoteControlContainer alloc] initWithDelegate: self];
-	[container instantiateAndAddRemoteControlDeviceWithClass: [AppleRemote class]];
-	[container instantiateAndAddRemoteControlDeviceWithClass: [KeyspanFrontRowControl class]];
-	[container startListening: self];
+	remoteControl = [[RemoteControlContainer alloc] initWithDelegate: self];
+	[remoteControl instantiateAndAddRemoteControlDeviceWithClass: [AppleRemote class]];
+	[remoteControl instantiateAndAddRemoteControlDeviceWithClass: [KeyspanFrontRowControl class]];
+	[remoteControl startListening: self];
 	
 	if (![self registered]) {
 		[NSApp beginSheet:welcomeRegisterSheet modalForWindow:splasher modalDelegate:self didEndSelector:nil contextInfo:nil];
@@ -215,7 +214,37 @@
 - (void)dealloc
 {
 	[ESDSerialNumber release];
+	[remoteControl stopListening: self];
+	[remoteControl release];
 	[super dealloc];
+}
+
+/////////////////////////////////////
+#pragma mark Remote Control Functions
+/////////////////////////////////////
+
+- (void)applicationWillBecomeActive:(NSNotification *)aNotification {
+    NSLog(@"Application will become active - Using remote controls");
+    [remoteControl startListening: self];
+}
+- (void)applicationWillResignActive:(NSNotification *)aNotification {
+    NSLog(@"Application will resign active - Releasing remote controls");
+    [remoteControl stopListening: self];
+}
+
+- (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown  remoteControl: (RemoteControl*) remoteControl 
+{
+	if (event == kRemoteButtonRight) {
+		#warning Right Remote Clicked -- Advance Slide
+	} if (event == kRemoteButtonLeft) {
+		#warning Left Remote Clicked -- Previous Slide
+	} if (event == kRemoteButtonPlus) {
+		#warning Plus Remote Clicked -- Advance Song
+	} if (event == kRemoteButtonMinus) {
+		#warning Down Remote Clicked -- Previous Song
+	}
+	
+    NSLog(@"Button %d pressed down %d", event, pressedDown);
 }
 
 - (void)runThumbnailSetup
@@ -246,6 +275,8 @@
 				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
 					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[moviesPathListing addObject: currentPath];
@@ -270,6 +301,8 @@
 				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
 					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[picturesPathListing addObject: currentPath];

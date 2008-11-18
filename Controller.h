@@ -9,12 +9,17 @@
 #import "IWVideoView.h"
 #import "BLIPConnection.h"
 #import "BLIP.h"
+#import "RemoteControlContainer.h"
+#import "AppleRemote.h"
+#import "KeyspanFrontRowControl.h"
 
 @class eSellerateObject;
 
 @interface Controller : NSObject <TCPListenerDelegate, BLIPConnectionDelegate>
 {	
 	IBOutlet NSWindow *splasher;
+	
+	RemoteControlContainer* remoteControl;
 	
 	NSNetServiceBrowser *_serviceBrowser;
     NSMutableArray *_serviceList;
