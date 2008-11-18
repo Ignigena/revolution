@@ -1,5 +1,0 @@
-/Users/albertmartin/Development/Revolution/Controller.m: In function '-[Controller runDVDSetup]':
-/Users/albertmartin/Development/Revolution/Controller.m:373: warning: passing argument 1 of 'DVDRegisterEventCallBack' from incompatible pointer type
-/Users/albertmartin/Development/Revolution/Controller.m:373: warning: passing argument 4 of 'DVDRegisterEventCallBack' makes pointer from integer without a cast
-/Users/albertmartin/Development/Revolution/Controller.m:373: warning: passing argument 5 of 'DVDRegisterEventCallBack' from incompatible pointer type
-/Users/albertmartin/Development/Revolution/Controller.m:404: warning: 'DVDSetVideoBounds' is deprecated (declared at /Developer/SDKs/MacOSX10.5.sdk/System/Library/Frameworks/DVDPlayback.framework/Headers/DVDPlayback.h:700)

@@ -72,6 +72,7 @@
 	// Images required for various states of slides
 	NSImage *slideGradientActive;
 	NSImage *slideGradientNormal;
+	NSImage *slideGradientBlank;
 	NSImage *slideEditorCorners;
 	NSImage *slideGradientEditor;
 	

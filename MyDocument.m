@@ -40,6 +40,7 @@
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
+	NSLog(@"creating new document ...");
 	[[[NSApp delegate] splasher] orderOut: nil];
 	
 	RSDarkScroller *darkScrollerPlaylist = [[RSDarkScroller alloc] init];
@@ -96,6 +97,7 @@
 	[darkScrollerSlides release];
 	
 	[self performSelector: @selector(checkEmptyLibrary) withObject: nil afterDelay: 0.1];
+	NSLog(@"done ...");
 }
 
 - (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
@@ -569,18 +571,11 @@
 
 - (IBAction)toggleMediaMixer:(id)sender
 {
-	NSLog(@"%f", [rightSplitterView splitterPosition]);
 	if ([rightSplitterView splitterPosition] < 660) {
 		[rightSplitterView setSplitterPosition:0 animate:YES];
 	} else {
 		[rightSplitterView setSplitterPosition:182 animate:YES];
 	}
-	
-	/*if ([[[NSApp delegate] backgroundMediaMixer] isVisible]) {
-		[[[NSApp delegate] backgroundMediaMixer] orderOut: self];
-	} else {
-		[[[NSApp delegate] backgroundMediaMixer] orderFront: self];
-	}*/
 }
 
 - (IBAction)docWindowGoToBlack:(id)sender

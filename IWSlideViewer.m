@@ -19,6 +19,7 @@
 		// Generate the slide backgrounds
 		slideGradientNormal = [self generateSlideWithState: 0];
 		slideGradientActive = [self generateSlideWithState: 1];
+		slideGradientBlank = [self generateSlideWithState: 2];
 		
 		// Build the bottom rounded corners for the text box
 		NSImage *slideEditorCornersBack = [[NSImage alloc] initWithSize:maskingRect.size];
@@ -151,7 +152,7 @@
 	
 	// Determine the state and draw the appropriate gradient
 	if (state==0) { [slideNormalGradient drawInRect:maskingRect angle:90.0f]; }
-	else { [slideActiveGradient drawInRect:maskingRect angle:90.0f]; }
+	else if (state==1) { [slideActiveGradient drawInRect:maskingRect angle:90.0f]; }
 	
 	// Create the glossy slide header area
 	[[NSColor blackColor] set];
@@ -291,34 +292,41 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 			} else if (editSlideAtIndex!=index && [[mediaReferences objectAtIndex: index] isEqualToString: @""]) {
 				[slideGradientNormal drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 			} else if (editSlideAtIndex==index) {
-				[slideGradientEditor drawInRect:NSMakeRect(backgroundRect.origin.x+8, backgroundRect.origin.y+5, 164, 150) fromRect:NSMakeRect(0, 0, 276, 276) operation:NSCompositeSourceOver fraction: 1.0];
+				NSImage *mediaMask = [[NSImage alloc] initWithSize: NSMakeSize(292, 276)];
+				[mediaMask lockFocus];
+				[[NSColor whiteColor] set];
+				[bgPath fill];
+				[mediaMask unlockFocus];
+				
+				[mediaMask drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
+				[slideGradientBlank drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 			} else {
 				NSArray *previewPathSplitter = [[NSArray alloc] initWithArray: [[mediaReferences objectAtIndex: index] componentsSeparatedByString:@"/"]];
 				NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[previewPathSplitter objectAtIndex: [previewPathSplitter count]-1] componentsSeparatedByString:@"."]];
 				NSImage *mediaFrame = [[NSImage alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [movieNameSplitter objectAtIndex: 0]] stringByExpandingTildeInPath]];
-				NSImage *mediaMask = [[NSImage alloc] initWithSize:maskingRect.size];
+				NSImage *mediaMask = [[NSImage alloc] initWithSize: NSMakeSize(292, 276)];
 				[mediaFrame setFlipped:YES];
 				[mediaMask lockFocus];
 				[[NSColor blackColor] set];
 				[bgPath fill];
-				[mediaFrame drawInRect:NSMakeRect(0,22,164,128) fromRect:NSMakeRect(0,0,288,163) operation:NSCompositeSourceIn fraction:1.0];
+				[mediaFrame drawInRect:NSMakeRect(14,41,264,235) fromRect:NSMakeRect(0,0,[mediaFrame size].width,[mediaFrame size].height) operation:NSCompositeSourceIn fraction:1.0];
 				
 				[[NSGraphicsContext currentContext] setShouldAntialias: NO];
 				[[NSColor colorWithDeviceWhite:1.0 alpha:0.1] set];
-				NSBezierPath *shadowLeft1 = [NSBezierPath bezierPath];
-				[shadowLeft1 moveToPoint:NSMakePoint(0, 22)];
-				[shadowLeft1 lineToPoint:NSMakePoint(maskingRect.size.width, 22)];
-				[shadowLeft1 setLineWidth:0.5];
-				[shadowLeft1 stroke];
+				NSBezierPath *titleBarShadowReflection = [NSBezierPath bezierPath];
+				[titleBarShadowReflection moveToPoint:NSMakePoint(14, 55)];
+				[titleBarShadowReflection lineToPoint:NSMakePoint(276, 55)];
+				[titleBarShadowReflection setLineWidth:0.5];
+				[titleBarShadowReflection stroke];
 				[[NSGraphicsContext currentContext] setShouldAntialias: YES];
 				
 				[[NSColor colorWithDeviceWhite:0.0 alpha:0.7] set];
-				[[NSBezierPath bezierPathWithRect: [self rectCenteredInRect:NSMakeRect(0,20,164,128) withSize:NSMakeSize(165, worshipTextViewHeight+10)]] fill];
+				[[NSBezierPath bezierPathWithRect: [self rectCenteredInRect:NSMakeRect(14,41,264,235) withSize:NSMakeSize(264, worshipTextViewHeight+10)]] fill];
 				
 				[mediaMask unlockFocus];
 				
-				[mediaMask drawInRect:NSMakeRect(backgroundRect.origin.x+8, backgroundRect.origin.y+27, 164, 128) fromRect:NSMakeRect(0, 22, 164, 128) operation:NSCompositeSourceOver fraction: slideOpacity];
-				[slideGradientNormal drawInRect:NSMakeRect(backgroundRect.origin.x+8, backgroundRect.origin.y+5, 164, 22) fromRect:NSMakeRect(0, 0, 164, 22) operation:NSCompositeSourceOver fraction: slideOpacity];
+				[mediaMask drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, [mediaMask size].width, [mediaMask size].height) operation:NSCompositeSourceOver fraction: slideOpacity];
+				[slideGradientBlank drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 			}
    			
 			if (clickedSlideAtIndex==index && [slidesNotes count]!=index && editSlideAtIndex!=index) {
@@ -351,7 +359,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				if ([inslideTextScroller superview]==self) {
 					[inslideTextScroller setFrameOrigin:NSMakePoint(slideRect.origin.x-2, slideRect.origin.y+18)];
 				} else {
-					[inslideTextScroller initWithFrame:NSMakeRect(slideRect.origin.x-2, slideRect.origin.y+18, slideRect.size.width+4, slideRect.size.height-24)];
+					[inslideTextScroller initWithFrame:NSMakeRect(slideRect.origin.x+1, slideRect.origin.y+21, slideRect.size.width-2, slideRect.size.height-20)];
 					[inslideTextScroller setHasHorizontalScroller:NO];
 					[inslideTextScroller setHasVerticalScroller:YES];
 					[[inslideTextScroller verticalScroller] setControlSize: NSSmallControlSize];
@@ -380,7 +388,8 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 					[worshipSlideTextAttrs setValue: nil forKey: NSShadowAttributeName];
 				}
 			
-				NSRect worshipTextView = [self rectCenteredInRect:NSMakeRect(slideRect.origin.x, slideRect.origin.y+20, slideRect.size.width, slideRect.size.height-10) withSize:NSMakeSize(155, worshipTextViewHeight)];
+				NSRect worshipTextView = [self rectCenteredInRect:NSMakeRect(slideRect.origin.x+1, slideRect.origin.y+21, slideRect.size.width-2, slideRect.size.height-10) withSize:NSMakeSize(slideRect.size.width-2, worshipTextViewHeight)];
+				//NSRect worshipTextView = [self rectCenteredInRect:NSMakeRect(slideRect.origin.x, slideRect.origin.y+20, slideRect.size.width, slideRect.size.height-10) withSize:NSMakeSize(155, worshipTextViewHeight)];
 			
 				[[worshipSlides objectAtIndex: index] drawInRect:worshipTextView withAttributes: worshipSlideTextAttrs];
 			}

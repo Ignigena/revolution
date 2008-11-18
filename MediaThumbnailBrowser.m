@@ -55,12 +55,8 @@
 		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
 		
 		NSImage *mediaThumbnail = [[NSImage alloc] initWithContentsOfFile: [thumbnailPath stringByExpandingTildeInPath]];
-		
-		//[RSHistogramView calculateHistogramFromImage: mediaThumbnail];
-		
-		//NSImage *mediaThumbnail = [NSImage imageWithPreviewOfFileAtPath:[thumbnailPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES];
 		[mediaThumbnail setFlipped: YES];
-		[mediaThumbnail drawInRect:backgroundRect fromRect: NSMakeRect(0.0, 0.0, 70, 70) operation:NSCompositeSourceOver fraction:1.0];
+		[mediaThumbnail drawInRect:[self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)] fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
 		
 		if (clickedSlideAtIndex==index) {
 			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect:NSMakeRect(backgroundRect.origin.x+2, backgroundRect.origin.y+2, [mediaThumbnail size].width-3, [mediaThumbnail size].height-6)];
@@ -77,8 +73,6 @@
 	//[[NSColor colorWithDeviceWhite:0.0 alpha: 0.8] set];
 	//[NSBezierPath fillRect: NSMakeRect(0, [[NSString stringWithFormat:@"%.0f", [[self enclosingScrollView] documentVisibleRect].size.height+(([self bounds].size.height*[[[self enclosingScrollView] verticalScroller] floatValue]) / 2)-25] floatValue], [self bounds].size.width, 25)];
 }
-
-
 
 - (void)updateGrid
 {
