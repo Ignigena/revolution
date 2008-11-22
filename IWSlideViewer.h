@@ -73,7 +73,6 @@
 	NSImage *slideGradientActive;
 	NSImage *slideGradientNormal;
 	NSImage *slideGradientBlank;
-	NSImage *slideEditorCorners;
 	NSImage *slideGradientEditor;
 	
 	// Images required for slide bevel effect
@@ -143,7 +142,8 @@
 - (NSMutableArray *) worshipSlides;
 - (NSMutableArray *) slidesNotes;
 
-- (void) setClickedSlideAtIndex:(unsigned)slideIndex;
+- (int)clickedSlideAtIndex;
+- (void)setClickedSlideAtIndex:(unsigned)slideIndex;
 
 - (BOOL)editorOn;
 - (void)setEditor:(BOOL)editorState;

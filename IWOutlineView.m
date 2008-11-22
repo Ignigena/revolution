@@ -44,7 +44,7 @@
 {
 	if (returnCode==1000) {
 		NSLog(@"Delete it! %@", [self itemAtRow: [self selectedRow]]);
-		NSString *worshipSongFile = [NSString stringWithFormat: @"%@.iwsf", [self itemAtRow: [self selectedRow]]];
+		NSString *worshipSongFile = [NSString stringWithFormat: @"%@", [self itemAtRow: [self selectedRow]]];
 		NSString *worshipSongPath;
 		NSArray *worshipSongFileSplit = [[NSArray alloc] initWithArray: [worshipSongFile componentsSeparatedByString:@"/"]];
 		

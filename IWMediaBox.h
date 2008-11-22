@@ -35,6 +35,9 @@
 	IBOutlet id scriptureChapter;
 	IBOutlet id scriptureVerses;
 	IBOutlet id scripturePreviewView;
+	IBOutlet NSButton *scriptureSplitSetting;
+	IBOutlet NSButton *insertIntoPlaylistButton;
+	IBOutlet NSButton *insertIntoSongButton;
 	MAAttachedWindow *searchPopup;
 	
 	QTCaptureSession *captureSession;
@@ -81,5 +84,7 @@
 - (IBAction)goToWebsite:(id)sender;
 - (IBAction)toggleSearchPopup:(id)sender;
 - (IBAction)lookupScripture:(id)sender;
+- (IBAction)insertScriptureIntoPlaylist:(id)sender;
+- (IBAction)insertScriptureIntoSlide:(id)sender;
 
 @end

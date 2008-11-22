@@ -256,9 +256,11 @@
 	NSString *currentPath;
 	unsigned index;
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/"] stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/"] stringByExpandingTildeInPath] attributes: nil]; }
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/"] stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/"] stringByExpandingTildeInPath] attributes: nil]; }
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/"] stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/"] stringByExpandingTildeInPath] attributes: nil]; }	
+	if ([[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/"] stringByExpandingTildeInPath]]) { [[NSFileManager defaultManager] removeItemAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/Thumbnails/"] stringByExpandingTildeInPath] error: nil]; }
+	
+	if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/cache/"] stringByExpandingTildeInPath]]) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/cache/"] stringByExpandingTildeInPath] attributes: nil]; }
+	if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/cache/Movies/"] stringByExpandingTildeInPath]]) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/cache/Movies/"] stringByExpandingTildeInPath] attributes: nil]; }
+	if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/cache/Pictures/"] stringByExpandingTildeInPath]]) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/cache/Pictures/"] stringByExpandingTildeInPath] attributes: nil]; }	
 	
 	// Build all the thumbnails for movies in the users Movies directory
 	NSMutableArray *moviesListing = [NSMutableArray arrayWithArray: [[NSFileManager defaultManager] directoryContentsAtPath:[[NSString stringWithString: @"~/Movies/ProWorship"] stringByExpandingTildeInPath]]];
@@ -272,11 +274,11 @@
 			NSString *movieType = [[currentPath pathExtension] lowercaseString];
 			
 			if ([movieType isEqualToString: @"mov"] || [movieType isEqualToString: @"avi"] || [movieType isEqualToString: @"mpg"] || [movieType isEqualToString: @"mpeg"] || [movieType isEqualToString: @"mp4"] || [movieType isEqualToString: @"qtz"]) {
-				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
+				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/%@-PREVIEW.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[moviesPathListing addObject: currentPath];
@@ -298,11 +300,11 @@
 			NSString *pictureType = [[currentPath pathExtension] lowercaseString];
 			
 			if ([pictureType isEqualToString: @"tiff"] || [pictureType isEqualToString: @"tif"] || [pictureType isEqualToString: @"jpg"] || [pictureType isEqualToString: @"jpeg"] || [pictureType isEqualToString: @"png"]) {
-				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
+				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/%@-PREVIEW.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[picturesPathListing addObject: currentPath];

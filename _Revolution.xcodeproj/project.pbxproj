@@ -19,7 +19,6 @@
 		5008D5E50C784045003D870C /* Disclosure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D5E30C784045003D870C /* Disclosure.tiff */; };
 		5008D5E60C784045003D870C /* Disclosure-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D5E40C784045003D870C /* Disclosure-P.tiff */; };
 		5008D6F20C784FF4003D870C /* RSDarkScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5008D6F00C784FF4003D870C /* RSDarkScroller.m */; };
-		5008D6F90C78503D003D870C /* DarkScrollerTrack.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D6F80C78503D003D870C /* DarkScrollerTrack.tiff */; };
 		5008D71C0C78516C003D870C /* DarkScrollerCap.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D71B0C78516C003D870C /* DarkScrollerCap.tiff */; };
 		5008D7450C785365003D870C /* DarkScrollerKnob.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5008D7440C785365003D870C /* DarkScrollerKnob.tif */; };
 		5008D77B0C785566003D870C /* DarkScrollerArrowUp2.tif in Resources */ = {isa = PBXBuildFile; fileRef = 5008D7770C785566003D870C /* DarkScrollerArrowUp2.tif */; };
@@ -261,7 +260,6 @@
 		5008D5E40C784045003D870C /* Disclosure-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Disclosure-P.tiff"; path = "Resources/Disclosure-P.tiff"; sourceTree = "<group>"; };
 		5008D6F00C784FF4003D870C /* RSDarkScroller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RSDarkScroller.m; sourceTree = "<group>"; };
 		5008D6F10C784FF4003D870C /* RSDarkScroller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RSDarkScroller.h; sourceTree = "<group>"; };
-		5008D6F80C78503D003D870C /* DarkScrollerTrack.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DarkScrollerTrack.tiff; path = Resources/DarkScroller/DarkScrollerTrack.tiff; sourceTree = "<group>"; };
 		5008D71B0C78516C003D870C /* DarkScrollerCap.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DarkScrollerCap.tiff; path = Resources/DarkScroller/DarkScrollerCap.tiff; sourceTree = "<group>"; };
 		5008D7440C785365003D870C /* DarkScrollerKnob.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DarkScrollerKnob.tif; path = Resources/DarkScroller/DarkScrollerKnob.tif; sourceTree = "<group>"; };
 		5008D7770C785566003D870C /* DarkScrollerArrowUp2.tif */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DarkScrollerArrowUp2.tif; path = Resources/DarkScroller/DarkScrollerArrowUp2.tif; sourceTree = "<group>"; };
@@ -852,7 +850,6 @@
 				5008D8BA0C7973AF003D870C /* DarkSlider.m */,
 				5008D9020C7976B2003D870C /* DarkSliderKnob.tiff */,
 				5008D9390C797846003D870C /* DarkSliderTrack.tiff */,
-				5008D6F80C78503D003D870C /* DarkScrollerTrack.tiff */,
 				5008D71B0C78516C003D870C /* DarkScrollerCap.tiff */,
 				5008D7440C785365003D870C /* DarkScrollerKnob.tif */,
 				5008D7770C785566003D870C /* DarkScrollerArrowUp2.tif */,
@@ -1101,7 +1098,6 @@
 				5008D23B0C77F1BE003D870C /* SlideHighlight-SL.tiff in Resources */,
 				5008D5E50C784045003D870C /* Disclosure.tiff in Resources */,
 				5008D5E60C784045003D870C /* Disclosure-P.tiff in Resources */,
-				5008D6F90C78503D003D870C /* DarkScrollerTrack.tiff in Resources */,
 				5008D71C0C78516C003D870C /* DarkScrollerCap.tiff in Resources */,
 				5008D7450C785365003D870C /* DarkScrollerKnob.tif in Resources */,
 				5008D77B0C785566003D870C /* DarkScrollerArrowUp2.tif in Resources */,

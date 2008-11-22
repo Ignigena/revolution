@@ -4,6 +4,7 @@
 #import "Controller.h"
 #import "MediaThumbnailBrowser.h"
 #import "XMLTree.h"
+#import "ImportController.h"
 
 @implementation IWMediaBox
 
@@ -616,19 +617,44 @@
 		
 		NSAttributedString *scripturePreviewTextRich = [[NSAttributedString alloc] initWithRTF:[scripturePreviewText dataUsingEncoding:NSASCIIStringEncoding] documentAttributes:nil];
 		
-		//[scripturePreviewTextRich stringByReplacingOccurrencesOfString:@"quot;" withString:@"\""];
-		
 		[scripturePreviewView setString: @""];
 		[scripturePreviewView insertText: scripturePreviewTextRich];
 		[scripturePreviewView setTextContainerInset: NSMakeSize(10.0,10.0)];
 		
 		[[[scripturePreviewView enclosingScrollView] contentView] scrollToPoint:NSMakePoint(0,0)];
 		[[scripturePreviewView enclosingScrollView] reflectScrolledClipView: [[scripturePreviewView enclosingScrollView] contentView]];
+		
+		[insertIntoPlaylistButton setEnabled: YES];
+		[insertIntoSongButton setEnabled: YES];
 	} else {
 		NSLog(@"ISCRIPTURE.ORG: No results found");
+		
+		[scripturePreviewView setString: @""];
+		
+		[[[scripturePreviewView enclosingScrollView] contentView] scrollToPoint:NSMakePoint(0,0)];
+		[[scripturePreviewView enclosingScrollView] reflectScrolledClipView: [[scripturePreviewView enclosingScrollView] contentView]];
+		
+		[insertIntoPlaylistButton setEnabled: NO];
+		[insertIntoSongButton setEnabled: NO];
 	}
 	
 	NSLog(@"------------------------------------------");
+}
+
+- (IBAction)insertScriptureIntoPlaylist:(id)sender
+{
+	NSURL *scriptureLookupURL = [NSURL URLWithString:[[NSString stringWithFormat:@"http://iscripture.org/api/search.php?s=%@+%@:%@&v=%@&t=passage", [scriptureBook titleOfSelectedItem], [scriptureChapter stringValue], [scriptureVerses stringValue], [scriptureTranslation titleOfSelectedItem]] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+	NSString *scriptureLookupReference = [NSString stringWithFormat:@"%@ %@:%@ - %@", [scriptureBook titleOfSelectedItem], [scriptureChapter stringValue], [scriptureVerses stringValue], [scriptureTranslation titleOfSelectedItem]];
+	
+	[ImportController importScriptureToDocumentFromURL: scriptureLookupURL reference: scriptureLookupReference split: [scriptureSplitSetting state]];
+}
+
+- (IBAction)insertScriptureIntoSlide:(id)sender
+{
+	NSURL *scriptureLookupURL = [NSURL URLWithString:[[NSString stringWithFormat:@"http://iscripture.org/api/search.php?s=%@+%@:%@&v=%@&t=passage", [scriptureBook titleOfSelectedItem], [scriptureChapter stringValue], [scriptureVerses stringValue], [scriptureTranslation titleOfSelectedItem]] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
+	NSString *scriptureLookupReference = [NSString stringWithFormat:@"%@ %@:%@ - %@", [scriptureBook titleOfSelectedItem], [scriptureChapter stringValue], [scriptureVerses stringValue], [scriptureTranslation titleOfSelectedItem]];
+	
+	[ImportController importScriptureToSlideFromURL: scriptureLookupURL reference: scriptureLookupReference split: [scriptureSplitSetting state]];
 }
 
 @end

@@ -51,15 +51,15 @@
 		NSArray *moviePathSplitter = [[NSArray alloc] initWithArray: [[mediaListing objectAtIndex:index] componentsSeparatedByString:@"/"]];
 		NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[moviePathSplitter objectAtIndex:[moviePathSplitter count]-1] componentsSeparatedByString:@"."]];
 		
-		if (mediaType==1) { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
-		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
+		if (mediaType==1) { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Pictures/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
+		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
 		
 		NSImage *mediaThumbnail = [[NSImage alloc] initWithContentsOfFile: [thumbnailPath stringByExpandingTildeInPath]];
 		[mediaThumbnail setFlipped: YES];
 		[mediaThumbnail drawInRect:[self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)] fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
 		
 		if (clickedSlideAtIndex==index) {
-			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect:NSMakeRect(backgroundRect.origin.x+2, backgroundRect.origin.y+2, [mediaThumbnail size].width-3, [mediaThumbnail size].height-6)];
+			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect:[self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width-3, [mediaThumbnail size].height-3)]];
 			[[NSColor redColor] set];
 			[clickedSlideBorder setLineWidth: 2.0];
 			[clickedSlideBorder stroke];
@@ -67,11 +67,6 @@
 		
 		[mediaThumbnail release];
 	}
-	
-	//NSLog(@"%f", [[[self enclosingScrollView] verticalScroller] floatValue]);
-	
-	//[[NSColor colorWithDeviceWhite:0.0 alpha: 0.8] set];
-	//[NSBezierPath fillRect: NSMakeRect(0, [[NSString stringWithFormat:@"%.0f", [[self enclosingScrollView] documentVisibleRect].size.height+(([self bounds].size.height*[[[self enclosingScrollView] verticalScroller] floatValue]) / 2)-25] floatValue], [self bounds].size.width, 25)];
 }
 
 - (void)updateGrid

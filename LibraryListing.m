@@ -77,7 +77,7 @@
 		//NSString *actualLibraryListing = [[NSString alloc] initWithString: [songLibrarySplitter objectAtIndex: 0]];
 		NSString *actualLibraryListing = [libraryListing objectAtIndex:index];
 			
-		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
+		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"cache"]) {
 			NSMutableArray *subLibraryListing = [[NSMutableArray alloc] initWithArray: [manager directoryContentsAtPath:[currentPath stringByExpandingTildeInPath]]];
 			
 			if ([subLibraryListing count]!=0) {
@@ -108,7 +108,7 @@
 			if (!filterResults)
 				[libraryListingText setObject:subLibraryListing forKey:actualLibraryListing];
 		} else {
-			if (![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
+			if (![[libraryListing objectAtIndex:index] isEqualToString: @"cache"]) {
 				if (filterResults) {
 					if ([self containsString:[librarySearchField stringValue] inString:actualLibraryListing])
 						[libraryListingText setObject:[NSNull null] forKey:actualLibraryListing];

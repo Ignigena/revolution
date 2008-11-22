@@ -13,4 +13,7 @@
 
 }
 
++ (void)importScriptureToDocumentFromURL:(NSURL *)url reference:(NSString *)ref split:(BOOL)split;
++ (void)importScriptureToSlideFromURL:(NSURL *)url reference:(NSString *)ref split:(BOOL)split;
+
 @end
