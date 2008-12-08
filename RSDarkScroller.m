@@ -70,7 +70,7 @@
 	[[NSBezierPath bezierPathWithRect:rect] fill];
 	
 	NSGradient *shadowLeft = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithDeviceWhite:0.26 alpha:1.0] endingColor:[NSColor colorWithDeviceWhite:0.38 alpha:1.0]];
-	[shadowLeft drawInRect:NSMakeRect(0, rect.origin.x, 4, rect.size.height) angle:0.0f];
+	[shadowLeft drawInRect:NSMakeRect(0, rect.origin.y, 4, rect.size.height) angle:0.0f];
 	
 	NSGradient *shadowRight = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithDeviceWhite:0.28 alpha:1.0] endingColor:[NSColor colorWithDeviceWhite:0.38 alpha:1.0]];
 	[shadowRight drawInRect:NSMakeRect(rect.size.width-4, rect.origin.y, 4, rect.size.height) angle:180.0f];

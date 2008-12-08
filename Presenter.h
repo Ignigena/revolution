@@ -15,11 +15,12 @@
 #import <QTKit/QTKit.h>
 
 @interface Presenter : NSView {
-	CATextLayer *presentationTextLayer;
-	CATextLayer *presentationTextLayerOutgoing;
+	CALayer *presentationTextLayer;
+	CALayer *presentationTextLayerOutgoing;
 	QTCaptureLayer *liveCameraView;
 	CALayer *ccliLayer;
 	CATextLayer *ccliLayerTextMain;
+	CATextLayer *unregisteredOverlayText;
 	
 	CALayer *videoLayer;
 	
@@ -63,6 +64,7 @@
 	NSView *outgoingSlideView;
 	
 	int presenterSlideLayout;
+	int presenterSlideAlignment;
 	
 	float pvl1_opacity, pvl2_opacity, pvl_release;
 	
@@ -74,6 +76,8 @@
 - (void)setPresentationText:(NSString *)newPresentationText;
 
 - (void)setRenderCCLI:(BOOL)renderCCLIYesNo;
+
+- (CGImageRef)drawPresentationText;
 
 //- (void)releaseVideo;
 
@@ -95,5 +99,10 @@
 - (void)setTextKnocksOutBorder:(int)textKnockout;
 
 - (NSSize)presentationWindowSize;
+
+- (NSString *)presentationFontFamily;
+- (int)presentationFontSize;
+- (int)presenterSlideLayout;
+- (int)presenterSlideAlignment;
 
 @end

@@ -128,6 +128,9 @@
 	NSBezierPath *bgPath;
 	
 	NSImage *dragImage;
+	
+	IBOutlet id nextSlideArrowButton;
+	IBOutlet id previousSlideArrowButton;
 }
 
 - (void)updateGrid;

@@ -36,6 +36,7 @@
 	IBOutlet id scriptureVerses;
 	IBOutlet id scripturePreviewView;
 	IBOutlet NSButton *scriptureSplitSetting;
+	IBOutlet NSButton *showOnScreenButton;
 	IBOutlet NSButton *insertIntoPlaylistButton;
 	IBOutlet NSButton *insertIntoSongButton;
 	MAAttachedWindow *searchPopup;
@@ -86,5 +87,6 @@
 - (IBAction)lookupScripture:(id)sender;
 - (IBAction)insertScriptureIntoPlaylist:(id)sender;
 - (IBAction)insertScriptureIntoSlide:(id)sender;
+- (IBAction)showScriptureOnScreen:(id)sender;
 
 @end

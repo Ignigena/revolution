@@ -29,6 +29,8 @@
 	IBOutlet id networkNodeServices;
 	IBOutlet id networkNodeReceiverToggle;
 	IBOutlet id networkNodeReceiverListener;
+	int overrideFormatting;
+	int overrideLayout;
 	
 	Presenter *mainPresenterView;
 	NSWindow *presentationWindow;
@@ -68,12 +70,17 @@
 	
 	IBOutlet id backgroundMediaMixer;
 	
+	BOOL presenterShouldShowText;
+	BOOL presenterShouldShowVideo;
 }
 
 @property (readonly) NSMutableArray *serviceList;
 
 - (IBAction)toggleNetworkNodeSettings:(id)sender;
 - (IBAction)toggleNetworkNodeReceiver:(id)sender;
+- (IBAction)setNodeDrawsBackground:(id)sender;
+- (IBAction)setNodeOverrideFormatting:(id)sender;
+- (IBAction)setNodeOverrideLayout:(id)sender;
 
 - (void)runDVDSetup;
 - (BOOL)searchMountedDVD;
@@ -82,9 +89,6 @@
 - (void)logMediaInfo;
 - (void)closeMedia;
 - (BOOL)hasMedia;
-
-- (void)runThumbnailSetup;
-
 - (void)runDVDPlay;
 - (void)runDVDStop;
 - (void)runDVDScanForward;
@@ -92,6 +96,12 @@
 - (void)runDVDJumpForward;
 - (void)runDVDJumpBackward;
 - (void)runDVDBackToMenu;
+
+- (void)applyPresentationMode:(int)mode;
+- (BOOL)presenterShouldShowText;
+- (BOOL)presenterShouldShowVideo;
+
+- (void)runThumbnailSetup;
 
 - (IBAction)newPlaylist:(id)sender;
 - (IBAction)loadRecent:(id)sender;

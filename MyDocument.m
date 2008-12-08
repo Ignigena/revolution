@@ -423,7 +423,6 @@
 		// Enable the toolbar buttons
 		[toolbarNewSlide setEnabled: YES];
 		[toolbarNextSlide setEnabled: YES];
-		[toolbarPrevSlide setEnabled: YES];
 		
 		// Reset the undo manager
 		[[self undoManager] removeAllActions];
@@ -482,6 +481,32 @@
 	
 }
 
+- (IBAction)toggleLibrarySearchPopup:(id)sender
+{
+	if (!librarySearchPopup) {
+		NSPoint librarySearchPopupPoint = [[librarySearchPopupButton superview] convertPointToBase: NSMakePoint(NSMidX([librarySearchPopupButton frame])-2, NSMidY([librarySearchPopupButton frame])-2)];
+		
+		librarySearchPopup = [[MAAttachedWindow alloc] initWithView: librarySearchPopupView
+											 attachedToPoint: librarySearchPopupPoint
+													inWindow: [librarySearchPopupButton window] 
+													  onSide: 10 
+												  atDistance: 3.0f];
+		
+		[librarySearchPopup setBackgroundColor: [NSColor colorWithDeviceWhite:0.0 alpha:0.85]];
+		[librarySearchPopup setBorderWidth: 0.0f];
+		[librarySearchPopup setCornerRadius: 20.0f];
+		[librarySearchPopup setArrowBaseWidth: 13.0f];
+		[librarySearchPopup setArrowHeight: 7.0f];
+		
+		[[librarySearchPopupButton window] addChildWindow:librarySearchPopup ordered:NSWindowAbove];
+	} else {
+		[[librarySearchPopupButton window] removeChildWindow:librarySearchPopup];
+		[librarySearchPopup orderOut:self];
+		[librarySearchPopup release];
+		librarySearchPopup = nil;
+	}
+}
+
 - (IBAction)removeFromPlaylist:(id)sender
 {
 	NSLog(@"Deleting %i", [playlistTable selectedRow]);
@@ -508,7 +533,7 @@
 	
 	[docSlideViewer saveAllSlidesForSong: nil];
 	
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]];
+	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]];
 	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
 	
 	NSString *ccliOverviewText = @"";
@@ -573,8 +598,10 @@
 {
 	if ([rightSplitterView splitterPosition] < 660) {
 		[rightSplitterView setSplitterPosition:0 animate:YES];
+		[toolbarMediaToggle setImage: [NSImage imageNamed: @"MediaButton"]];
 	} else {
 		[rightSplitterView setSplitterPosition:182 animate:YES];
+		[toolbarMediaToggle setImage: [NSImage imageNamed: @"MediaButton-P"]];
 	}
 }
 
@@ -644,6 +671,13 @@
 	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath]];
 	
 	return [readSlideFileContents objectForKey: key];
+}
+
+#pragma mark Presentation Mode Switcher
+
+- (IBAction)setPresentationMode:(id)sender
+{
+	[[NSApp delegate] applyPresentationMode: [sender selectedSegment]];
 }
 
 @end

@@ -39,6 +39,10 @@
 	unsigned index;
 	unsigned lastIndex = rangeToDraw.location + rangeToDraw.length;
 	
+	NSMutableDictionary *movieNameAttributes = [[NSMutableDictionary alloc] initWithCapacity: 2];
+	[movieNameAttributes setObject:[NSFont systemFontOfSize:8] forKey:NSFontAttributeName];
+	[movieNameAttributes setObject:[NSColor colorWithDeviceWhite:1.0 alpha:0.7] forKey:NSForegroundColorAttributeName];
+	
 	// Start building the slides
 	for (index = rangeToDraw.location; index <= lastIndex; index++) {
 		NSRect gridRect = [self centerScanRect:[self gridRectForIndex:index]];
@@ -55,12 +59,17 @@
 		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
 		
 		NSImage *mediaThumbnail = [[NSImage alloc] initWithContentsOfFile: [thumbnailPath stringByExpandingTildeInPath]];
+		NSRect mediaThumbnailFrame = [self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)];
 		[mediaThumbnail setFlipped: YES];
-		[mediaThumbnail drawInRect:[self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)] fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
+		[mediaThumbnail drawInRect: mediaThumbnailFrame fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
+		[[movieNameSplitter objectAtIndex: 0] drawInRect:NSMakeRect(mediaThumbnailFrame.origin.x+5, mediaThumbnailFrame.origin.y+mediaThumbnailFrame.size.height-1, mediaThumbnailFrame.size.width, 12) withAttributes: movieNameAttributes];
 		
 		if (clickedSlideAtIndex==index) {
-			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect:[self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width-3, [mediaThumbnail size].height-3)]];
-			[[NSColor redColor] set];
+			NSRect slideBorderRect = [self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width-3, [mediaThumbnail size].height-3)];
+			if (mediaType==1) { slideBorderRect.origin.y -= 2; slideBorderRect.size.height += 1; }
+			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect: slideBorderRect];
+			
+			[[NSColor colorWithDeviceCyan:0.09 magenta:1.0 yellow:1.0 black:0.02 alpha:1.0] set];
 			[clickedSlideBorder setLineWidth: 2.0];
 			[clickedSlideBorder stroke];
 		}

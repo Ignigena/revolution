@@ -29,6 +29,9 @@
 	
 	[captureView setCaptureSession:captureSession];
 	
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Scripture Translation"])
+		[scriptureTranslation selectItemWithTitle: [[NSUserDefaults standardUserDefaults] objectForKey:@"Scripture Translation"]];
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(devicesDidChange:) name:QTCaptureDeviceWasConnectedNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(devicesDidChange:) name:QTCaptureDeviceWasDisconnectedNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionFormatWillChange:) name:QTCaptureConnectionFormatDescriptionWillChangeNotification object:nil];
@@ -587,6 +590,8 @@
 
 - (IBAction)lookupScripture:(id)sender
 {
+	[[NSUserDefaults standardUserDefaults] setObject:[scriptureTranslation titleOfSelectedItem] forKey:@"Scripture Translation"];
+	
 	NSLog(@" ");
 	NSLog(@"------------------------------------------");
 	NSLog(@"SCRIPTURE LOOKUP POWERED BY ISCRIPTURE.ORG");
@@ -624,6 +629,7 @@
 		[[[scripturePreviewView enclosingScrollView] contentView] scrollToPoint:NSMakePoint(0,0)];
 		[[scripturePreviewView enclosingScrollView] reflectScrolledClipView: [[scripturePreviewView enclosingScrollView] contentView]];
 		
+		[showOnScreenButton setEnabled: YES];
 		[insertIntoPlaylistButton setEnabled: YES];
 		[insertIntoSongButton setEnabled: YES];
 	} else {
@@ -634,6 +640,7 @@
 		[[[scripturePreviewView enclosingScrollView] contentView] scrollToPoint:NSMakePoint(0,0)];
 		[[scripturePreviewView enclosingScrollView] reflectScrolledClipView: [[scripturePreviewView enclosingScrollView] contentView]];
 		
+		[showOnScreenButton setEnabled: NO];
 		[insertIntoPlaylistButton setEnabled: NO];
 		[insertIntoSongButton setEnabled: NO];
 	}
@@ -655,6 +662,11 @@
 	NSString *scriptureLookupReference = [NSString stringWithFormat:@"%@ %@:%@ - %@", [scriptureBook titleOfSelectedItem], [scriptureChapter stringValue], [scriptureVerses stringValue], [scriptureTranslation titleOfSelectedItem]];
 	
 	[ImportController importScriptureToSlideFromURL: scriptureLookupURL reference: scriptureLookupReference split: [scriptureSplitSetting state]];
+}
+
+- (IBAction)showScriptureOnScreen:(id)sender
+{
+	[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: [scripturePreviewView string]];
 }
 
 @end

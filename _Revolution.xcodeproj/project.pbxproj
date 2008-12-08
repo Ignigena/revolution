@@ -125,7 +125,6 @@
 		50B3DFED0B6FFC0F005BDFC1 /* IWSlideViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3DFEC0B6FFC0F005BDFC1 /* IWSlideViewer.m */; };
 		50B3E0230B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E0210B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m */; };
 		50B3E1C90B708F6F005BDFC1 /* LibraryListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */; };
-		50B3E6C70B7BBEA9005BDFC1 /* Credits.bak.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3E6C50B7BBEA9005BDFC1 /* Credits.bak.rtf */; };
 		50D3904B0CD983DC00A19A3F /* BP.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D3904A0CD983DC00A19A3F /* BP.tiff */; };
 		50D390C70CD9A64300A19A3F /* DVDPlay-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D390C50CD9A64300A19A3F /* DVDPlay-P.tiff */; };
 		50D390C80CD9A64300A19A3F /* DVDPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D390C60CD9A64300A19A3F /* DVDPlay.tiff */; };
@@ -201,7 +200,10 @@
 		8669F3210ECA6E2E00640634 /* Target.m in Sources */ = {isa = PBXBuildFile; fileRef = 8669F3160ECA6E2E00640634 /* Target.m */; };
 		8669F3220ECA6E2E00640634 /* Test.m in Sources */ = {isa = PBXBuildFile; fileRef = 8669F3180ECA6E2E00640634 /* Test.m */; };
 		8669F32D0ECA6E6200640634 /* IPAddress.m in Sources */ = {isa = PBXBuildFile; fileRef = 8669F32C0ECA6E6200640634 /* IPAddress.m */; };
+		866D30F50EDE75BC003D0C8E /* MediaButton-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 866D30F40EDE75BC003D0C8E /* MediaButton-P.tiff */; };
 		868DEE920EC752F900C001A7 /* RSDarkButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 868DEE910EC752F900C001A7 /* RSDarkButtonCell.m */; };
+		869112010EEDB0D80070ED41 /* Node-Host.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 869111FF0EEDB0D80070ED41 /* Node-Host.tiff */; };
+		869112020EEDB0D80070ED41 /* Node-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 869112000EEDB0D80070ED41 /* Node-On.tiff */; };
 		86C07E650ECA12EA001676F7 /* NodeSettingsBackground.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 86C07E640ECA12EA001676F7 /* NodeSettingsBackground.tiff */; };
 		86C07E6F0ECA16C0001676F7 /* SwitchLeft.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 86C07E6D0ECA16C0001676F7 /* SwitchLeft.tiff */; };
 		86C07E700ECA16C0001676F7 /* SwitchRight.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 86C07E6E0ECA16C0001676F7 /* SwitchRight.tiff */; };
@@ -388,7 +390,6 @@
 		50B3E0220B6FFDE3005BDFC1 /* IWNoFocusRingTextField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IWNoFocusRingTextField.h; sourceTree = "<group>"; };
 		50B3E1C70B708F6F005BDFC1 /* LibraryListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryListing.h; sourceTree = "<group>"; };
 		50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryListing.m; sourceTree = "<group>"; };
-		50B3E6C60B7BBEA9005BDFC1 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.bak.rtf; sourceTree = "<group>"; };
 		50D3904A0CD983DC00A19A3F /* BP.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BP.tiff; path = Resources/BP.tiff; sourceTree = "<group>"; };
 		50D390C50CD9A64300A19A3F /* DVDPlay-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDPlay-P.tiff"; path = "Resources/DVDPlayer/DVDPlay-P.tiff"; sourceTree = "<group>"; };
 		50D390C60CD9A64300A19A3F /* DVDPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDPlay.tiff; path = Resources/DVDPlayer/DVDPlay.tiff; sourceTree = "<group>"; };
@@ -495,8 +496,11 @@
 		8669F32B0ECA6E6200640634 /* IPAddress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPAddress.h; sourceTree = "<group>"; };
 		8669F32C0ECA6E6200640634 /* IPAddress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPAddress.m; sourceTree = "<group>"; };
 		8669F3360ECA701200640634 /* MYUtilities_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MYUtilities_Prefix.pch; sourceTree = "<group>"; };
+		866D30F40EDE75BC003D0C8E /* MediaButton-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "MediaButton-P.tiff"; path = "Resources/MediaButton-P.tiff"; sourceTree = "<group>"; };
 		868DEE900EC752F900C001A7 /* RSDarkButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDarkButtonCell.h; sourceTree = "<group>"; };
 		868DEE910EC752F900C001A7 /* RSDarkButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSDarkButtonCell.m; sourceTree = "<group>"; };
+		869111FF0EEDB0D80070ED41 /* Node-Host.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Node-Host.tiff"; path = "Resources/Node-Host.tiff"; sourceTree = "<group>"; };
+		869112000EEDB0D80070ED41 /* Node-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Node-On.tiff"; path = "Resources/Node-On.tiff"; sourceTree = "<group>"; };
 		86C07E640ECA12EA001676F7 /* NodeSettingsBackground.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = NodeSettingsBackground.tiff; path = Resources/NodeSettingsBackground.tiff; sourceTree = "<group>"; };
 		86C07E6D0ECA16C0001676F7 /* SwitchLeft.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SwitchLeft.tiff; path = Resources/SwitchLeft.tiff; sourceTree = "<group>"; };
 		86C07E6E0ECA16C0001676F7 /* SwitchRight.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SwitchRight.tiff; path = Resources/SwitchRight.tiff; sourceTree = "<group>"; };
@@ -665,6 +669,7 @@
 				507CF4AA0C8BE173004E4E0B /* SlidePrevious-P.tiff */,
 				507CF4AB0C8BE173004E4E0B /* SlidePrevious.tiff */,
 				50A104050C6D82F4001CF707 /* MediaButton.tiff */,
+				866D30F40EDE75BC003D0C8E /* MediaButton-P.tiff */,
 				506E93DF0C6F9F850043ED8A /* PlaylistAdd.tiff */,
 				5066A3850CB0A79300BCD7CE /* PlaylistAddFolder.tiff */,
 				50F0A7F70BB4F062007F9C82 /* Presentation Background Mixer.qtz */,
@@ -675,7 +680,8 @@
 				503173A50CF6A3B900EEFF79 /* Icon-Folder.tiff */,
 				5031737B0CF69F0700EEFF79 /* Icon-SongFile.tiff */,
 				864506EC0EB22FEA009DEAE7 /* MediaTabBGActive.tiff */,
-				50B3E6C50B7BBEA9005BDFC1 /* Credits.bak.rtf */,
+				869111FF0EEDB0D80070ED41 /* Node-Host.tiff */,
+				869112000EEDB0D80070ED41 /* Node-On.tiff */,
 				86431C910E858C540088D644 /* MainMenu.xib */,
 				86431C980E858C880088D644 /* Preferences.xib */,
 				86431C9E0E858C9D0088D644 /* MyDocument.xib */,
@@ -1081,7 +1087,6 @@
 				8D15AC2F0486D014006FF6A4 /* InfoPlist.strings in Resources */,
 				5024B39D0B50FC7300D4249E /* Playlist.icns in Resources */,
 				5024B4D80B52242D00D4249E /* Song File.icns in Resources */,
-				50B3E6C70B7BBEA9005BDFC1 /* Credits.bak.rtf in Resources */,
 				50F0A7F80BB4F062007F9C82 /* Presentation Background Mixer.qtz in Resources */,
 				507509C90C0BE8A300B902E2 /* GeneralPreferences.tiff in Resources */,
 				507509CF0C0BECAF00B902E2 /* SoftwareUpdate.tiff in Resources */,
@@ -1210,6 +1215,9 @@
 				86C07E6F0ECA16C0001676F7 /* SwitchLeft.tiff in Resources */,
 				86C07E700ECA16C0001676F7 /* SwitchRight.tiff in Resources */,
 				86E5107F0ECF9CC400501763 /* AlignRight-w.tiff in Resources */,
+				866D30F50EDE75BC003D0C8E /* MediaButton-P.tiff in Resources */,
+				869112010EEDB0D80070ED41 /* Node-Host.tiff in Resources */,
+				869112020EEDB0D80070ED41 /* Node-On.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1294,14 +1302,6 @@
 				089C1660FE840EACC02AAC07 /* English */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		50B3E6C50B7BBEA9005BDFC1 /* Credits.bak.rtf */ = {
-			isa = PBXVariantGroup;
-			children = (
-				50B3E6C60B7BBEA9005BDFC1 /* English */,
-			);
-			name = Credits.bak.rtf;
 			sourceTree = "<group>";
 		};
 		50F331CE0D0A98A30038EBDF /* ProWorshipHelp */ = {

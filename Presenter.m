@@ -50,14 +50,16 @@
 		
 		NSLog(@"PRESENTATION: Text layer initializing");
 		//presentationTextLayer.wrapped = YES;
-		presentationTextLayer.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
-		presentationTextLayerOutgoing.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
+		presentationTextLayer.anchorPoint = CGPointMake(0,0);
+		presentationTextLayerOutgoing.anchorPoint = CGPointMake(0,0);
+		//presentationTextLayer.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
+		//presentationTextLayerOutgoing.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
 		
 		[[self layer] addSublayer: presentationTextLayer];
 		[[self layer] addSublayer: presentationTextLayerOutgoing];
 		
 		NSLog(@"PRESENTATION: CCLI licensing layer initializing");
-		ccliLayer = [[CALayer layer] retain];
+		/*ccliLayer = [[CALayer layer] retain];
 		ccliLayer.cornerRadius = 8;
 		ccliLayer.borderWidth = 1;
 		ccliLayer.borderColor = kCGColorWhite;
@@ -72,16 +74,16 @@
 		ccliLayerTextMain.font = @"Helvetica Neue Light";
 		ccliLayerTextMain.fontSize = 16.0;
 		
-		[[self layer] addSublayer: ccliLayer];
+		[[self layer] addSublayer: ccliLayer];*/
 		
 		if (![[NSApp delegate] registered]) {
 			NSLog(@"PRESENTATION: Unregistered watermark");
-			CATextLayer *unregisteredOverlayText = [CATextLayer layer];
+			unregisteredOverlayText = [CATextLayer layer];
 		
 			unregisteredOverlayText.string = @"ProWorship Unregistered Demo Copy\n ";
 			unregisteredOverlayText.alignmentMode = kCAAlignmentCenter;
 			unregisteredOverlayText.font = @"Georgia";
-			unregisteredOverlayText.fontSize = 40.0;
+			unregisteredOverlayText.fontSize = 60.0;
 			unregisteredOverlayText.opacity = 0.6;
 		
 			unregisteredOverlayText.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
@@ -93,6 +95,9 @@
 		NSLog(@"PRESENTATION: Registering defaults");
 		presentationText = [[NSString alloc] initWithString: @" "];
 		outgoingPresentationText = [[NSString alloc] initWithString: @" "];
+		
+		//presentationTextLayer.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
+		//presentationTextLayerOutgoing.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
 		
 		presentationTextAlpha = 1.0;
 		outgoingPresentationTextAlpha = 0.0;
@@ -371,12 +376,9 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	presentationTextColour = nil;
 	
 	if (standardUserDefaults) {
-		stroke = [standardUserDefaults objectForKey:@"Text Stroke"];
-		
-		if ([standardUserDefaults objectForKey:@"Text Colour"] != nil)
-			presentationTextColour = [NSUnarchiver unarchiveObjectWithData:[standardUserDefaults objectForKey:@"Text Colour"]];
-		if ([standardUserDefaults objectForKey:@"Text Border Colour"] != nil)
-			presentationTextBorderColour = [NSUnarchiver unarchiveObjectWithData:[standardUserDefaults objectForKey:@"Text Border Colour"]];
+		if ([standardUserDefaults objectForKey:@"Text Stroke"]) stroke = [standardUserDefaults objectForKey:@"Text Stroke"];
+		if ([standardUserDefaults objectForKey:@"Text Colour"]) presentationTextColour = [NSUnarchiver unarchiveObjectWithData:[standardUserDefaults objectForKey:@"Text Colour"]];
+		if ([standardUserDefaults objectForKey:@"Text Border Colour"]) presentationTextBorderColour = [NSUnarchiver unarchiveObjectWithData:[standardUserDefaults objectForKey:@"Text Border Colour"]];
 	}
 	
 	if (!stroke) {
@@ -417,40 +419,114 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	
 	genericPresenterSlideTextAttrs = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 									  [NSFont fontWithName:presentationFontFamily size:presentationFontSize], NSFontAttributeName,
+									  presenterSlideTextPara, NSParagraphStyleAttributeName,
 									  stroke, NSStrokeWidthAttributeName,
 									  nil];
 	
 	[presenterSlideTextAttrs addEntriesFromDictionary: genericPresenterSlideTextAttrs];
-	[outgoingPresenterSlideTextAttrs addEntriesFromDictionary: genericPresenterSlideTextAttrs];
-	
-	presentationTextBorderColour = [NSColor greenColor];
 	
 	[presenterSlideTextAttrs setValue: [presentationTextColour colorWithAlphaComponent: presentationTextAlpha] forKey: NSForegroundColorAttributeName];
-	//[presenterSlideTextAttrs setValue: presentationTextBorderColour forKey: NSStrokeColorAttributeName];
+	[presenterSlideTextAttrs setValue: presentationTextBorderColour forKey: NSStrokeColorAttributeName];
+}
+
+- (CGImageRef)drawPresentationText
+{
+	[self setTextFormatting];
 	
-	[outgoingPresenterSlideTextAttrs setValue: [presentationTextColour colorWithAlphaComponent: outgoingPresentationTextAlpha] forKey: NSForegroundColorAttributeName];
-	//[outgoingPresenterSlideTextAttrs setValue: presentationTextBorderColour forKey: NSStrokeColorAttributeName];
+	NSRect contentSafeArea = NSMakeRect([[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsX"] floatValue], [[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsY"] floatValue], [[self superview] frame].size.width-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsW"] floatValue]-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsX"] floatValue], [[self superview] frame].size.height-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsH"] floatValue]-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsY"] floatValue]);
+	
+	// Start creating the image
+	NSImage *presentationTextRef = [[NSImage alloc] initWithSize: contentSafeArea.size];
+	[presentationTextRef setFlipped: YES];
+	[presentationTextRef lockFocus];
+	
+	// Set up the text storage and layout containers
+	
+	// Standard container
+	NSTextStorage *textStorage = [[[NSTextStorage alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: [self presentationText] attributes:presenterSlideTextAttrs]] autorelease];
+	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(contentSafeArea.size.width, FLT_MAX)] autorelease];
+	NSLayoutManager *layoutManager = [[[NSLayoutManager alloc] init] autorelease];
+	
+	[layoutManager addTextContainer: textContainer];
+	[textStorage addLayoutManager: layoutManager];
+	
+	(void)[layoutManager glyphRangeForTextContainer: textContainer];
+	
+	// Standard overlay container
+	[presenterSlideTextAttrs setValue: [presentationTextBorderColour colorWithAlphaComponent: 0] forKey: NSStrokeColorAttributeName];
+	
+	NSTextStorage *textOverlayStorage = [[[NSTextStorage alloc] initWithAttributedString: [[NSAttributedString alloc] initWithString: [self presentationText] attributes:presenterSlideTextAttrs]] autorelease];
+	NSTextContainer *textOverlayContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(contentSafeArea.size.width, FLT_MAX)] autorelease];
+	NSLayoutManager *layoutOverlayManager = [[[NSLayoutManager alloc] init] autorelease];
+	
+	[layoutOverlayManager addTextContainer: textOverlayContainer];
+	[textOverlayStorage addLayoutManager: layoutOverlayManager];
+	
+	(void)[layoutOverlayManager glyphRangeForTextContainer: textOverlayContainer];
+	
+	// Calculate the height needed to draw the text
+	float slideTextHeight = [layoutManager usedRectForTextContainer: textContainer].size.height;
+	NSRect slideTextView;
+	float slideTextOverlayHeight = [layoutOverlayManager usedRectForTextContainer: textOverlayContainer].size.height;
+	NSRect slideTextOverlayView;
+	
+	// Calculate the layout co-ordinants based on the selected layout
+	if (presenterSlideLayout==2) { // Bottom slide layout
+		slideTextView = NSMakeRect(0, contentSafeArea.size.height-slideTextHeight-5, contentSafeArea.size.width, slideTextHeight);
+		slideTextOverlayView = NSMakeRect(0, contentSafeArea.size.height-slideTextOverlayHeight-5, contentSafeArea.size.width, slideTextOverlayHeight);
+	} else if (presenterSlideLayout==0) { // Top slide layout
+		slideTextView = NSMakeRect(0, contentSafeArea.origin.y, contentSafeArea.size.width, slideTextHeight);
+		slideTextOverlayView = NSMakeRect(0, contentSafeArea.origin.y, contentSafeArea.size.width, slideTextOverlayHeight);
+	} else { // Centered slide layout
+		slideTextView = NSMakeRect(0, (contentSafeArea.size.height-slideTextHeight)/2, contentSafeArea.size.width, slideTextHeight);
+		slideTextOverlayView = NSMakeRect(0, (contentSafeArea.size.height-slideTextOverlayHeight)/2, contentSafeArea.size.width, slideTextOverlayHeight);
+	}
+	
+	[layoutManager drawGlyphsForGlyphRange:NSMakeRange(0, [textStorage length]) atPoint: NSMakePoint(slideTextView.origin.x, slideTextView.origin.y)];
+	if ([textKnocksOutStroke isEqualToNumber: [NSNumber numberWithInt: 1]])
+		[layoutOverlayManager drawGlyphsForGlyphRange:NSMakeRange(0, [textOverlayStorage length]) atPoint: NSMakePoint(slideTextOverlayView.origin.x, slideTextOverlayView.origin.y)];
+	
+	[presentationTextRef unlockFocus];
+	
+	CGImageSourceRef source = CGImageSourceCreateWithData((CFDataRef)[presentationTextRef TIFFRepresentation], NULL);
+	
+	[presentationTextRef release];
+	
+	CGImageRef imageRef = CGImageSourceCreateImageAtIndex(source, 0, NULL);
+	
+	CFRelease(source);
+	[(id)imageRef autorelease];
+	
+	return imageRef;
 }
 
 - (void)setPresentationText:(NSString *)newPresentationText
 {
+	if ([[NSApp delegate] registered]) {
+		unregisteredOverlayText.opacity = 0.0;
+	}
+	
+	if (![[NSApp delegate] presenterShouldShowText])
+		return;
+	
 	if (![newPresentationText isEqualToString: presentationText]) {		
 		[self setTextFormatting];
 		
 		[CATransaction begin];
 		[CATransaction setValue:[NSNumber numberWithFloat:0.0f] forKey:kCATransactionAnimationDuration];
 		
-		presentationTextLayerOutgoing.string = [[NSAttributedString alloc] initWithString: [self presentationText] attributes:presenterSlideTextAttrs];
+		presentationTextLayer.frame = CGRectMake(0, 0, [[self superview] frame].size.width-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsW"] floatValue]-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsX"] floatValue], [[self superview] frame].size.height-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsH"] floatValue]-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsY"] floatValue]);
+		presentationTextLayer.position = CGPointMake([[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsX"] floatValue], [[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsH"] floatValue]);
+		presentationTextLayerOutgoing.frame = CGRectMake(0, 0, [[self superview] frame].size.width-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsW"] floatValue]-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsX"] floatValue], [[self superview] frame].size.height-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsH"] floatValue]-[[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsY"] floatValue]);
+		presentationTextLayerOutgoing.position = CGPointMake([[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsX"] floatValue], [[[NSUserDefaults standardUserDefaults] objectForKey:@"BoundsH"] floatValue]);
+		
+		presentationTextLayerOutgoing.contents = presentationTextLayer.contents;
 		presentationTextLayerOutgoing.opacity = 1.0;
 		
 		presentationText = newPresentationText;
 		
+		presentationTextLayer.contents = (id)[self drawPresentationText];
 		presentationTextLayer.opacity = 0.0;
-		presentationTextLayer.string = [[NSAttributedString alloc] initWithString: newPresentationText attributes:presenterSlideTextAttrs];
-		
-		// Resize the height of the layer ... not being done automatically with wrapping
-		presentationTextLayer.frame = CGRectMake(0, 0, [self layer].frame.size.width, heightForStringDrawingPresenter([presentationTextLayer string], [self layer].frame.size.width));
-		presentationTextLayerOutgoing.frame = CGRectMake(0, 0, [self layer].frame.size.width, heightForStringDrawingPresenter([presentationTextLayer string], [self layer].frame.size.width));
 		
 		[CATransaction commit];
 		
@@ -462,7 +538,8 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 		
 		[CATransaction commit];
 		
-		/*if (renderCCLI && ![presentationText isEqualToString:nil] && ![presentationText isEqualToString:@" "]) {
+		/*if (renderCCLI && presentationText && ![presentationText isEqualToString:@" "]) {
+			NSLog(@"render ccli");
 			NSString *ccliSongTitle = [[[NSDocumentController sharedDocumentController] currentDocument] songDetailsWithKey: @"Song Title"];
 			NSString *ccliArtist = [[[NSDocumentController sharedDocumentController] currentDocument] songDetailsWithKey: @"CCLI Artist"];
 			NSString *ccliCopyrightYear = [[[NSDocumentController sharedDocumentController] currentDocument] songDetailsWithKey: @"CCLI Copyright Year"];
@@ -487,7 +564,8 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 			if (ccliCopyrightPublisher)
 				ccliLayerTextMain.string = [ccliLayerTextMain.string stringByAppendingString: [NSString stringWithFormat:@"%@.", ccliCopyrightPublisher]];
 			
-			ccliLayerTextMain.string = [ccliLayerTextMain.string stringByAppendingString: [NSString stringWithFormat: @" Lyrics used by permission. CCLI license #%@", ccliLicense]];
+			if (ccliLicense)
+				ccliLayerTextMain.string = [ccliLayerTextMain.string stringByAppendingString: [NSString stringWithFormat: @" Lyrics used by permission. CCLI license #%@", ccliLicense]];
 			
 			[CATransaction commit];
 			
@@ -497,6 +575,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 			ccliLayer.opacity = 0.6;
 			
 			[CATransaction commit];
+			NSLog(@"done");
 		} else if (ccliLayer.opacity = 0.6) {
 			[CATransaction setValue:[NSNumber numberWithFloat:transitionTime] forKey:kCATransactionAnimationDuration];
 			
@@ -594,26 +673,34 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 
 
 - (void)setAlignment:(unsigned)alignment
-{
+{	
+	presenterSlideAlignment = alignment;
 	// Left aligned
 	if (alignment == 0) {
-		presentationTextLayer.alignmentMode = kCAAlignmentLeft;
-		presentationTextLayerOutgoing.alignmentMode = kCAAlignmentLeft;
+		//presentationTextLayer.alignmentMode = kCAAlignmentLeft;
+		//presentationTextLayerOutgoing.alignmentMode = kCAAlignmentLeft;
+		
+		[presenterSlideTextPara setAlignment:NSLeftTextAlignment];
 	}
 	
 	// Center aligned
 	if (alignment == 2) {
-		presentationTextLayer.alignmentMode = kCAAlignmentCenter;
-		presentationTextLayerOutgoing.alignmentMode = kCAAlignmentCenter;
+		//presentationTextLayer.alignmentMode = kCAAlignmentCenter;
+		//presentationTextLayerOutgoing.alignmentMode = kCAAlignmentCenter;
+		
+		[presenterSlideTextPara setAlignment:NSCenterTextAlignment];
 	}
 	
 	// Right aligned
 	if (alignment == 1) {
-		presentationTextLayer.alignmentMode = kCAAlignmentRight;
-		presentationTextLayerOutgoing.alignmentMode = kCAAlignmentRight;
+		//presentationTextLayer.alignmentMode = kCAAlignmentRight;
+		//presentationTextLayerOutgoing.alignmentMode = kCAAlignmentRight;
+		
+		[presenterSlideTextPara setAlignment:NSRightTextAlignment];
 	}
 	
-	[[self layer] setNeedsLayout];
+	presentationTextLayer.contents = (id)[self drawPresentationText];
+	//[[self layer] setNeedsLayout];
 }
 
 - (void)setStrokeWeight:(int)strokeWeight
@@ -630,7 +717,10 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	presentationTextLayer.constraints = nil;
 	presentationTextLayerOutgoing.constraints = nil;
 	
-	if (layout==2) { // Bottom slide layout
+	presenterSlideLayout = layout;
+	//[presentationTextLayer setContents: (id)[self drawPresentationText]];
+	
+	/*if (layout==2) { // Bottom slide layout
 		[presentationTextLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinY relativeTo:@"superlayer" attribute:kCAConstraintMinY]];
 		[presentationTextLayerOutgoing addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinY  relativeTo:@"superlayer" attribute:kCAConstraintMinY]];
 	} else if (layout==0) { // Top slide layout
@@ -641,7 +731,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 		[presentationTextLayerOutgoing addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMidY relativeTo:@"superlayer" attribute:kCAConstraintMidY]];
 	}
 	
-	[[self layer] setNeedsLayout];
+	[[self layer] setNeedsLayout];*/
 }
 
 - (void)setTransitionSpeed:(float)speed
@@ -655,7 +745,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	NSLog(@"SET FONT SIZE: %i", size);
 	presentationFontSize = size;
 	
-	[self setNeedsDisplay: YES];
+	presentationTextLayer.contents = (id)[self drawPresentationText];
 }
 
 - (void)setFontFamily:(NSString *)font
@@ -663,28 +753,28 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	NSLog(@"Presenter: setFontFamily %@", font);
 	presentationFontFamily = font;
 	
-	[self setNeedsDisplay: YES];
+	presentationTextLayer.contents = (id)[self drawPresentationText];
 }
 
 - (void)setTextColour:(NSColor *)textColor
 {
 	presentationTextColour = textColor;
 	
-	[self setNeedsDisplay: YES];
+	presentationTextLayer.contents = (id)[self drawPresentationText];
 }
 
 - (void)setTextBorderColour:(NSColor *)borderColor
 {
 	presentationTextBorderColour = borderColor;
 	
-	[self setNeedsDisplay: YES];
+	presentationTextLayer.contents = (id)[self drawPresentationText];
 }
 
 - (void)setTextKnocksOutBorder:(int)textKnockout
 {
 	textKnocksOutStroke = [NSNumber numberWithInt: textKnockout];
 	
-	[self setNeedsDisplay: YES];
+	presentationTextLayer.contents = (id)[self drawPresentationText];
 }
 
 - (NSString *)presentationText
@@ -727,6 +817,26 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 - (NSSize)presentationWindowSize
 {
 	return NSMakeSize([self frame].size.width, [self frame].size.height);
+}
+
+- (NSString *)presentationFontFamily
+{
+	return presentationFontFamily;
+}
+
+- (int)presentationFontSize
+{
+	return presentationFontSize;
+}
+
+- (int)presenterSlideLayout
+{
+	return presenterSlideLayout;
+}
+
+- (int)presenterSlideAlignment
+{
+	return presenterSlideAlignment;
 }
 
 @end

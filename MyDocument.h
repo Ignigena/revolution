@@ -63,8 +63,14 @@
 	IBOutlet id toolbarNewSlide;
 	IBOutlet id toolbarNextSlide;
 	IBOutlet id toolbarPrevSlide;
+	IBOutlet id toolbarMediaToggle;
 	
 	int draggingTableRowStart;
+	
+	IBOutlet id librarySearchPopupView;
+	IBOutlet id librarySearchPopupButton;
+	
+	MAAttachedWindow *librarySearchPopup;
 }
 
 - (void)sendDataToAllNodes:(NSData *)data;
@@ -99,5 +105,9 @@
 - (NSTableView *)libraryListing;
 
 - (NSString *)songDetailsWithKey:(NSString *)key;
+
+- (IBAction)setPresentationMode:(id)sender;
+
+- (IBAction)toggleLibrarySearchPopup:(id)sender;
 
 @end

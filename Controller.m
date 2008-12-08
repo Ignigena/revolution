@@ -144,6 +144,9 @@
 
 	}
 	
+	presenterShouldShowText = YES;
+	presenterShouldShowVideo = YES;
+	
 	// Beta expiration code ... REMOVE IN FINAL RELEASE!
 	/*NSDate * today = [NSDate date];
 	NSDate * targetDate = [NSDate dateWithString:@"2007-12-04 00:00:00 -0500"];
@@ -234,14 +237,17 @@
 
 - (void) sendRemoteButtonEvent: (RemoteControlEventIdentifier) event pressedDown: (BOOL) pressedDown  remoteControl: (RemoteControl*) remoteControl 
 {
-	if (event == kRemoteButtonRight) {
-		#warning Right Remote Clicked -- Advance Slide
-	} if (event == kRemoteButtonLeft) {
-		#warning Left Remote Clicked -- Previous Slide
-	} if (event == kRemoteButtonPlus) {
-		#warning Plus Remote Clicked -- Advance Song
-	} if (event == kRemoteButtonMinus) {
-		#warning Down Remote Clicked -- Previous Song
+	int currentSlide = [[[[NSDocumentController sharedDocumentController] currentDocument] docSlideViewer] clickedSlideAtIndex];
+	int currentSong = [[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectedRow];
+	
+	if (event == kRemoteButtonRight && pressedDown == 1) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] docSlideViewer] presentSlideAtIndex: currentSlide+1];
+	} if (event == kRemoteButtonLeft && pressedDown == 1) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] docSlideViewer] presentSlideAtIndex: currentSlide-1];
+	} if (event == kRemoteButtonPlus && pressedDown == 1) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong+1 byExtendingSelection:NO];
+	} if (event == kRemoteButtonMinus && pressedDown == 1) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong-1 byExtendingSelection:NO];
 	}
 	
     NSLog(@"Button %d pressed down %d", event, pressedDown);
@@ -344,6 +350,8 @@
 		
 		[connectedListener close];
 		
+		[[self mainPresenterViewConnect] setPresentationText: @" "];
+		
 		[sender setTitle: @"Turn On Node"];
 	}
 }
@@ -395,10 +403,14 @@
 		
 		NSDictionary *presentationNodeDataReceived = [NSUnarchiver unarchiveObjectWithData: request.body];
 		
-		[[self mainPresenterViewConnect] setAlignment: [[presentationNodeDataReceived objectForKey: @"Alignment"] intValue]];
-		[[self mainPresenterViewConnect] setLayout: [[presentationNodeDataReceived objectForKey: @"Layout"] intValue]];
-		[[self mainPresenterViewConnect] setFontSize: [[presentationNodeDataReceived objectForKey: @"Size"] floatValue]];
-		[[self mainPresenterViewConnect] setFontFamily: [presentationNodeDataReceived objectForKey: @"Font"]];
+		if (overrideFormatting == 0 && ![[self mainPresenterViewConnect] presenterSlideAlignment] == [[presentationNodeDataReceived objectForKey: @"Alignment"] intValue]) { [[self mainPresenterViewConnect] setAlignment: [[presentationNodeDataReceived objectForKey: @"Alignment"] intValue]]; }
+		else if (![[self mainPresenterViewConnect] presenterSlideAlignment] == overrideFormatting-1) { [[self mainPresenterViewConnect] setAlignment: overrideFormatting-1]; }
+		
+		if (overrideLayout == 0 && ![[self mainPresenterViewConnect] presenterSlideLayout] == [[presentationNodeDataReceived objectForKey: @"Layout"] intValue]) { [[self mainPresenterViewConnect] setLayout: [[presentationNodeDataReceived objectForKey: @"Layout"] intValue]]; }
+		else if (![[self mainPresenterViewConnect] presenterSlideLayout] == overrideLayout-1) { [[self mainPresenterViewConnect] setLayout: overrideLayout-1]; }
+		
+		if (![[self mainPresenterViewConnect] presentationFontSize] == [[presentationNodeDataReceived objectForKey: @"Size"] intValue]) { [[self mainPresenterViewConnect] setFontSize: [[presentationNodeDataReceived objectForKey: @"Size"] floatValue]]; }
+		if (![[[self mainPresenterViewConnect] presentationFontFamily] isEqualToString: [presentationNodeDataReceived objectForKey: @"Font"]]) { [[self mainPresenterViewConnect] setFontFamily: [presentationNodeDataReceived objectForKey: @"Font"]]; }
 		[[self mainPresenterViewConnect] setTransitionSpeed: [[presentationNodeDataReceived objectForKey: @"Transition"] floatValue]];
 		[[self mainPresenterViewConnect] setPresentationText: [presentationNodeDataReceived objectForKey: @"Slide Text"]];
 	} else {
@@ -407,6 +419,31 @@
 	}
 	
 	NSLog(@"-----------------------------");
+}
+
+- (IBAction)setNodeDrawsBackground:(id)sender
+{
+	if ([sender state]==NSOnState) {
+		[videoPlaybackGLWindow setAlphaValue: 1.0];
+		[videoPlaybackGLIncomingWindow setAlphaValue: 1.0];
+		[dvdPlayerWindow setAlphaValue: 1.0];
+	} else {
+		[videoPlaybackGLWindow setAlphaValue: 0.0];
+		[videoPlaybackGLIncomingWindow setAlphaValue: 0.0];
+		[dvdPlayerWindow setAlphaValue: 0.0];
+	}
+}
+
+- (IBAction)setNodeOverrideFormatting:(id)sender
+{
+	overrideFormatting = [sender selectedSegment];
+	[[self mainPresenterViewConnect] setAlignment: [sender indexOfSelectedItem]-1];
+}
+
+- (IBAction)setNodeOverrideLayout:(id)sender
+{
+	overrideLayout = [sender selectedSegment];
+	[[self mainPresenterViewConnect] setLayout: [sender indexOfSelectedItem]-1];
 }
 
 #pragma mark DVD Playback Controller
@@ -755,6 +792,33 @@ receive in the beginSession method. */
 	[event release];
 }
 
+#pragma mark Presentation Mode Switcher
+
+- (void)applyPresentationMode:(int)mode
+{
+	if (mode == 0) { // BLACK
+		[self presentationGoToBlack: nil];
+		presenterShouldShowText = NO;
+		presenterShouldShowVideo = NO;
+	} else if (mode == 1) { // TEXT
+		[self presentationVideoGoToBlack: nil];
+		presenterShouldShowText = YES;
+		presenterShouldShowVideo = NO;
+	} else if (mode == 2) { // VIDEO
+		[self presentationTextGoToBlack: nil];
+		presenterShouldShowText = NO;
+		presenterShouldShowVideo = YES;
+	} else if (mode == 3) { // BOTH
+		presenterShouldShowText = YES;
+		presenterShouldShowVideo = YES;
+	}
+}
+
+- (BOOL)presenterShouldShowText
+{
+	return presenterShouldShowText;
+}
+
 //
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
@@ -838,6 +902,9 @@ receive in the beginSession method. */
 
 - (void)presentJuice:(NSString *)path
 {
+	if (!presenterShouldShowVideo)
+		return;
+	
 	[videoPlaybackGLWindow setLevel:NSScreenSaverWindowLevel+2];
 	
 	if ([[[[NSDocumentController sharedDocumentController] currentDocument] loopingToggle] state] == NSOnState)
@@ -1050,6 +1117,7 @@ receive in the beginSession method. */
 
 - (void)setRegistered:(BOOL)yn
 {
+	[[self mainPresenterViewConnect] setPresentationText: @" "];
     registered = yn;
 }
 
@@ -1073,7 +1141,7 @@ receive in the beginSession method. */
 			[self setRegistered:YES];
 			
 			[serialDisplay setStringValue: [defaults objectForKey:@"iWorshipRegistrationName"]];
-			[serialDisplayS setStringValue: ESDSerialNumber];
+			[serialDisplayS setStringValue: [ESDSerialNumber substringWithRange:NSMakeRange(11,24)]];
 		}
     }    
 }
