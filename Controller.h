@@ -40,9 +40,12 @@
 	IBOutlet IWVideoView *videoPlaybackGLIncomingView;
 	NSWindow *videoPlaybackGLIncomingWindow;
 	DVDPlayerWindow *dvdPlayerWindow;
+	IBOutlet NSButton *dvdPlayerPauseButton;
 	
+	BOOL didComeFromBlack;
 	BOOL willGoToBlack;
 	BOOL incomingOnTop;
+	BOOL isPhoto;
 	NSTimer *crossFadeTimer;
 	float mediaWindowAlpha;
 	
@@ -83,6 +86,7 @@
 - (IBAction)setNodeOverrideLayout:(id)sender;
 
 - (void)runDVDSetup;
+- (void)deviceDidMount:(NSNotification *)notification;
 - (BOOL)searchMountedDVD;
 - (BOOL)openMedia:(NSString *)media isVolume:(BOOL)isVolume;
 - (BOOL)isValidMedia:(NSString *)inPath folder:(FSRef *)fileRefP;
@@ -100,6 +104,10 @@
 - (void)applyPresentationMode:(int)mode;
 - (BOOL)presenterShouldShowText;
 - (BOOL)presenterShouldShowVideo;
+- (IBAction)switchToModeBlack:(id)sender;
+- (IBAction)switchToModeText:(id)sender;
+- (IBAction)switchToModeVideo:(id)sender;
+- (IBAction)switchToModeBoth:(id)sender;
 
 - (void)runThumbnailSetup;
 

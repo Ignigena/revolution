@@ -268,8 +268,8 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				[[NSGraphicsContext currentContext] setShouldAntialias: NO];
 				[[NSColor colorWithDeviceWhite:1.0 alpha:0.1] set];
 				NSBezierPath *titleBarShadowReflection = [NSBezierPath bezierPath];
-				[titleBarShadowReflection moveToPoint:NSMakePoint(14, 55)];
-				[titleBarShadowReflection lineToPoint:NSMakePoint(276, 55)];
+				[titleBarShadowReflection moveToPoint:NSMakePoint(14, 50)];
+				[titleBarShadowReflection lineToPoint:NSMakePoint(276, 50)];
 				[titleBarShadowReflection setLineWidth:0.5];
 				[titleBarShadowReflection stroke];
 				[[NSGraphicsContext currentContext] setShouldAntialias: YES];
@@ -277,8 +277,12 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				[mediaMask unlockFocus];
 				
 				[mediaMask drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, [mediaMask size].width, [mediaMask size].height) operation:NSCompositeSourceOver fraction: slideOpacity];
-				[[NSColor colorWithDeviceWhite:0.0 alpha:0.7] set];
-				[[NSBezierPath bezierPathWithRect: [self rectCenteredInRect:NSMakeRect(slideRect.origin.x+1, slideRect.origin.y+21, slideRect.size.width-2, slideRect.size.height-10) withSize:NSMakeSize(slideRect.size.width, worshipTextViewHeight+8)]] fill];
+				
+				if (![[worshipSlides objectAtIndex: index] isEqualToString: @""]) {
+					[[NSColor colorWithDeviceWhite:0.0 alpha:0.7] set];
+					[[NSBezierPath bezierPathWithRect: [self rectCenteredInRect:NSMakeRect(slideRect.origin.x+1, slideRect.origin.y+21, slideRect.size.width-2, slideRect.size.height-10) withSize:NSMakeSize(slideRect.size.width, worshipTextViewHeight+8)]] fill];
+				}
+					
 				[slideGradientBlank drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 			}
    			
@@ -778,7 +782,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	NSRect boundsPaddingRect = NSMakeRect([[self superview] visibleRect].origin.x, [[self superview] visibleRect].origin.y, [[self superview] visibleRect].size.width, [[self superview] visibleRect].size.height);
 	
 	// If the bottom right point of the currently selected slide exceeds the viewable area, scroll to point
-	if (!NSPointInRect(curSlideBottomRightPoint, boundsPaddingRect)) {
+	if (!NSPointInRect(curSlideBottomRightPoint, boundsPaddingRect) || !NSPointInRect(NSMakePoint(curSlideBottomRightPoint.x, curSlideBottomRightPoint.y-150), boundsPaddingRect)) {
 		NSPoint scrollTo = NSMakePoint([[self superview] visibleRect].origin.x, (curSlideBottomRightPoint.y-[[self superview] visibleRect].size.height)+150);
 		//NSPoint minScrollTo = NSMakePoint([[self superview] visibleRect].origin.x, NSMinY([[[self enclosingScrollView] documentView] frame])-NSHeight([[[self enclosingScrollView] contentView] bounds]));
 		NSPoint maxScrollTo = NSMakePoint([[self superview] visibleRect].origin.x, NSMaxY([[[self enclosingScrollView] documentView] frame])-NSHeight([[[self enclosingScrollView] contentView] bounds]));
@@ -916,7 +920,10 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	[self setNeedsDisplay: YES];
 }
 
-- (void)swipeWithEvent:(NSEvent *)event {  
+#pragma mark Multitouch Trackpad Support
+
+- (void)swipeWithEvent:(NSEvent *)event
+{  
 	if ([event deltaX] == 1.0)
 		[self presentSlideAtIndex:clickedSlideAtIndex-1];
 	
@@ -931,6 +938,24 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	if ([event deltaY] == -1.0)
 		[self setEditor: NO];
 }
+
+-(void)rotateWithEvent:(NSEvent *)event
+{
+	int currentSong = [[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectedRow];
+	rotateTicker += [event rotation];
+	
+	if (rotateTicker >= 40) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong-1 byExtendingSelection:NO];
+		rotateTicker = 0;
+	}
+		
+	if (rotateTicker <= -40) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong+1 byExtendingSelection:NO];
+		rotateTicker = 0;
+	}
+}
+
+#pragma mark <#label#>
 
 - (void)setFlag:(id)sender
 {

@@ -46,8 +46,10 @@
 	[scriptureFile setObject:scriptureSlides forKey:@"Slides"];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Scripture/"] stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/Scripture/"] stringByExpandingTildeInPath] attributes: nil]; }
-		
-	[scriptureFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Scripture/%@.iwsf", ref] stringByExpandingTildeInPath] atomically:TRUE];
+	
+	NSString *saveSongFile = [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Scripture/%@.iwsf", ref] stringByExpandingTildeInPath];
+	if ([[NSFileManager defaultManager] fileExistsAtPath: saveSongFile]) [[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath] destination: @"" files: [NSArray arrayWithObject: [NSString stringWithFormat:@"%@.iwsf", ref]] tag: 0];
+	[scriptureFile writeToFile:saveSongFile atomically:TRUE];
 		
 	[[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] dataSource] loadReloadLibraryList];
 	[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] reloadData];

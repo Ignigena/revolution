@@ -15,7 +15,8 @@
 #import <QTKit/QTKit.h>
 
 @interface Presenter : NSView {
-	CALayer *presentationTextLayer;
+	NSImageView *presentationTextLayer;
+	NSImageView *presentationPhotoBackground;
 	CALayer *presentationTextLayerOutgoing;
 	QTCaptureLayer *liveCameraView;
 	CALayer *ccliLayer;
@@ -23,6 +24,8 @@
 	CATextLayer *unregisteredOverlayText;
 	
 	CALayer *videoLayer;
+	
+	CGImageRef presentationTextLayerContents;
 	
 	/*QTMovie *presentationVideoFile;
 	QTMovieLayer *presentationVideoLayer;
@@ -69,15 +72,24 @@
 	float pvl1_opacity, pvl2_opacity, pvl_release;
 	
 	NSAnimation *crossFadeAnimation;
+	
+	NSString *ccliSongTitle;
+	NSString *ccliArtist;
+	NSString *ccliCopyrightYear;
+	NSString *ccliCopyrightPublisher;
+	NSString *ccliLicense;
+	NSString *displayString;
 }
 
 - (QTCaptureLayer *)liveCameraView;
+- (void)setLiveCameraViewOpacity:(float)opacity;
 
 - (void)setPresentationText:(NSString *)newPresentationText;
+- (void)setPresentationPhotoBG:(NSImage *)newPresentationPhotoBackground withSpeed:(float)transitionSpeed;
 
 - (void)setRenderCCLI:(BOOL)renderCCLIYesNo;
 
-- (CGImageRef)drawPresentationText;
+- (NSImage *)drawPresentationText;
 
 //- (void)releaseVideo;
 

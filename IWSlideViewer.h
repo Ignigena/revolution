@@ -129,6 +129,8 @@
 	
 	NSImage *dragImage;
 	
+	float rotateTicker;
+	
 	IBOutlet id nextSlideArrowButton;
 	IBOutlet id previousSlideArrowButton;
 }

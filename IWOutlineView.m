@@ -56,11 +56,7 @@
 			worshipSongPath = [NSString stringWithString: @"~/Library/Application Support/ProWorship/"];
 		}
 		
-		NSLog(@"%@", worshipSongPath);
-		
-		NSArray  *deleteFile = [NSArray arrayWithObject: worshipSongFile];
-
-		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [worshipSongPath stringByExpandingTildeInPath] destination: @"" files: deleteFile tag: 0];
+		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source:[worshipSongPath stringByExpandingTildeInPath] destination:@"" files:[NSArray arrayWithObject: worshipSongFile] tag: 0];
 		
 		[[self delegate] loadReloadLibraryList];
 		[self reloadData];

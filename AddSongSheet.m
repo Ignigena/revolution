@@ -105,6 +105,7 @@
 	
 			[songFile setObject:blankNotes forKey:@"Flags"];
 			
+			if ([[NSFileManager defaultManager] fileExistsAtPath: [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]]) [[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [[NSString stringWithFormat:@"~/Library/Application Support/ProWorship/%@", saveSongFolder] stringByExpandingTildeInPath] destination: @"" files: [NSArray arrayWithObject: [NSString stringWithFormat:@"%@.iwsf", [songTitleField stringValue]]] tag: 0];
 			[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 	
 			[[importerLibraryView dataSource] loadReloadLibraryList];
@@ -133,7 +134,8 @@
 		[songFile setObject:[songTitleField stringValue] forKey:@"Song Title"];
 		[songFile setObject:blankArray forKey:@"Slides"];
 		[songFile setObject:blankArray forKey:@"Flags"];
-	
+		
+		if ([[NSFileManager defaultManager] fileExistsAtPath: [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]]) [[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [[NSString stringWithFormat:@"~/Library/Application Support/ProWorship/%@", saveSongFolder] stringByExpandingTildeInPath] destination: @"" files: [NSArray arrayWithObject: [NSString stringWithFormat:@"%@.iwsf", [songTitleField stringValue]]] tag: 0];
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 		
 		[[importerLibraryView dataSource] loadReloadLibraryList];

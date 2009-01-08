@@ -41,6 +41,8 @@
 	IBOutlet NSButton *insertIntoSongButton;
 	MAAttachedWindow *searchPopup;
 	
+	BOOL drawTransitionSpeedBar;
+	
 	QTCaptureSession *captureSession;
 	QTCaptureDeviceInput *videoDeviceInput;
 	IBOutlet id videoDeviceSelector;
@@ -70,6 +72,8 @@
 - (IBAction)toggleLooping:(id)sender;
 - (IBAction)toggleAudio:(id)sender;
 
+- (void)setDrawsTransitionBar:(BOOL)draw;
+
 - (IBAction)juiceGoToBlack:(id)sender;
 
 - (IBAction)playDVDVideo:(id)sender;
@@ -79,6 +83,7 @@
 - (IBAction)skipBackwardDVDVideo:(id)sender;
 - (IBAction)returnToMenuDVDVideo:(id)sender;
 - (IBAction)ejectMountedDVD:(id)sender;
+- (NSButton *)dvdPlayPauseButton;
 
 - (IBAction)toggleLiveVideo:(id)sender;
 

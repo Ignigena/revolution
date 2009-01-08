@@ -43,6 +43,9 @@
 	NSLog(@"creating new document ...");
 	[[[NSApp delegate] splasher] orderOut: nil];
 	
+	[documentWindow setAutorecalculatesContentBorderThickness:NO forEdge:NSMinYEdge];
+	[documentWindow setContentBorderThickness:27.0 forEdge:NSMinYEdge];
+	
 	RSDarkScroller *darkScrollerPlaylist = [[RSDarkScroller alloc] init];
 	[playlistTable registerForDraggedTypes: [NSArray arrayWithObject:IWPlaylistDataType]];
 	[[playlistTable enclosingScrollView] setVerticalScroller: darkScrollerPlaylist];
@@ -64,11 +67,10 @@
 	
 	// Set up the split view that will open up the media panel
 	// Fix the Interface Builder mess
-	[rightSplitterView setFrame: NSMakeRect(250,20,893,671)];
+	[rightSplitterView setFrame: NSMakeRect(250,16,893,673)];
 	[[[rightSplitterView subviews] objectAtIndex:0] addSubview: mediaBoxContent];
-	//[worshipTitleBarContainer setOrigin: NSMakePoint(0, 452)
-	[worshipTitleBarContainer setFrame: NSMakeRect(0, 452, [worshipTitleBarContainer bounds].size.width, [worshipTitleBarContainer bounds].size.height+1)];
-	[docSlideScroller setFrame: NSMakeRect(0, [docSlideScroller frame].origin.y, [docSlideScroller frame].size.width, 413)];
+	[worshipTitleBarContainer setFrame: NSMakeRect(0, 454, [worshipTitleBarContainer bounds].size.width, [worshipTitleBarContainer bounds].size.height+1)];
+	[docSlideScroller setFrame: NSMakeRect(0, [docSlideScroller frame].origin.y, [docSlideScroller frame].size.width, 415)];
 	
 	// 
 	[thumbnailScroller setMovieListing: [[NSApp delegate] moviesMediaListing]];
@@ -89,7 +91,8 @@
 	
 	// Hide the video panel until the user opens it
 	// No need to animate because this is not visible to the user
-	//[rightSplitterView setSplitterPosition:1 animate:NO];
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:@"Hide Media Drawer"] intValue] == 1)
+		[rightSplitterView setSplitterPosition:0 animate:NO];
 	
 	// Release custom scroll bar classes
 	[darkScrollerPlaylist release];
@@ -115,6 +118,8 @@
         [self didChangeValueForKey:@"receiverList"];
     }
 }
+
+- (void)listener:(TCPListener*)listener didAcceptConnection:(TCPConnection*)connection{}
 
 - (void)sendDataToAllNodes:(NSData *)data
 {
@@ -152,8 +157,6 @@
 {
 	if ([[[NSDocumentController sharedDocumentController] documents] count] == 1)
 		[[[NSApp delegate] splasher] makeKeyAndOrderFront: nil];
-		
-	[[NSApp delegate] presentationGoToBlack: nil];
 }
 
 - (void)splitView:(IWSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize
@@ -321,9 +324,6 @@
 // Called whenever the table selection changes
 - (void)tableViewSelectionDidChange:(NSNotification *) notification
 {
-	// Blank out the presenter screen
-	[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
-	
 	if ([[docSlideViewer worshipSlides] count] > 0)
 		[docSlideViewer saveAllSlidesForSong: previousSelectedPlaylist];
 		
@@ -484,12 +484,12 @@
 - (IBAction)toggleLibrarySearchPopup:(id)sender
 {
 	if (!librarySearchPopup) {
-		NSPoint librarySearchPopupPoint = [[librarySearchPopupButton superview] convertPointToBase: NSMakePoint(NSMidX([librarySearchPopupButton frame])-2, NSMidY([librarySearchPopupButton frame])-2)];
+		NSPoint librarySearchPopupPoint = [[librarySearchPopupButton superview] convertPointToBase: NSMakePoint(NSMidX([librarySearchPopupButton frame])-2, NSMidY([librarySearchPopupButton frame]))];
 		
 		librarySearchPopup = [[MAAttachedWindow alloc] initWithView: librarySearchPopupView
 											 attachedToPoint: librarySearchPopupPoint
 													inWindow: [librarySearchPopupButton window] 
-													  onSide: 10 
+													  onSide: 0 
 												  atDistance: 3.0f];
 		
 		[librarySearchPopup setBackgroundColor: [NSColor colorWithDeviceWhite:0.0 alpha:0.85]];
@@ -596,13 +596,17 @@
 
 - (IBAction)toggleMediaMixer:(id)sender
 {
+	NSUserDefaults *standardDefaults = [NSUserDefaults standardUserDefaults];
+	
 	if ([rightSplitterView splitterPosition] < 660) {
 		[rightSplitterView setSplitterPosition:0 animate:YES];
-		[toolbarMediaToggle setImage: [NSImage imageNamed: @"MediaButton"]];
+		[standardDefaults setObject:[NSNumber numberWithBool: YES] forKey:@"Hide Media Drawer"];
 	} else {
 		[rightSplitterView setSplitterPosition:182 animate:YES];
-		[toolbarMediaToggle setImage: [NSImage imageNamed: @"MediaButton-P"]];
+		[standardDefaults setObject:[NSNumber numberWithBool: NO] forKey:@"Hide Media Drawer"];
 	}
+	
+	[standardDefaults synchronize];
 }
 
 - (IBAction)docWindowGoToBlack:(id)sender
@@ -633,6 +637,11 @@
 - (QTMovieView *)videoPreviewController2
 {
 	return videoPreviewController2;
+}
+
+- (NSImageView *)videoPreviewImageArea
+{
+	return videoPreviewImageArea;
 }
 
 - (NSView *)thumbnailScroller
@@ -668,7 +677,7 @@
 
 - (NSString *)songDetailsWithKey:(NSString *)key
 {
-	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath]];
+	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath]];
 	
 	return [readSlideFileContents objectForKey: key];
 }
@@ -678,6 +687,11 @@
 - (IBAction)setPresentationMode:(id)sender
 {
 	[[NSApp delegate] applyPresentationMode: [sender selectedSegment]];
+}
+
+- (NSSegmentedControl *)presentationModeSwitcher
+{
+	return presentationModeSwitcher;
 }
 
 @end

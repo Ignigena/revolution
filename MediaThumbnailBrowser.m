@@ -62,7 +62,7 @@
 		NSRect mediaThumbnailFrame = [self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)];
 		[mediaThumbnail setFlipped: YES];
 		[mediaThumbnail drawInRect: mediaThumbnailFrame fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
-		[[movieNameSplitter objectAtIndex: 0] drawInRect:NSMakeRect(mediaThumbnailFrame.origin.x+5, mediaThumbnailFrame.origin.y+mediaThumbnailFrame.size.height-1, mediaThumbnailFrame.size.width, 12) withAttributes: movieNameAttributes];
+		[[movieNameSplitter objectAtIndex: 0] drawInRect:NSMakeRect(mediaThumbnailFrame.origin.x+5, mediaThumbnailFrame.origin.y+mediaThumbnailFrame.size.height-3, mediaThumbnailFrame.size.width-10, 12) withAttributes: movieNameAttributes];
 		
 		if (clickedSlideAtIndex==index) {
 			NSRect slideBorderRect = [self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width-3, [mediaThumbnail size].height-3)];
@@ -132,11 +132,6 @@
 		clickedSlideAtIndex = clickedIndex;
 		[self setNeedsDisplay: YES];
 		
-		//if (mediaType==1)
-		//	[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: NO];
-		//else
-		//	[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: YES];
-			
 		[[NSApp delegate] presentJuice: [[mediaListing objectAtIndex: clickedIndex] stringByExpandingTildeInPath]];
 		
 		//[[[NSApp delegate] mainPresenterViewConnect] setVideoFile: [QTMovie movieWithFile:[[mediaListing objectAtIndex: clickedIndex] stringByExpandingTildeInPath] error:nil]];
@@ -229,8 +224,6 @@
 		unsigned filesIndex;
 		
 		for (filesIndex = 0; filesIndex <= [files count]-1; filesIndex++) {
-			NSLog(@"%@", [files objectAtIndex:filesIndex] );
-			
 			// Make sure it is of type "MOV" and a thumbnail is not already saved
 			if ([[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"mov"] ||
 				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"avi"] ||

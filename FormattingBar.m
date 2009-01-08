@@ -22,26 +22,30 @@
 {
 	NSLog(@"Setting up font listing");
 		
-		// Set up the font family selector
-		[formattingFontFamily removeAllItems];
+	// Set up the font family selector
+	[formattingFontFamily removeAllItems];
 	
-		NSMutableArray *fontFamilies = [[NSMutableArray alloc] initWithArray: [[NSFontManager sharedFontManager] availableFontFamilies]];
-		[fontFamilies sortUsingSelector:@selector(compare:)];
-		unsigned index;
+	NSMutableArray *fontFamilies = [[NSMutableArray alloc] initWithArray: [[NSFontManager sharedFontManager] availableFontFamilies]];
+	[fontFamilies sortUsingSelector:@selector(compare:)];
+	unsigned index, index2;
 	
-		for (index = 0; index <= [fontFamilies count]-1; index++)
-			[formattingFontFamily addItemWithTitle:[fontFamilies objectAtIndex: index]];
+	for (index = 0; index <= [fontFamilies count]-1; index++) {
+		NSArray *fontFamiliesWithStyles = [[NSArray alloc] initWithArray: [[NSFontManager sharedFontManager] availableMembersOfFontFamily: [fontFamilies objectAtIndex: index]]];
 		
-		if (![[NSUserDefaults standardUserDefaults] objectForKey:@"Font Family"]) {
-			[formattingFontFamily selectItemWithTitle: @"Lucida Grande"];
-		} else {
-			[formattingFontFamily selectItemWithTitle: [[NSUserDefaults standardUserDefaults] objectForKey:@"Font Family"]];
-		}
+		for (index2 = 0; index2 <= [fontFamiliesWithStyles count]-1; index2++)
+			[formattingFontFamily addItemWithTitle:[[fontFamiliesWithStyles objectAtIndex: index2] objectAtIndex: 0]];
+	}
 		
-		if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
-				[fontSizeField setStringValue: [NSString stringWithFormat:@"%.0f", [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]]];
-			else
-				[fontSizeField setStringValue: @"72"];
+	if (![[NSUserDefaults standardUserDefaults] objectForKey:@"Font Family"]) {
+		[formattingFontFamily selectItemWithTitle: @"LucidaGrande-Bold"];
+	} else {
+		[formattingFontFamily selectItemWithTitle: [[NSUserDefaults standardUserDefaults] objectForKey:@"Font Family"]];
+	}
+		
+	if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
+		[fontSizeField setStringValue: [NSString stringWithFormat:@"%.0f", [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]]];
+	else
+		[fontSizeField setStringValue: @"72"];
 }
 
 - (void)drawRect:(NSRect)rect
@@ -182,13 +186,11 @@
 
 - (IBAction)fontSize:(id)sender
 {
-	NSLog(@"set font size from text field %f", [fontSizeField floatValue]);
 	[slideViewer setFontFamilySize: [fontSizeField floatValue]];
 }
 
 - (void)setFormatFontSize:(float)size
 {
-	NSLog(@"programatically set font size %f", size);
 	[fontSizeField setStringValue: [NSString stringWithFormat: @"%.0f", size]];
 	[slideViewer setFontFamilySize: size];
 }

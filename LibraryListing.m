@@ -26,8 +26,6 @@
 
 - (void)loadReloadLibraryList
 {
-	NSLog(@"loadReloadLibraryList");
-	
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *library = @"~/Library/Application Support/ProWorship";
 		
@@ -39,9 +37,6 @@
 	
 	if ([librarySearchField stringValue] && ![[librarySearchField stringValue] isEqualToString:@""])
 		filterResults = YES;
-		
-	NSLog(@"%i", filterResults);
-	NSLog(@"%@", [librarySearchField stringValue]);
 	
 	if ([libraryListing count] <= 1) {
 		if (!gettingStartedAddButton) {
@@ -87,9 +82,7 @@
 					if ([[subLibraryListing objectAtIndex:subIndex] isEqualToString:@".DS_Store"]) {
 						[subLibraryListing removeObjectAtIndex:subIndex];
 					} else {
-						//NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [[[subLibraryListing objectAtIndex:subIndex] componentsSeparatedByString:@"."] objectAtIndex: 0]]];
 						NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [subLibraryListing objectAtIndex:subIndex]]];
-						//[subLibraryListing replaceObjectAtIndex:subIndex withObject: ];
 						[subLibraryListing replaceObjectAtIndex:subIndex withObject:subActualLibraryListing];
 					
 						if (filterResults) {
@@ -193,14 +186,12 @@
 	if ([outlineView isExpandable:[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]])
 		return NO;
 	
-	if ([outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]==@"[empty]")
+	if ([[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]] isEqualToString: @"[empty]"])
 		return NO;
 	
-	NSLog(@"%@", items);
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:items];
 
     [pboard declareTypes:[NSArray arrayWithObject:IWPlaylistDataType] owner:self];
-
     [pboard setData:data forType:IWPlaylistDataType];
 
     return YES;

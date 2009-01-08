@@ -95,14 +95,6 @@
 		[presentationWindow setContentView: mainPresenterView];
 		[presentationWindow orderFront:nil];
 		
-		// Initialize the Quartz composition
-		/*qcPresentationBackground = [[QCView alloc] init];
-		[qcPresentationBackground setAutostartsRendering:YES];
-		[qcPresentationBackground setFrame: screenArea];
-		[qcPresentationBackground setMaxRenderingFrameRate: 30.0];
-		[qcPresentationBackground loadCompositionFromFile: [[NSBundle mainBundle] pathForResource:@"Presentation Background Mixer" ofType:@"qtz"]];
-		[qcPresentationBackground setValue:0 forInputKey:@"LiveEnable"];*/
-		
 		// Initialize the window containing the video layer
 		/*presentationBGWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];;
 		[presentationBGWindow setLevel:NSScreenSaverWindowLevel];
@@ -141,8 +133,10 @@
 		// Setup the DVD playback and hide the window
 		[self runDVDSetup];
 		[dvdPlayerWindow setLevel:NSScreenSaverWindowLevel-1];
-
 	}
+	
+	// Register for notifications
+	[[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self selector:@selector(deviceDidMount:) name:NSWorkspaceDidMountNotification object:NULL];
 	
 	presenterShouldShowText = YES;
 	presenterShouldShowVideo = YES;
@@ -162,15 +156,12 @@
 	// Create all the necessary application support directories
 	NSFileManager *manager = [NSFileManager defaultManager];
 	
-	NSLog(@"%@", [[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources"] stringByAppendingPathComponent:@"Song Library"]);
-	
-	if ([manager fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/"] stringByExpandingTildeInPath]] == NO) {
+	if (![manager fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/"] stringByExpandingTildeInPath]]) {
 		[manager createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/"] stringByExpandingTildeInPath] attributes: nil];
-		[manager copyPath:[[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources"] stringByAppendingPathComponent:@"Song Library"] toPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Song Library/"] stringByExpandingTildeInPath] handler:nil];
-		[manager copyPath:[[NSBundle mainBundle] pathForResource:@"Song Library" ofType:@""] toPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/"] stringByExpandingTildeInPath] handler:nil];
+		[manager copyItemAtPath:[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources/Song Library"] toPath: [@"~/Library/Application Support/ProWorship/Song Library" stringByExpandingTildeInPath] error:nil];
 	}
-	if ([manager fileExistsAtPath: [[NSString stringWithString: @"~/Movies/ProWorship/"] stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[[NSString stringWithString: @"~/Movies/ProWorship/"] stringByExpandingTildeInPath] attributes: nil]; }
-	if ([manager fileExistsAtPath: [[NSString stringWithString: @"~/Pictures/ProWorship/"] stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[[NSString stringWithString: @"~/Pictures/ProWorship/"] stringByExpandingTildeInPath] attributes: nil]; }
+	if ([manager fileExistsAtPath: [@"~/Movies/ProWorship/" stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[@"~/Movies/ProWorship/" stringByExpandingTildeInPath] attributes: nil]; }
+	if ([manager fileExistsAtPath: [@"~/Pictures/ProWorship/" stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[@"~/Pictures/ProWorship/" stringByExpandingTildeInPath] attributes: nil]; }
 	
 	// Fill in the registration info on the splash screen
 	
@@ -184,6 +175,8 @@
 	[networkNodeContent setFrameOrigin: NSMakePoint(660, 25)];
 	
 	// Open up the splash screen window
+	[splasher setAutorecalculatesContentBorderThickness:NO forEdge:NSMinYEdge];
+	[splasher setContentBorderThickness:26.0 forEdge:NSMinYEdge];
 	[splasher center];
 	[splasher makeKeyAndOrderFront: nil];
 	
@@ -201,9 +194,6 @@
 	// Setup thumbnails for the media browser
 	[self runThumbnailSetup];
 	
-	// Register for notifications
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidMount:) name:NSWorkspaceDidMountNotification object:NULL];
-	
 	remoteControl = [[RemoteControlContainer alloc] initWithDelegate: self];
 	[remoteControl instantiateAndAddRemoteControlDeviceWithClass: [AppleRemote class]];
 	[remoteControl instantiateAndAddRemoteControlDeviceWithClass: [KeyspanFrontRowControl class]];
@@ -214,13 +204,13 @@
 	}
 }
 
-- (void)dealloc
+/*- (void)dealloc
 {
 	[ESDSerialNumber release];
 	[remoteControl stopListening: self];
 	[remoteControl release];
 	[super dealloc];
-}
+}*/
 
 /////////////////////////////////////
 #pragma mark Remote Control Functions
@@ -244,9 +234,9 @@
 		[[[[NSDocumentController sharedDocumentController] currentDocument] docSlideViewer] presentSlideAtIndex: currentSlide+1];
 	} if (event == kRemoteButtonLeft && pressedDown == 1) {
 		[[[[NSDocumentController sharedDocumentController] currentDocument] docSlideViewer] presentSlideAtIndex: currentSlide-1];
-	} if (event == kRemoteButtonPlus && pressedDown == 1) {
-		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong+1 byExtendingSelection:NO];
 	} if (event == kRemoteButtonMinus && pressedDown == 1) {
+		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong+1 byExtendingSelection:NO];
+	} if (event == kRemoteButtonPlus && pressedDown == 1) {
 		[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:currentSong-1 byExtendingSelection:NO];
 	}
 	
@@ -451,18 +441,18 @@
 - (void)runDVDSetup
 {
 	// Intialize the DVD player
-	NSLog(@"DVD INITIALIZING");
+	NSLog(@" ");
+	NSLog(@"-------------------------");
+	NSLog(@"DVD PLAYER INITIALIZATION");
 	OSStatus errInit = DVDInitialize();
 
 	if (errInit != noErr)
-		NSLog(@"DVDInitialize returned %d", errInit);
+		NSLog(@"DVD: Error %d", errInit);
 	
 	// Register for playback events
 	DVDEventCode eventCodes[] = {
 		kDVDEventDisplayMode, 
 		kDVDEventError,
-		/* registering for and handling this event makes the use of
-		DVDGetState unnecessary */
 		kDVDEventPlayback, 
 		kDVDEventPTT, 
 		kDVDEventTitle, 
@@ -470,20 +460,15 @@
 		kDVDEventVideoStandard, 
 	};
 
-	errInit = DVDRegisterEventCallBack (
-		MyDVDEventHandler, 
-		eventCodes, 
-		sizeof(eventCodes)/sizeof(DVDEventCode), 
-		(UInt32)self, 
-		&mEventCallBackID);
+	errInit = DVDRegisterEventCallBack(MyDVDEventHandler, eventCodes, sizeof(eventCodes)/sizeof(DVDEventCode), (UInt32)self, &mEventCallBackID);
 
-	NSAssert1 (!errInit, @"DVDRegisterEventCallBack returned %d", errInit);
+	NSAssert1(!errInit, @"DVD: RegisterEventCallBack %d", errInit);
 			
 	// Connect the DVD player to the correct window
 	OSStatus errWindow = DVDSetVideoWindowID([dvdPlayerWindow windowNumber]);
 	
 	if (errWindow != noErr)
-		NSLog(@"DVDSetVideoWindowID returned %d", errWindow);
+		NSLog(@"DVD: SetVideoWindowID %d", errWindow);
 		
 	// Connect the DVD player to the correct monitor
 	CGDirectDisplayID display = (CGDirectDisplayID)
@@ -494,40 +479,31 @@
 	OSStatus errDisplay = DVDSwitchToDisplay(display, &isSupported);
 	
 	if (errDisplay != noErr)
-		NSLog(@"DVDSwitchToDisplay returned %d", errDisplay);
+		NSLog(@"DVD: SwitchToDisplay %d", errDisplay);
 		
 	// Setup the DVD display bounds
-	NSRect content = [[dvdPlayerWindow contentView] bounds];
-	NSRect frame = [dvdPlayerWindow frame];
-
-	Rect qdRect;
-	qdRect.left = 0;
-	qdRect.right = content.size.width;
-	qdRect.bottom = frame.size.height;
-	qdRect.top = frame.size.height - content.size.height; // 4
-
-	OSStatus errBounds = DVDSetVideoBounds(&qdRect);
+	CGRect qdRect = CGRectMake(0, 0, [dvdPlayerWindow frame].size.width, [dvdPlayerWindow frame].size.height);
+	OSStatus errBounds = DVDSetVideoCGBounds(&qdRect);
 	
 	if (errBounds != noErr)
-		NSLog(@"DVDSetVideoBounds returned %d", errBounds);
+		NSLog(@"DVD: SetVideoBounds %d", errBounds);
 		
-	if ([self searchMountedDVD]) {
-		if ([self hasMedia] == NO) {
-			return;
-		}
-	}
+	if ([self searchMountedDVD] && [self hasMedia] == NO)
+		return;
+	
+	NSLog(@"-------------------------");
 }
 
 - (void)deviceDidMount:(NSNotification *)notification 
 {
+	NSString *devicePath = [[notification userInfo] objectForKey:@"NSDevicePath"];
+	NSLog(@"Device did mount: %@", devicePath);
+	
 	OSStatus isDVDPlaying;
 	DVDGetState(&isDVDPlaying);
 	
 	// Make sure the DVD isn't currently playing
 	if (isDVDPlaying != kDVDStatePlaying) {
-		NSString *devicePath = [[notification userInfo] objectForKey:@"NSDevicePath"];
-		NSLog(@"Device did mount: %@", devicePath);
-
 		NSString *mediaPath = [devicePath stringByAppendingString:@"/VIDEO_TS"];
 		[self openMedia:mediaPath isVolume:YES];
 	}
@@ -539,6 +515,7 @@
 
 - (void)runDVDPlay
 {
+	[self presentationGoToBlack: nil];
 	[dvdPlayerWindow setLevel:NSScreenSaverWindowLevel+4];
 	
 	OSStatus isDVDPlaying;
@@ -561,6 +538,8 @@
 	
 	if (isDVDPlaying == kDVDStatePlaying) {
 		DVDPause();
+		[[[[[NSDocumentController sharedDocumentController] currentDocument] mediaBox] dvdPlayPauseButton] setImage: [NSImage imageNamed:@"DVDPlay"]];
+		[[[[[NSDocumentController sharedDocumentController] currentDocument] mediaBox] dvdPlayPauseButton] setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	}
 }
 
@@ -819,7 +798,36 @@ receive in the beginSession method. */
 	return presenterShouldShowText;
 }
 
-//
+- (BOOL)presenterShouldShowVideo
+{
+	return presenterShouldShowVideo;
+}
+
+- (IBAction)switchToModeBlack:(id)sender
+{
+	[self applyPresentationMode: 0];
+	[[[[NSDocumentController sharedDocumentController] currentDocument] presentationModeSwitcher] setSelectedSegment: 0];
+}
+
+- (IBAction)switchToModeText:(id)sender
+{
+	[self applyPresentationMode: 1];
+	[[[[NSDocumentController sharedDocumentController] currentDocument] presentationModeSwitcher] setSelectedSegment: 1];
+}
+
+- (IBAction)switchToModeVideo:(id)sender
+{
+	[self applyPresentationMode: 2];
+	[[[[NSDocumentController sharedDocumentController] currentDocument] presentationModeSwitcher] setSelectedSegment: 2];
+}
+
+- (IBAction)switchToModeBoth:(id)sender
+{
+	[self applyPresentationMode: 3];
+	[[[[NSDocumentController sharedDocumentController] currentDocument] presentationModeSwitcher] setSelectedSegment: 3];
+}
+
+#pragma mark <#label#>
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {
@@ -894,10 +902,7 @@ receive in the beginSession method. */
 	[[[[NSDocumentController sharedDocumentController] currentDocument] thumbnailScroller] removeFocus: self];
 	
 	// Hide the DVD playback window
-	[dvdPlayerWindow setLevel:NSScreenSaverWindowLevel-1];
-	
-	// Turn off the live camera view
-	[qcPresentationBackground setValue:[NSNumber numberWithBool:NO] forInputKey:@"LiveEnable"];
+	[self runDVDStop];
 }
 
 - (void)presentJuice:(NSString *)path
@@ -931,6 +936,15 @@ receive in the beginSession method. */
 			incomingOnTop = YES;
 		}
 		
+		float transitionSpeedPhoto = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Override Fade to Black Speed"] floatValue];
+		if (transitionSpeedPhoto == 0) transitionSpeedPhoto = 1.0;
+		
+		[[self mainPresenterViewConnect] setPresentationPhotoBG:[NSImage imageNamed: nil] withSpeed:transitionSpeedPhoto];
+		
+		[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewImageArea] setHidden: YES];
+		[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] setFrameOrigin: NSMakePoint(1, -20)];
+		[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] setFrameOrigin: NSMakePoint(1, -20)];
+		
 		crossFadeTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(crossFadeMedia:) userInfo:nil repeats:YES];
 	} else {
 		willGoToBlack = NO;
@@ -939,44 +953,84 @@ receive in the beginSession method. */
 		[qtMovieAttributes setObject:path forKey:QTMovieFileNameAttribute];
 		[qtMovieAttributes setObject:[NSNumber numberWithBool: looping] forKey:QTMovieLoopsAttribute];
 		
-		//QTMovie	*qtMovie = nil;
 		NSError	*error;
         
 		QTMovie	*qtMovie = [QTMovie movieWithAttributes:qtMovieAttributes error:&error];
 		
+		isPhoto = NO;
+		
+		if ([qtMovie duration].timeValue <= 40) {
+			isPhoto = YES;
+			
+			float transitionSpeedPhoto = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Video Transition Speed"] floatValue];
+			if (transitionSpeedPhoto == 0) transitionSpeedPhoto = 1.0;
+			
+			NSImage *presentationPhotoBG = [[NSImage alloc] initWithContentsOfFile:path];
+			
+			[[self mainPresenterViewConnect] setPresentationPhotoBG:presentationPhotoBG withSpeed:transitionSpeedPhoto];
+			
+			[presentationPhotoBG release];
+			
+			return;
+		}
+		
 		if(qtMovie) {
+			NSArray *moviePathSplitter = [[NSArray alloc] initWithArray: [path componentsSeparatedByString:@"/"]];
+			NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[moviePathSplitter objectAtIndex:[moviePathSplitter count]-1] componentsSeparatedByString:@"."]];
+			NSImage *moviePreviewImage = [[NSImage alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/%@-PREVIEW.tiff", [movieNameSplitter objectAtIndex: 0]] stringByExpandingTildeInPath]];
+			
+			[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewImageArea] setHidden: NO];
+			[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewImageArea] setImage: moviePreviewImage];
+			
+			if (!isPhoto) {
+				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewImageArea] setFrame: NSMakeRect(1, 15, 288, 166)];
+			}
+			
+			didComeFromBlack = NO;
+			
 			if (incomingOnTop) {
-				[[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] animator] setAlphaValue: 1.0];
-				[[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] animator] setAlphaValue: 0.0];
+				if (!isPhoto) {
+					[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] setFrameOrigin: NSMakePoint(1, -1)];
+					[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] setFrameOrigin: NSMakePoint(1, -20)];
+				}
 				
 				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] setMovie: qtMovie];
+				
 				[videoPlaybackGLView setQTMovie: qtMovie];
 				[videoPlaybackGLView togglePlay: self];
 				
+				if ([[[videoPlaybackGLIncomingView qtMovie] tracks] count] < 1)
+					didComeFromBlack = YES;
+				
 				incomingOnTop = NO;
 			} else {
-				[[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] animator] setAlphaValue: 0.0];
-				[[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] animator] setAlphaValue: 1.0];
+				if (!isPhoto) {
+					[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] setFrameOrigin: NSMakePoint(1, -1)];
+					[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] setFrameOrigin: NSMakePoint(1, -20)];
+				}
 				
 				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] setMovie: qtMovie];
+				
 				[videoPlaybackGLIncomingView setQTMovie: qtMovie];
 				[videoPlaybackGLIncomingView togglePlay: self];
+				
+				if ([[[videoPlaybackGLView qtMovie] tracks] count] < 1)
+					didComeFromBlack = YES;
 				
 				incomingOnTop = YES;
 			}
 			
-			//if (incomingOnTop) {
-			///	[[videoPlaybackGLWindow animator] setAlphaValue: 0.0];
-			//} else if (!incomingOnTop) {
-			//	[[videoPlaybackGLWindow animator] setAlphaValue: 1.0];
-			//}
+			NSLog(@"didComeFromBlack %i", didComeFromBlack);
+			
+			if (isPhoto) {
+				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController] setFrameOrigin: NSMakePoint(1, -20)];
+				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewController2] setFrameOrigin: NSMakePoint(1, -20)];
+				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewImageArea] setFrame: NSMakeRect(1, 0, 288, 181)];
+			}
 			
 			crossFadeTimer = [NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(crossFadeMedia:) userInfo:nil repeats:YES];
 		}
 		
-		NSLog(@"GO TO JUICE: %@", path);
-		
-		[qcPresentationBackground setValue:[NSNumber numberWithBool:NO] forInputKey:@"LiveEnable"];
 		[goLiveButton setState: NSOffState];
 	}
 }
@@ -999,41 +1053,22 @@ receive in the beginSession method. */
 
 - (void)crossFadeMedia:(NSTimer *)timer
 {
-	//float transitionSpeedVideo = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Video Transition Speed"] floatValue];
-	float transitionSpeedVideo = 1.0;
+	float transitionSpeedVideo = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Video Transition Speed"] floatValue];
+	
+	if ((willGoToBlack || didComeFromBlack) && [[[NSUserDefaults standardUserDefaults] objectForKey:@"Override Fade to Black"] intValue] == 1)
+		transitionSpeedVideo = [[[NSUserDefaults standardUserDefaults] objectForKey:@"Override Fade to Black Speed"] floatValue];
+	
+	if (transitionSpeedVideo == 0) transitionSpeedVideo = 1.0;
 	
 	if (incomingOnTop && mediaWindowAlpha > 0.0) {
-		NSLog(@"incomingOnTop %f", mediaWindowAlpha);
 		[videoPlaybackGLWindow setAlphaValue: mediaWindowAlpha -= (1/(transitionSpeedVideo*10))];
-		//[videoPlaybackGLView setTransitionCompletion: mediaWindowAlpha -= (1/(1.0*10))];
-		//[videoPlaybackGLIncomingView setTransitionCompletion: mediaWindowAlpha];
-		//[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: NO];
 	} else if (!incomingOnTop && mediaWindowAlpha < 1.0) {
-		NSLog(@"!incomingOnTop %f", mediaWindowAlpha);
 		[videoPlaybackGLWindow setAlphaValue: mediaWindowAlpha += (1/(transitionSpeedVideo*10))];
-		//[videoPlaybackGLView setTransitionCompletion: mediaWindowAlpha += (1/(1.0*10))];
-		//[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: NO];
 	} else {
-		if ([[[[NSDocumentController sharedDocumentController] currentDocument] thumbnailScroller] mediaType] == 0)
-			//[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: YES];
-		
 		[timer invalidate];
 		
-		if (incomingOnTop) {
-			[videoPlaybackGLView setQTMovie: [QTMovie movie]];
-			if (!willGoToBlack)
-				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setVideoPreview: [[videoPlaybackGLView qtMovie] attributeForKey: @"QTMovieFileNameAttribute"]];
-		} else {
-			[videoPlaybackGLIncomingView setQTMovie: [QTMovie movie]];
-			if (!willGoToBlack)
-				[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setVideoPreview: [[videoPlaybackGLView qtMovie] attributeForKey: @"QTMovieFileNameAttribute"]];
-		}
-			
-		if (willGoToBlack) {
-			NSLog(@"willGoToBlack");
-			[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setTimeCode: 0.0];
-			[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setVideoPreview: @""];
-		}
+		if (incomingOnTop) { [videoPlaybackGLView setQTMovie: [QTMovie movie]]; }
+		else { [videoPlaybackGLIncomingView setQTMovie: [QTMovie movie]]; }
 	}
 }
 

@@ -40,6 +40,7 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceAttributeDidChange:) name:QTCaptureDeviceAttributeDidChangeNotification object:nil];
 	
 	[self selectVideosTab:self];
+	drawTransitionSpeedBar = YES;
 }
 
 /////////////////////////////////
@@ -116,15 +117,17 @@
 		[liveVideoToggleButton setImage: [NSImage imageNamed:@"LiveOn"]];
 		[liveVideoToggleButton setAlternateImage: [NSImage imageNamed:@"LiveOn-Down"]];
 		
-		[[moviePreview1 animator] setAlphaValue: 0.0];
-		[[moviePreview2 animator] setAlphaValue: 0.0];
+		[moviePreview1 setHidden: YES];
+		[moviePreview2 setHidden: YES];
 		
-		[[captureView animator] setAlphaValue:1.0];
+		[[[NSApp delegate] mainPresenterViewConnect] setLiveCameraViewOpacity: 1.0];
+		[captureView setHidden: NO];
 	} else {
 		[liveVideoToggleButton setImage: [NSImage imageNamed:@"LiveOff"]];
 		[liveVideoToggleButton setAlternateImage: [NSImage imageNamed:@"LiveOff-Down"]];
 		
-		[[captureView animator] setAlphaValue:0.0];
+		[[[NSApp delegate] mainPresenterViewConnect] setLiveCameraViewOpacity: 0.0];
+		[captureView setHidden: YES];
 	}
 }
 
@@ -203,7 +206,7 @@
 {
 	float actualTransitionSpeed;
 	
-	if ([videoSpeedSlider floatValue] <= 0.5) { actualTransitionSpeed = 0.0; }
+	if ([videoSpeedSlider floatValue] <= 0.5) { actualTransitionSpeed = 0.5; }
 	else if ([videoSpeedSlider floatValue] <= 1.0) { actualTransitionSpeed = 0.5; }
 	else if ([videoSpeedSlider floatValue] <= 1.5) { actualTransitionSpeed = 1.0; }
 	else if ([videoSpeedSlider floatValue] <= 2.0) { actualTransitionSpeed = 1.5; }
@@ -251,10 +254,12 @@
 	NSGradient *background = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithDeviceWhite:0.24 alpha:1.0] endingColor:[NSColor colorWithDeviceWhite:0.15 alpha:1.0]];
 	[background drawInRect:NSMakeRect(321, 0, [self bounds].size.width-320, 26) angle:-90.0f];
 	
-	//NSImage *transitionSpeedBar = [NSImage imageNamed:@"TransitionSpeedBar"];
-	//[transitionSpeedBar setFlipped: NO];
-	//[transitionSpeedBar drawInRect: NSMakeRect([self bounds].size.width-144-160-13,3,144,20) fromRect: NSMakeRect(0,0,144,20) operation: NSCompositeSourceOver fraction: 1.0];
-	
+	if (drawTransitionSpeedBar) {
+		NSImage *transitionSpeedBar = [NSImage imageNamed:@"TransitionSpeedBar"];
+		[transitionSpeedBar setFlipped: NO];
+		[transitionSpeedBar drawInRect: NSMakeRect([self bounds].size.width-144-160-13,3,144,20) fromRect: NSMakeRect(0,0,144,20) operation: NSCompositeSourceOver fraction: 1.0];
+	}
+		
 	[[NSColor colorWithDeviceWhite:0.11 alpha:1.0] set];
 	
 	// Turn anti-aliasing off to draw 1px lines for shadow
@@ -268,6 +273,12 @@
 	
 	// Turn anti-aliasing back on for the rest of the drawing
 	[[NSGraphicsContext currentContext] setShouldAntialias: YES];
+}
+
+- (void)setDrawsTransitionBar:(BOOL)draw
+{
+	drawTransitionSpeedBar = draw;
+	[self setNeedsDisplay: YES];
 }
 
 ///////////////////////////////////////////////////////////////
@@ -306,7 +317,15 @@
 	[assignToSlideButton setHidden: NO];
 	[goToBlackButton setHidden: NO];
 	
+	[captureView setHidden: YES];
+	[[[NSApp delegate] mainPresenterViewConnect] setLiveCameraViewOpacity: 0.0];
 	[captureSession stopRunning];
+	[liveVideoToggleButton setImage: [NSImage imageNamed:@"LiveOff"]];
+	[liveVideoToggleButton setAlternateImage: [NSImage imageNamed:@"LiveOff-Down"]];
+	
+	[videoSpeedSlider setHidden: NO];
+	[videoSpeedArea setHidden: NO];
+	drawTransitionSpeedBar = YES;
 	
 	[self setNeedsDisplay: YES];
 }
@@ -343,7 +362,15 @@
 	[assignToSlideButton setHidden: NO];
 	[goToBlackButton setHidden: NO];
 	
+	[captureView setHidden: YES];
+	[[[NSApp delegate] mainPresenterViewConnect] setLiveCameraViewOpacity: 0.0];
 	[captureSession stopRunning];
+	[liveVideoToggleButton setImage: [NSImage imageNamed:@"LiveOff"]];
+	[liveVideoToggleButton setAlternateImage: [NSImage imageNamed:@"LiveOff-Down"]];
+	
+	[videoSpeedSlider setHidden: NO];
+	[videoSpeedArea setHidden: NO];
+	drawTransitionSpeedBar = YES;
 	
 	[self setNeedsDisplay: YES];
 }
@@ -377,7 +404,15 @@
 	[assignToSlideButton setHidden: YES];
 	[goToBlackButton setHidden: NO];
 	
+	[captureView setHidden: YES];
+	[[[NSApp delegate] mainPresenterViewConnect] setLiveCameraViewOpacity: 0.0];
 	[captureSession stopRunning];
+	[liveVideoToggleButton setImage: [NSImage imageNamed:@"LiveOff"]];
+	[liveVideoToggleButton setAlternateImage: [NSImage imageNamed:@"LiveOff-Down"]];
+	
+	[videoSpeedSlider setHidden: YES];
+	[videoSpeedArea setHidden: YES];
+	drawTransitionSpeedBar = NO;
 	
 	[self setNeedsDisplay: YES];
 }
@@ -415,10 +450,16 @@
 	[assignToSlideButton setHidden: YES];
 	[goToBlackButton setHidden: NO];
 	
+	[captureView setFrameOrigin: NSMakePoint(1, 0)];
+	
 	if ([[[[NSApp delegate] mainPresenterViewConnect] liveCameraView] session] != captureSession)
 		[[[[NSApp delegate] mainPresenterViewConnect] liveCameraView] setSession: captureSession];
 	
 	[captureSession startRunning];
+	
+	[videoSpeedSlider setHidden: YES];
+	[videoSpeedArea setHidden: YES];
+	drawTransitionSpeedBar = NO;
 	
 	[self setNeedsDisplay: YES];
 }
@@ -455,7 +496,15 @@
 	[assignToSlideButton setHidden: YES];
 	[goToBlackButton setHidden: YES];
 	
+	[captureView setHidden: YES];
+	[[[NSApp delegate] mainPresenterViewConnect] setLiveCameraViewOpacity: 0.0];
 	[captureSession stopRunning];
+	[liveVideoToggleButton setImage: [NSImage imageNamed:@"LiveOff"]];
+	[liveVideoToggleButton setAlternateImage: [NSImage imageNamed:@"LiveOff-Down"]];
+	
+	[videoSpeedSlider setHidden: YES];
+	[videoSpeedArea setHidden: YES];
+	drawTransitionSpeedBar = NO;
 	
 	[self setNeedsDisplay: YES];
 }
@@ -551,6 +600,11 @@
 			break;
 		}
 	}
+}
+
+- (NSButton *)dvdPlayPauseButton
+{
+	return dvdPlayPauseButton;
 }
 
 ////////////////////////
@@ -666,7 +720,8 @@
 
 - (IBAction)showScriptureOnScreen:(id)sender
 {
-	[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: [scripturePreviewView string]];
+	NSLog(@"ISCRIPTURE.ORG: Showing scripture on screen");
+	[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: [NSString stringWithFormat: @"%@", [scripturePreviewView string]]];
 }
 
 @end

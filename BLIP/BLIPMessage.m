@@ -215,6 +215,8 @@
             body = [NSData gtm_dataByGzippingData: body compressionLevel: 5];
             LogTo(BLIPVerbose,@"Compressed %@ to %u bytes (%.0f%%)", self,body.length,
                   body.length*100.0/length);
+			
+			NSLog(@"Compressed %@ to %u bytes (%.0f%%)", self,body.length,body.length*100.0/length);
         }
         [_encodedBody appendData: body];
     }
