@@ -35,13 +35,7 @@
 	IBOutlet id scriptureChapter;
 	IBOutlet id scriptureVerses;
 	IBOutlet id scripturePreviewView;
-	IBOutlet NSButton *scriptureSplitSetting;
-	IBOutlet NSButton *showOnScreenButton;
-	IBOutlet NSButton *insertIntoPlaylistButton;
-	IBOutlet NSButton *insertIntoSongButton;
 	MAAttachedWindow *searchPopup;
-	
-	BOOL drawTransitionSpeedBar;
 	
 	QTCaptureSession *captureSession;
 	QTCaptureDeviceInput *videoDeviceInput;
@@ -72,8 +66,6 @@
 - (IBAction)toggleLooping:(id)sender;
 - (IBAction)toggleAudio:(id)sender;
 
-- (void)setDrawsTransitionBar:(BOOL)draw;
-
 - (IBAction)juiceGoToBlack:(id)sender;
 
 - (IBAction)playDVDVideo:(id)sender;
@@ -83,15 +75,11 @@
 - (IBAction)skipBackwardDVDVideo:(id)sender;
 - (IBAction)returnToMenuDVDVideo:(id)sender;
 - (IBAction)ejectMountedDVD:(id)sender;
-- (NSButton *)dvdPlayPauseButton;
 
 - (IBAction)toggleLiveVideo:(id)sender;
 
 - (IBAction)goToWebsite:(id)sender;
 - (IBAction)toggleSearchPopup:(id)sender;
 - (IBAction)lookupScripture:(id)sender;
-- (IBAction)insertScriptureIntoPlaylist:(id)sender;
-- (IBAction)insertScriptureIntoSlide:(id)sender;
-- (IBAction)showScriptureOnScreen:(id)sender;
 
 @end

@@ -50,29 +50,18 @@ static PreferencesController *sharedPreferencesController = nil;
 		[importSplitTextBy selectItemWithTitle: [standardUserDefaults objectForKey:@"Line Breaks"]];
 	}
 	
-	if ([[standardUserDefaults objectForKey:@"Override Fade to Black"] intValue] == 1) {
-		[overrideFadeBlack setState: NSOnState];
-		[overrideFadeBlackSpeed setEnabled: YES];
-	}
-	
-	if ([standardUserDefaults objectForKey:@"Override Fade to Black Speed"]) [overrideFadeBlackSpeed setStringValue: [standardUserDefaults objectForKey:@"Override Fade to Black Speed"]];
-	
 	// Formatting Tab
 	[formattingFontFamily removeAllItems];
 	
 	NSMutableArray *fontFamilies = [[NSMutableArray alloc] initWithArray: [[NSFontManager sharedFontManager] availableFontFamilies]];
 	[fontFamilies sortUsingSelector:@selector(compare:)];
-	unsigned index, index2;
+	unsigned index;
 	
-	for (index = 0; index <= [fontFamilies count]-1; index++) {
-		NSArray *fontFamiliesWithStyles = [[NSArray alloc] initWithArray: [[NSFontManager sharedFontManager] availableMembersOfFontFamily: [fontFamilies objectAtIndex: index]]];
-		
-		for (index2 = 0; index2 <= [fontFamiliesWithStyles count]-1; index2++)
-			[formattingFontFamily addItemWithTitle:[[fontFamiliesWithStyles objectAtIndex: index2] objectAtIndex: 0]];
-	}
+	for (index = 0; index <= [fontFamilies count]-1; index++)
+		[formattingFontFamily addItemWithTitle:[fontFamilies objectAtIndex: index]];
 	
 	if ([standardUserDefaults objectForKey:@"Font Family"]==nil) {
-		[formattingFontFamily selectItemWithTitle: @"LucidaGrande-Bold"];
+		[formattingFontFamily selectItemWithTitle: @"Lucida Grande"];
 	} else {
 		[formattingFontFamily selectItemWithTitle: [standardUserDefaults objectForKey:@"Font Family"]];
 	}
@@ -88,6 +77,9 @@ static PreferencesController *sharedPreferencesController = nil;
 	
 	float textStroke = [[standardUserDefaults objectForKey:@"Text Stroke"] floatValue];
 	textStroke = 0 - textStroke;
+	
+	//if ([standardUserDefaults objectForKey:@"Text Knocks Out Stroke"]!=nil)
+	//	[formattingTextKnockout setState: (BOOL)[NSUnarchiver unarchiveObjectWithData:[standardUserDefaults objectForKey:@"Text Knocks Out Stroke"]]];
 	
 	if ([standardUserDefaults objectForKey:@"Text Stroke"]!=nil)
 		[formattingFontBorder setFloatValue: textStroke];
@@ -185,6 +177,11 @@ static PreferencesController *sharedPreferencesController = nil;
 		[item setImage:[NSImage imageNamed:@"CCLIPreferences"]];
 		[item setTarget:self];
 		[item setAction:@selector(toggleActivePreferenceView:)];
+	/*} else if ([identifier isEqualToString:DotMacToolbarItemIdentifier]) {
+		[item setLabel:DotMacToolbarItemIdentifier];
+		[item setImage:[NSImage imageNamed:@"DotMacPreferences"]];
+		[item setTarget:self];
+		[item setAction:@selector(toggleActivePreferenceView:)];*/
 	} else
 		item = nil;
 	return item; 
@@ -230,15 +227,6 @@ static PreferencesController *sharedPreferencesController = nil;
 	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 
 	[standardUserDefaults setObject:[importSplitTextBy titleOfSelectedItem] forKey:@"Line Breaks"];
-	
-	if ([overrideFadeBlack state]==NSOnState) {
-		[overrideFadeBlackSpeed setEnabled: YES];
-	} else {
-		[overrideFadeBlackSpeed setEnabled: NO];
-	}
-	
-	[standardUserDefaults setObject:[NSString stringWithFormat:@"%i",[overrideFadeBlack state]] forKey:@"Override Fade to Black"];
-	[standardUserDefaults setObject:[overrideFadeBlackSpeed stringValue] forKey:@"Override Fade to Black Speed"];
 }
 
 - (IBAction)setFormattingDefaults:(id)sender
@@ -288,7 +276,7 @@ static PreferencesController *sharedPreferencesController = nil;
 	[standardUserDefaults synchronize];
 }
 
-/*- (IBAction)setInternalCameraEnabledDefaults:(id)sender
+- (IBAction)setInternalCameraEnabledDefaults:(id)sender
 {	
 	NSAppleEventDescriptor* returnDescriptor = NULL;
 	
@@ -339,7 +327,7 @@ static PreferencesController *sharedPreferencesController = nil;
 			}
 		}
 	}
-}*/
+}
 
 
 @end

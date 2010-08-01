@@ -5,6 +5,7 @@
 
 - (void)textDidChange:(NSNotification *)aNotification
 {
+	NSLog(@"SEARCHING");
 	[[libraryListingView dataSource] loadReloadLibraryList];
 	[libraryListingView reloadData];
 	[super textDidChange:aNotification];

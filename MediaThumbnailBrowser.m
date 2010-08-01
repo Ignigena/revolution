@@ -39,10 +39,6 @@
 	unsigned index;
 	unsigned lastIndex = rangeToDraw.location + rangeToDraw.length;
 	
-	NSMutableDictionary *movieNameAttributes = [[NSMutableDictionary alloc] initWithCapacity: 2];
-	[movieNameAttributes setObject:[NSFont systemFontOfSize:8] forKey:NSFontAttributeName];
-	[movieNameAttributes setObject:[NSColor colorWithDeviceWhite:1.0 alpha:0.7] forKey:NSForegroundColorAttributeName];
-	
 	// Start building the slides
 	for (index = rangeToDraw.location; index <= lastIndex; index++) {
 		NSRect gridRect = [self centerScanRect:[self gridRectForIndex:index]];
@@ -55,27 +51,27 @@
 		NSArray *moviePathSplitter = [[NSArray alloc] initWithArray: [[mediaListing objectAtIndex:index] componentsSeparatedByString:@"/"]];
 		NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[moviePathSplitter objectAtIndex:[moviePathSplitter count]-1] componentsSeparatedByString:@"."]];
 		
-		if (mediaType==1) { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Pictures/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
-		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/cache/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
+		if (mediaType==1) { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
+		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
 		
 		NSImage *mediaThumbnail = [[NSImage alloc] initWithContentsOfFile: [thumbnailPath stringByExpandingTildeInPath]];
-		NSRect mediaThumbnailFrame = [self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)];
 		[mediaThumbnail setFlipped: YES];
-		[mediaThumbnail drawInRect: mediaThumbnailFrame fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
-		[[movieNameSplitter objectAtIndex: 0] drawInRect:NSMakeRect(mediaThumbnailFrame.origin.x+5, mediaThumbnailFrame.origin.y+mediaThumbnailFrame.size.height-3, mediaThumbnailFrame.size.width-10, 12) withAttributes: movieNameAttributes];
+		[mediaThumbnail drawInRect:[self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width, [mediaThumbnail size].height)] fromRect: NSMakeRect(0.0, 0.0, [mediaThumbnail size].width, [mediaThumbnail size].height) operation:NSCompositeSourceOver fraction:1.0];
 		
 		if (clickedSlideAtIndex==index) {
-			NSRect slideBorderRect = [self rectCenteredInRect:backgroundRect withSize:NSMakeSize([mediaThumbnail size].width-3, [mediaThumbnail size].height-3)];
-			if (mediaType==1) { slideBorderRect.origin.y -= 2; slideBorderRect.size.height += 1; }
-			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect: slideBorderRect];
-			
-			[[NSColor colorWithDeviceCyan:0.09 magenta:1.0 yellow:1.0 black:0.02 alpha:1.0] set];
+			NSBezierPath *clickedSlideBorder = [NSBezierPath bezierPathWithRect:NSMakeRect(backgroundRect.origin.x+2, backgroundRect.origin.y+2, [mediaThumbnail size].width-3, [mediaThumbnail size].height-6)];
+			[[NSColor redColor] set];
 			[clickedSlideBorder setLineWidth: 2.0];
 			[clickedSlideBorder stroke];
 		}
 		
 		[mediaThumbnail release];
 	}
+	
+	//NSLog(@"%f", [[[self enclosingScrollView] verticalScroller] floatValue]);
+	
+	//[[NSColor colorWithDeviceWhite:0.0 alpha: 0.8] set];
+	//[NSBezierPath fillRect: NSMakeRect(0, [[NSString stringWithFormat:@"%.0f", [[self enclosingScrollView] documentVisibleRect].size.height+(([self bounds].size.height*[[[self enclosingScrollView] verticalScroller] floatValue]) / 2)-25] floatValue], [self bounds].size.width, 25)];
 }
 
 - (void)updateGrid
@@ -132,6 +128,11 @@
 		clickedSlideAtIndex = clickedIndex;
 		[self setNeedsDisplay: YES];
 		
+		//if (mediaType==1)
+		//	[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: NO];
+		//else
+		//	[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: YES];
+			
 		[[NSApp delegate] presentJuice: [[mediaListing objectAtIndex: clickedIndex] stringByExpandingTildeInPath]];
 		
 		//[[[NSApp delegate] mainPresenterViewConnect] setVideoFile: [QTMovie movieWithFile:[[mediaListing objectAtIndex: clickedIndex] stringByExpandingTildeInPath] error:nil]];
@@ -224,6 +225,8 @@
 		unsigned filesIndex;
 		
 		for (filesIndex = 0; filesIndex <= [files count]-1; filesIndex++) {
+			NSLog(@"%@", [files objectAtIndex:filesIndex] );
+			
 			// Make sure it is of type "MOV" and a thumbnail is not already saved
 			if ([[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"mov"] ||
 				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"avi"] ||

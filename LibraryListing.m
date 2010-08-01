@@ -26,6 +26,8 @@
 
 - (void)loadReloadLibraryList
 {
+	NSLog(@"loadReloadLibraryList");
+	
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *library = @"~/Library/Application Support/ProWorship";
 		
@@ -37,6 +39,9 @@
 	
 	if ([librarySearchField stringValue] && ![[librarySearchField stringValue] isEqualToString:@""])
 		filterResults = YES;
+		
+	NSLog(@"%i", filterResults);
+	NSLog(@"%@", [librarySearchField stringValue]);
 	
 	if ([libraryListing count] <= 1) {
 		if (!gettingStartedAddButton) {
@@ -72,7 +77,7 @@
 		//NSString *actualLibraryListing = [[NSString alloc] initWithString: [songLibrarySplitter objectAtIndex: 0]];
 		NSString *actualLibraryListing = [libraryListing objectAtIndex:index];
 			
-		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"cache"]) {
+		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
 			NSMutableArray *subLibraryListing = [[NSMutableArray alloc] initWithArray: [manager directoryContentsAtPath:[currentPath stringByExpandingTildeInPath]]];
 			
 			if ([subLibraryListing count]!=0) {
@@ -82,7 +87,9 @@
 					if ([[subLibraryListing objectAtIndex:subIndex] isEqualToString:@".DS_Store"]) {
 						[subLibraryListing removeObjectAtIndex:subIndex];
 					} else {
+						//NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [[[subLibraryListing objectAtIndex:subIndex] componentsSeparatedByString:@"."] objectAtIndex: 0]]];
 						NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [subLibraryListing objectAtIndex:subIndex]]];
+						//[subLibraryListing replaceObjectAtIndex:subIndex withObject: ];
 						[subLibraryListing replaceObjectAtIndex:subIndex withObject:subActualLibraryListing];
 					
 						if (filterResults) {
@@ -101,7 +108,7 @@
 			if (!filterResults)
 				[libraryListingText setObject:subLibraryListing forKey:actualLibraryListing];
 		} else {
-			if (![[libraryListing objectAtIndex:index] isEqualToString: @"cache"]) {
+			if (![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
 				if (filterResults) {
 					if ([self containsString:[librarySearchField stringValue] inString:actualLibraryListing])
 						[libraryListingText setObject:[NSNull null] forKey:actualLibraryListing];
@@ -186,12 +193,14 @@
 	if ([outlineView isExpandable:[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]])
 		return NO;
 	
-	if ([[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]] isEqualToString: @"[empty]"])
+	if ([outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]==@"[empty]")
 		return NO;
 	
+	NSLog(@"%@", items);
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:items];
 
     [pboard declareTypes:[NSArray arrayWithObject:IWPlaylistDataType] owner:self];
+
     [pboard setData:data forType:IWPlaylistDataType];
 
     return YES;

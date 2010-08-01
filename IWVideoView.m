@@ -259,7 +259,8 @@ static OSErr QTMoovProcs_VideoTrackDataProc(void *theRefcon, MovieExportGetDataP
 
 - (void)setQTMovie:(QTMovie*)inMovie
 {
-	if (CVDisplayLinkIsRunning(displayLink)) [self togglePlay:nil];
+	NSLog(@"IWVideoView: setQTMovie");
+    if (CVDisplayLinkIsRunning(displayLink)) [self togglePlay:nil];
     [inMovie retain];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:NSWindowDidMoveNotification object:[self window]];

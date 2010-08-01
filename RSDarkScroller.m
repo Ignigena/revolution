@@ -66,20 +66,11 @@
 // Draws the knob background
 - (void)drawKnobSlotInRect:(NSRect)rect highlight:(BOOL)highlight
 {
-	[[NSColor colorWithDeviceWhite:0.38 alpha:1.0] set];
-	[[NSBezierPath bezierPathWithRect:rect] fill];
-	
-	NSGradient *shadowLeft = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithDeviceWhite:0.26 alpha:1.0] endingColor:[NSColor colorWithDeviceWhite:0.38 alpha:1.0]];
-	[shadowLeft drawInRect:NSMakeRect(0, rect.origin.y, 4, rect.size.height) angle:0.0f];
-	
-	NSGradient *shadowRight = [[NSGradient alloc] initWithStartingColor:[NSColor colorWithDeviceWhite:0.28 alpha:1.0] endingColor:[NSColor colorWithDeviceWhite:0.38 alpha:1.0]];
-	[shadowRight drawInRect:NSMakeRect(rect.size.width-4, rect.origin.y, 4, rect.size.height) angle:180.0f];
-	
-	//scrollTrack = [NSImage imageNamed:@"DarkScrollerTrack"];
+	scrollTrack = [NSImage imageNamed:@"DarkScrollerTrack"];
 	NSImage *scrollCap = [NSImage imageNamed:@"DarkScrollerCap"];
 	[scrollCap setFlipped: TRUE];
 	
-	//[scrollTrack drawInRect:rect fromRect: NSMakeRect(0, 0, 15, 15) operation:NSCompositeSourceOver fraction:1.0];
+	[scrollTrack drawInRect:rect fromRect: NSMakeRect(0, 0, 15, 15) operation:NSCompositeSourceOver fraction:1.0];
 	
 	// Only draw the cap if there is a scroll knob present
 	if ([self knobProportion]!=0)

@@ -44,7 +44,7 @@
 {
 	if (returnCode==1000) {
 		NSLog(@"Delete it! %@", [self itemAtRow: [self selectedRow]]);
-		NSString *worshipSongFile = [NSString stringWithFormat: @"%@", [self itemAtRow: [self selectedRow]]];
+		NSString *worshipSongFile = [NSString stringWithFormat: @"%@.iwsf", [self itemAtRow: [self selectedRow]]];
 		NSString *worshipSongPath;
 		NSArray *worshipSongFileSplit = [[NSArray alloc] initWithArray: [worshipSongFile componentsSeparatedByString:@"/"]];
 		
@@ -56,7 +56,11 @@
 			worshipSongPath = [NSString stringWithString: @"~/Library/Application Support/ProWorship/"];
 		}
 		
-		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source:[worshipSongPath stringByExpandingTildeInPath] destination:@"" files:[NSArray arrayWithObject: worshipSongFile] tag: 0];
+		NSLog(@"%@", worshipSongPath);
+		
+		NSArray  *deleteFile = [NSArray arrayWithObject: worshipSongFile];
+
+		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [worshipSongPath stringByExpandingTildeInPath] destination: @"" files: deleteFile tag: 0];
 		
 		[[self delegate] loadReloadLibraryList];
 		[self reloadData];

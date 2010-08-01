@@ -31,18 +31,21 @@ in the window. */
 	/* index of selected button in DVD menu */
 	SInt32 index = kDVDButtonIndexNone;
 
-	// Convert the mouse location to a CGPoint
-	CGPoint mousePoint = CGPointMake([theEvent locationInWindow].x,[self frame].size.height - [theEvent locationInWindow].y);
+	/* convert mouse location to QuickDraw coordinates */
+	NSPoint location = [theEvent locationInWindow];
+	Point portPt;
+	portPt.h = location.x;
+	portPt.v = [self frame].size.height - location.y;
 	
 	/* notify DVD Playback */
 	switch ([theEvent type])
 	{
 		OSStatus err;
 		case NSMouseMoved:
-			err = DVDDoMenuCGMouseOver (&mousePoint, &index);
+			err = DVDDoMenuMouseOver (portPt, &index);
 			break;
 		case NSLeftMouseDown:
-			err = DVDDoMenuCGClick(&mousePoint, &index);
+			err = DVDDoMenuClick(portPt, &index);
 			break;
 		default:
 			break;

@@ -91,9 +91,98 @@ frame].size.width;
 frame].size.height;
 }
 
-- (BOOL)isSplitterAnimating
-{
-	return isSplitterAnimating;
+- (BOOL)isSplitterAnimating {
+       return isSplitterAnimating;
 }
+
+//- (float)splitView:(NSSplitView *)sender constrainMaxCoordinate:(float)proposedMax ofSubviewAt:(int)offset
+//{
+//	NSLog(@"Max size");
+//	return 172;
+//}
+
+/*#pragma mark -
+#pragma mark Sidebar resize area
+
+- (void)resetCursorRects
+{
+	[super resetCursorRects];
+		
+	NSRect location = [resizeGrabber frame];
+		location.origin.y = [self frame].size.height - location.size.height;
+
+	[self addCursorRect:location cursor:[NSCursor resizeLeftRightCursor]];
+}
+
+- (void)mouseDown:(NSEvent *)theEvent 
+{
+	//NSLog(@"mouseDown in splitView");
+	NSPoint clickLocation = [theEvent locationInWindow];
+
+	NSView *clickReceiver = [self hitTest:clickLocation];
+	if ( [[clickReceiver className] isEqualToString:@"IWSplitterHandle"] ) {
+		//NSLog(@"Entering drag");
+		inResizeMode = YES;
+	} else {
+		//NSLog([clickReceiver className]);
+		inResizeMode = NO;
+		[super mouseDown:theEvent];
+	}
+	//NSLog(@"mouseDown in splitView done");
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	//NSLog(@"Exiting drag");
+	inResizeMode = NO;
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent 
+{
+	//NSLog(@"mouseDragged in splitView");
+	if ( inResizeMode == NO ) {
+		[super mouseDragged:theEvent];
+		return;
+	}
+		
+	[[NSNotificationCenter defaultCenter] postNotificationName:NSSplitViewWillResizeSubviewsNotification object:self];
+	
+    NSPoint clickLocation = [theEvent locationInWindow];	
+	NSRect newFrame = [leftView frame];
+		newFrame.size.width = clickLocation.x;
+	
+	id delegate = [self delegate];
+	if( delegate && [delegate respondsToSelector:@selector( splitView:constrainSplitPosition:ofSubviewAt: )] ) {
+		float new = [delegate splitView:self constrainSplitPosition:newFrame.size.width ofSubviewAt:0];
+		newFrame.size.width = new;
+		//NSLog(@"Constrained width to: %f", new);
+	}
+	
+	if( delegate && [delegate respondsToSelector:@selector( splitView:constrainMinCoordinate:ofSubviewAt: )] ) {
+		float min = [delegate splitView:self constrainMinCoordinate:0. ofSubviewAt:0];
+		newFrame.size.width = MAX( min, newFrame.size.width );
+		//NSLog(@"Constrained width to: %f", newFrame.size.width);
+	}
+	
+	if( delegate && [delegate respondsToSelector:@selector( splitView:constrainMaxCoordinate:ofSubviewAt: )] ) {
+		float max = [delegate splitView:self constrainMaxCoordinate:0. ofSubviewAt:0];
+		newFrame.size.width = MIN( max, newFrame.size.width );
+		//NSLog(@"Constrained width to: %f", newFrame.size.width);
+	}
+	
+	//[toolbarStretcher setFrame: NSMakeRect(0, 0, newFrame.size.width, 32)];
+	//[[[[[self window] toolbar] toolbar:[[self window] toolbar] itemForItemIdentifier:@"CustomStretcher" willBeInsertedIntoToolbar:NO] view] setFrame: NSMakeRect(0, 0, newFrame.size.width, 32)];
+	//[[[[self window] toolbar] toolbar:[[self window] toolbar] itemForItemIdentifier:@"CustomStretcher" willBeInsertedIntoToolbar:NO] setMinSize:NSMakeSize(newFrame.size.width, 32)];
+	//[[[[self window] toolbar] toolbar:[[self window] toolbar] itemForItemIdentifier:@"CustomStretcher" willBeInsertedIntoToolbar:NO] setMaxSize:NSMakeSize(newFrame.size.width, 32)];
+	
+	//[[[[self window] toolbar] itemForItemIdentifier:@"CustomStretcher"] setMinSize:NSMakeSize(32, newFrame.size.width)];
+	//[[[[self window] toolbar] itemForItemIdentifier:@"CustomStretcher"] setMaxSize:NSMakeSize(32, newFrame.size.width)];
+	
+	[toolbarStretcher setFrame:newFrame];
+	[leftView setFrame:newFrame];
+	[self adjustSubviews];
+	
+	[[NSNotificationCenter defaultCenter] postNotificationName:NSSplitViewDidResizeSubviewsNotification object:self];
+}*/
 
 @end

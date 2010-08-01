@@ -22,8 +22,6 @@
 	
 	// General tab
 	IBOutlet NSPopUpButton *importSplitTextBy;
-	IBOutlet NSButton *overrideFadeBlack;
-	IBOutlet NSTextField *overrideFadeBlackSpeed;
 	
 	// Formatting tab
 	IBOutlet NSPopUpButton *formattingFontFamily;
@@ -53,5 +51,6 @@
 - (IBAction)setFormattingDefaults:(id)sender;
 - (IBAction)setBoundariesDefaults:(id)sender;
 - (IBAction)setCCLIDefaults:(id)sender;
+- (IBAction)setInternalCameraEnabledDefaults:(id)sender;
 
 @end

@@ -26,7 +26,7 @@
     NSMutableArray * receiverList;
 	
     IBOutlet id playlistTable;
-	IBOutlet NSWindow *documentWindow;
+	IBOutlet NFIWindow *documentWindow;
 	IBOutlet id worshipTitleBar;
 	IBOutlet id worshipCCLIBar;
 	IBOutlet id worshipCCLIButton;
@@ -41,7 +41,6 @@
 	IBOutlet id videoPreviewController;
 	IBOutlet id videoPreviewController2;
 	IBOutlet id videoPreviewDisplay;
-	IBOutlet id videoPreviewImageArea;
 	IBOutlet IWVideoView* videoPreviewDisplayGL;
 	IBOutlet id loopingToggle;
 	
@@ -56,8 +55,6 @@
 	IBOutlet id songPublisher;
 	IBOutlet id songNumber;
 	
-	IBOutlet NSSegmentedControl *presentationModeSwitcher;
-	
 	NSString *previousSelectedPlaylist;
 	
 	IBOutlet id rightSplitterView;
@@ -66,19 +63,12 @@
 	IBOutlet id toolbarNewSlide;
 	IBOutlet id toolbarNextSlide;
 	IBOutlet id toolbarPrevSlide;
-	IBOutlet id toolbarMediaToggle;
 	
 	int draggingTableRowStart;
-	
-	IBOutlet id librarySearchPopupView;
-	IBOutlet id librarySearchPopupButton;
-	
-	MAAttachedWindow *librarySearchPopup;
 }
 
 - (void)sendDataToAllNodes:(NSData *)data;
-- (void)gotResponse:(BLIPResponse*)response;
-- (void)listener:(TCPListener*)listener didAcceptConnection:(TCPConnection*)connection;
+- (void) gotResponse: (BLIPResponse*)response;
 
 - (void)checkEmptyLibrary;
 - (IBAction)removeFromPlaylist:(id)sender;
@@ -103,17 +93,11 @@
 - (IWVideoPreview *)videoPreviewDisplay;
 - (QTMovieView *)videoPreviewController;
 - (QTMovieView *)videoPreviewController2;
-- (NSImageView *)videoPreviewImageArea;
 - (MediaThumbnailBrowser *)thumbnailScroller;
 - (IWSlideViewer *)docSlideViewer;
 - (NSTableView *)playlistTable;
 - (NSTableView *)libraryListing;
 
 - (NSString *)songDetailsWithKey:(NSString *)key;
-
-- (IBAction)toggleLibrarySearchPopup:(id)sender;
-
-- (IBAction)setPresentationMode:(id)sender;
-- (NSSegmentedControl *)presentationModeSwitcher;
 
 @end

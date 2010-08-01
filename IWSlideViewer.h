@@ -73,6 +73,7 @@
 	NSImage *slideGradientActive;
 	NSImage *slideGradientNormal;
 	NSImage *slideGradientBlank;
+	NSImage *slideEditorCorners;
 	NSImage *slideGradientEditor;
 	
 	// Images required for slide bevel effect
@@ -128,11 +129,6 @@
 	NSBezierPath *bgPath;
 	
 	NSImage *dragImage;
-	
-	float rotateTicker;
-	
-	IBOutlet id nextSlideArrowButton;
-	IBOutlet id previousSlideArrowButton;
 }
 
 - (void)updateGrid;
@@ -147,8 +143,7 @@
 - (NSMutableArray *) worshipSlides;
 - (NSMutableArray *) slidesNotes;
 
-- (int)clickedSlideAtIndex;
-- (void)setClickedSlideAtIndex:(unsigned)slideIndex;
+- (void) setClickedSlideAtIndex:(unsigned)slideIndex;
 
 - (BOOL)editorOn;
 - (void)setEditor:(BOOL)editorState;

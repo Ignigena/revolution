@@ -15,17 +15,13 @@
 #import <QTKit/QTKit.h>
 
 @interface Presenter : NSView {
-	NSImageView *presentationTextLayer;
-	NSImageView *presentationPhotoBackground;
-	CALayer *presentationTextLayerOutgoing;
+	CATextLayer *presentationTextLayer;
+	CATextLayer *presentationTextLayerOutgoing;
 	QTCaptureLayer *liveCameraView;
 	CALayer *ccliLayer;
 	CATextLayer *ccliLayerTextMain;
-	CATextLayer *unregisteredOverlayText;
 	
 	CALayer *videoLayer;
-	
-	CGImageRef presentationTextLayerContents;
 	
 	/*QTMovie *presentationVideoFile;
 	QTMovieLayer *presentationVideoLayer;
@@ -67,29 +63,17 @@
 	NSView *outgoingSlideView;
 	
 	int presenterSlideLayout;
-	int presenterSlideAlignment;
 	
 	float pvl1_opacity, pvl2_opacity, pvl_release;
 	
 	NSAnimation *crossFadeAnimation;
-	
-	NSString *ccliSongTitle;
-	NSString *ccliArtist;
-	NSString *ccliCopyrightYear;
-	NSString *ccliCopyrightPublisher;
-	NSString *ccliLicense;
-	NSString *displayString;
 }
 
 - (QTCaptureLayer *)liveCameraView;
-- (void)setLiveCameraViewOpacity:(float)opacity;
 
 - (void)setPresentationText:(NSString *)newPresentationText;
-- (void)setPresentationPhotoBG:(NSImage *)newPresentationPhotoBackground withSpeed:(float)transitionSpeed;
 
 - (void)setRenderCCLI:(BOOL)renderCCLIYesNo;
-
-- (NSImage *)drawPresentationText;
 
 //- (void)releaseVideo;
 
@@ -111,10 +95,5 @@
 - (void)setTextKnocksOutBorder:(int)textKnockout;
 
 - (NSSize)presentationWindowSize;
-
-- (NSString *)presentationFontFamily;
-- (int)presentationFontSize;
-- (int)presenterSlideLayout;
-- (int)presenterSlideAlignment;
 
 @end

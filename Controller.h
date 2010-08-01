@@ -29,8 +29,6 @@
 	IBOutlet id networkNodeServices;
 	IBOutlet id networkNodeReceiverToggle;
 	IBOutlet id networkNodeReceiverListener;
-	int overrideFormatting;
-	int overrideLayout;
 	
 	Presenter *mainPresenterView;
 	NSWindow *presentationWindow;
@@ -40,12 +38,9 @@
 	IBOutlet IWVideoView *videoPlaybackGLIncomingView;
 	NSWindow *videoPlaybackGLIncomingWindow;
 	DVDPlayerWindow *dvdPlayerWindow;
-	IBOutlet NSButton *dvdPlayerPauseButton;
 	
-	BOOL didComeFromBlack;
 	BOOL willGoToBlack;
 	BOOL incomingOnTop;
-	BOOL isPhoto;
 	NSTimer *crossFadeTimer;
 	float mediaWindowAlpha;
 	
@@ -73,26 +68,23 @@
 	
 	IBOutlet id backgroundMediaMixer;
 	
-	BOOL presenterShouldShowText;
-	BOOL presenterShouldShowVideo;
 }
 
 @property (readonly) NSMutableArray *serviceList;
 
 - (IBAction)toggleNetworkNodeSettings:(id)sender;
 - (IBAction)toggleNetworkNodeReceiver:(id)sender;
-- (IBAction)setNodeDrawsBackground:(id)sender;
-- (IBAction)setNodeOverrideFormatting:(id)sender;
-- (IBAction)setNodeOverrideLayout:(id)sender;
 
 - (void)runDVDSetup;
-- (void)deviceDidMount:(NSNotification *)notification;
 - (BOOL)searchMountedDVD;
 - (BOOL)openMedia:(NSString *)media isVolume:(BOOL)isVolume;
 - (BOOL)isValidMedia:(NSString *)inPath folder:(FSRef *)fileRefP;
 - (void)logMediaInfo;
 - (void)closeMedia;
 - (BOOL)hasMedia;
+
+- (void)runThumbnailSetup;
+
 - (void)runDVDPlay;
 - (void)runDVDStop;
 - (void)runDVDScanForward;
@@ -100,16 +92,6 @@
 - (void)runDVDJumpForward;
 - (void)runDVDJumpBackward;
 - (void)runDVDBackToMenu;
-
-- (void)applyPresentationMode:(int)mode;
-- (BOOL)presenterShouldShowText;
-- (BOOL)presenterShouldShowVideo;
-- (IBAction)switchToModeBlack:(id)sender;
-- (IBAction)switchToModeText:(id)sender;
-- (IBAction)switchToModeVideo:(id)sender;
-- (IBAction)switchToModeBoth:(id)sender;
-
-- (void)runThumbnailSetup;
 
 - (IBAction)newPlaylist:(id)sender;
 - (IBAction)loadRecent:(id)sender;
