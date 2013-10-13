@@ -179,10 +179,12 @@
         NSString *songName = selectedSong.playlistTitle;
         
         // Use the name of the song as the location of the song file
-        NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", songName];
+        NSString *worshipSlideFile = [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", songName] stringByExpandingTildeInPath];
         
         // Check to see if the song file exists or not
-        if ([[NSFileManager defaultManager] fileExistsAtPath: [worshipSlideFile stringByExpandingTildeInPath]]) {
+        if (![[NSFileManager defaultManager] fileExistsAtPath: worshipSlideFile]) {
+            NSBeginAlertSheet([NSString stringWithFormat: @"\"%@\" Not Found", songName], @"OK", nil, nil, documentWindow, self, NULL, NULL, nil, @"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist.");
+        } else {
             [docSlideViewer setWorshipSlides: nil notesSlides: nil mediaRefs: nil];
             
             // The song file exists, process the file
@@ -191,7 +193,7 @@
             NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
             [worshipTitleBar setStringValue: [songDisplayText componentsSeparatedByString:@"."][0]];
             
-            NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
+            NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: worshipSlideFile];
             
             [docSlideViewer setWorshipSlides:readSlideFileContents[@"Slides"] notesSlides:readSlideFileContents[@"Flags"] mediaRefs:readSlideFileContents[@"Media"]];
             
@@ -293,14 +295,6 @@
             
             //[songDisplaySplitter release];
             //[readSlideFileContents release];
-        } else {
-            // The song file does not exist
-            NSAlert *alert = [[NSAlert alloc] init];
-            [alert addButtonWithTitle:@"OK"];
-            [alert setMessageText:[NSString stringWithFormat: @"\"%@\" Not Found", songName]];
-            [alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
-            [alert setAlertStyle:NSCriticalAlertStyle];
-            [alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
         }
     }
 }
