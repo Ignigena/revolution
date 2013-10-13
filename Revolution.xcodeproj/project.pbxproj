@@ -212,7 +212,6 @@
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		32DBCF750370BD2300C91783 /* iWorship_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iWorship_Prefix.pch; sourceTree = "<group>"; };
 		500854870CB4B0ED00A773E1 /* IWSlideEditor.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IWSlideEditor.h; sourceTree = "<group>"; };
 		500854880CB4B0ED00A773E1 /* IWSlideEditor.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = IWSlideEditor.m; sourceTree = "<group>"; };
 		5008D22C0C77F1BE003D870C /* SlideHighlight-CLL.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "SlideHighlight-CLL.tiff"; path = "Resources/SlideHighlight-CLL.tiff"; sourceTree = "<group>"; };
@@ -499,6 +498,8 @@
 		2A37F4ABFDCFA73011CA2CEA /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				506564770B40FCBB00670737 /* Controller.h */,
+				506564780B40FCBB00670737 /* Controller.m */,
 				864502740EAE9106009DEAE7 /* NSImage+QuickLook.m */,
 				864502750EAE9106009DEAE7 /* NSImage+QuickLook.h */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
@@ -518,12 +519,9 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32DBCF750370BD2300C91783 /* iWorship_Prefix.pch */,
 				5024B1210B4C379200D4249E /* Presenter.h */,
 				5024B1220B4C379200D4249E /* Presenter.m */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
-				506564770B40FCBB00670737 /* Controller.h */,
-				506564780B40FCBB00670737 /* Controller.m */,
 				507C37810B6558A200870D74 /* SlideTitleBar.h */,
 				507C37820B6558A200870D74 /* SlideTitleBar.m */,
 				507C38E10B66951100870D74 /* FormattingBar.h */,

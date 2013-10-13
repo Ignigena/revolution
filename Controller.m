@@ -18,68 +18,25 @@
 		NSRunCriticalAlertPanel(@"Secondary Monitor Required", @"ProWorship requires a secondary monitor, or projector connected to your graphics card, in order to present lyrics.  Without a secondary monitor, you will only be able to manage your library and playlist.", @"OK", nil, nil);
 		[NSApp requestUserAttention: 0];
 	}
-	
-	// User preferences initiation
-	NSMutableDictionary *defaultValues = [NSMutableDictionary dictionary];
-    NSUserDefaults *defaults;
-	
-	NSRect screenArea = NSMakeRect(50,[[[NSScreen screens] objectAtIndex:0] frame].size.height/2,800,600);
-	
+
 	// Setup presentation windows if more than one screen is present
 	if ([[NSScreen screens] count] > 1) {
-		screenArea = [[[NSScreen screens] objectAtIndex:1] frame];
+		NSRect screenArea = [[[NSScreen screens] objectAtIndex:1] frame];
 		presentationWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-	//} else {
-	//	presentationWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-	//}
-	
+
 		mainPresenterView = [[Presenter alloc] initWithFrame: screenArea];
-	
+
 		// Initialize the window containing the text layer
 		[presentationWindow setLevel:NSScreenSaverWindowLevel+4];
 		[presentationWindow setOpaque:NO];
 		[presentationWindow setBackgroundColor:[NSColor clearColor]];
 		[presentationWindow setContentView: mainPresenterView];
 		[presentationWindow orderFront:nil];
-		
-		// Initialize the Quartz composition
-		/*qcPresentationBackground = [[QCView alloc] init];
-		[qcPresentationBackground setAutostartsRendering:YES];
-		[qcPresentationBackground setFrame: screenArea];
-		[qcPresentationBackground setMaxRenderingFrameRate: 30.0];
-		[qcPresentationBackground loadCompositionFromFile: [[NSBundle mainBundle] pathForResource:@"Presentation Background Mixer" ofType:@"qtz"]];
-		[qcPresentationBackground setValue:0 forInputKey:@"LiveEnable"];*/
-		
-		// Initialize the window containing the video layer
-		/*presentationBGWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];;
-		[presentationBGWindow setLevel:NSScreenSaverWindowLevel];
-		[presentationBGWindow setOpaque:NO];
-		[presentationBGWindow setBackgroundColor:[NSColor clearColor]];
-		[presentationBGWindow setContentView: qcPresentationBackground];
-		[presentationBGWindow orderFront:nil];*/
-		
-		/*videoPlaybackGLWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];;
-		[videoPlaybackGLWindow setLevel:NSScreenSaverWindowLevel+3];
-		[videoPlaybackGLWindow setOpaque:NO];
-		[videoPlaybackGLWindow setBackgroundColor:[NSColor blackColor]];
-		[videoPlaybackGLWindow setContentView: videoPlaybackGLView];
-		[videoPlaybackGLWindow orderFront:nil];
-		
-		[videoPlaybackGLView update];
-		
-		videoPlaybackGLIncomingWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO screen:[NSScreen mainScreen]];;
-		[videoPlaybackGLIncomingWindow setLevel:NSScreenSaverWindowLevel+2];
-		[videoPlaybackGLIncomingWindow setOpaque:NO];
-		[videoPlaybackGLIncomingWindow setBackgroundColor:[NSColor blackColor]];
-		[videoPlaybackGLIncomingWindow setContentView: videoPlaybackGLIncomingView];
-		[videoPlaybackGLIncomingWindow orderFront:nil];
-		
-		[videoPlaybackGLIncomingView update];*/
-		
+
 		incomingOnTop = NO;
 		mediaWindowAlpha = 1.0;
     }
-	
+
 	// Create all the necessary application support directories
 	NSFileManager *manager = [NSFileManager defaultManager];
 	
@@ -92,16 +49,16 @@
 	}
 	if ([manager fileExistsAtPath: [@"~/Movies/ProWorship/" stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[@"~/Movies/ProWorship/" stringByExpandingTildeInPath] attributes: nil]; }
 	if ([manager fileExistsAtPath: [@"~/Pictures/ProWorship/" stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[@"~/Pictures/ProWorship/" stringByExpandingTildeInPath] attributes: nil]; }
-	
+
 	[networkNodeContent setFrameOrigin: NSMakePoint(660, 25)];
-	
+
 	// Open up the splash screen window
 	[splasher center];
 	[splasher makeKeyAndOrderFront: nil];
-	
+
 	// Setup thumbnails for the media browser
 	[self runThumbnailSetup];
-	
+
 	// Register for notifications
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidMount:) name:NSWorkspaceDidMountNotification object:NULL];
 }
