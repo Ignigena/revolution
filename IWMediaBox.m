@@ -1,5 +1,3 @@
-#import <DVDPlayback/DVDPlayback.h>
-
 #import "IWMediaBox.h"
 #import "Controller.h"
 #import "MediaThumbnailBrowser.h"
@@ -271,15 +269,8 @@
 {
 	[videosTab setState: NSOnState];
 	[photosTab setState: NSOffState];
-	[dvdTab setState: NSOffState];
 	[liveTab setState: NSOffState];
 	[scriptureTab setState: NSOffState];
-	
-	if ([dvdPlaybackView superview]==self)
-		[dvdPlaybackView removeFromSuperview];
-		
-	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
 	if ([livePlaybackView superview]==self)
 		[livePlaybackView removeFromSuperview];
@@ -307,15 +298,8 @@
 {
 	[videosTab setState: NSOffState];
 	[photosTab setState: NSOnState];
-	[dvdTab setState: NSOffState];
 	[liveTab setState: NSOffState];
 	[scriptureTab setState: NSOffState];
-	
-	if ([dvdPlaybackView superview]==self)
-		[dvdPlaybackView removeFromSuperview];
-	
-	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
 	if ([livePlaybackView superview]==self)
 		[livePlaybackView removeFromSuperview];
@@ -339,53 +323,15 @@
 	[self setNeedsDisplay: YES];
 }
 
-- (IBAction)selectDVDTab:(id)sender
-{
-	[videosTab setState: NSOffState];
-	[photosTab setState: NSOffState];
-	[dvdTab setState: NSOnState];
-	[liveTab setState: NSOffState];
-	[scriptureTab setState: NSOffState];
-	
-	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
-	
-	if ([dvdPlaybackView superview]!=self)
-		[self addSubview: dvdPlaybackView];
-	
-	if ([livePlaybackView superview]==self)
-		[livePlaybackView removeFromSuperview];
-	
-	if (searchPopup)
-		[self toggleSearchPopup: nil];
-	
-	if ([scriptureView superview]==self)
-		[scriptureView removeFromSuperview];
-		
-	[dvdPlaybackView setFrameOrigin: NSMakePoint(320,27)];
-	
-	[loopingButton setHidden: YES];
-	[audioButton setHidden: YES];
-	[assignToSlideButton setHidden: YES];
-	[goToBlackButton setHidden: NO];
-	
-	[captureSession stopRunning];
-	
-	[self setNeedsDisplay: YES];
-}
-
 - (IBAction)selectLiveTab:(id)sender
 {
 	[videosTab setState: NSOffState];
 	[photosTab setState: NSOffState];
-	[dvdTab setState: NSOffState];
 	[liveTab setState: NSOnState];
 	[scriptureTab setState: NSOffState];
 	
 	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
 
-	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
-	
 	if ([livePlaybackView superview]!=self)
 		[self addSubview: livePlaybackView];
 	
@@ -414,14 +360,10 @@
 {
 	[videosTab setState: NSOffState];
 	[photosTab setState: NSOffState];
-	[dvdTab setState: NSOffState];
 	[liveTab setState: NSOffState];
 	[scriptureTab setState: NSOnState];
 	
 	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
-
-	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
 	if ([livePlaybackView superview]==self)
 		[livePlaybackView removeFromSuperview];
@@ -460,46 +402,6 @@
 - (IBAction)juiceGoToBlack:(id)sender
 {
 	[[NSApp delegate] juiceGoToBlack:sender];
-}
-
-//////////////////////////
-// DVD Playback Methods //
-//////////////////////////
-
-- (IBAction)playDVDVideo:(id)sender
-{
-	[self juiceGoToBlack: self];
-}
-
-- (IBAction)fastForwardDVDVideo:(id)sender
-{
-	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
-}
-
-- (IBAction)rewindDVDVideo:(id)sender
-{
-	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
-}
-
-- (IBAction)skipForwardDVDVideo:(id)sender
-{
-
-}
-
-- (IBAction)skipBackwardDVDVideo:(id)sender
-{
-
-}
-
-- (IBAction)returnToMenuDVDVideo:(id)sender
-{
-}
-
-- (IBAction)ejectMountedDVD:(id)sender
-{
-
 }
 
 ////////////////////////
@@ -564,7 +466,7 @@
 		if (![[scriptureVerses stringValue] isEqualToString: @""])
 			scripturePreviewText = [scripturePreviewText stringByAppendingString: [NSString stringWithFormat: @":%@", [scriptureVerses stringValue]]];
 		
-		scripturePreviewText = [scripturePreviewText stringByAppendingString: [NSString stringWithString: @"}"]];
+		scripturePreviewText = [scripturePreviewText stringByAppendingString: @"}"];
 		
 		NSAttributedString *scripturePreviewTextRich = [[NSAttributedString alloc] initWithRTF:[scripturePreviewText dataUsingEncoding:NSASCIIStringEncoding] documentAttributes:nil];
 		

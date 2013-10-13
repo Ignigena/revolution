@@ -8,7 +8,6 @@
 {
 	IBOutlet id videosTab;
 	IBOutlet id photosTab;
-	IBOutlet id dvdTab;
 	IBOutlet id liveTab;
 	IBOutlet id scriptureTab;
 	
@@ -18,11 +17,9 @@
 	IBOutlet id goToBlackButton;
 	
 	IBOutlet id mediaThumbnailBrowser;
-	IBOutlet id dvdPlaybackView;
 	IBOutlet id livePlaybackView;
 	IBOutlet id scriptureView;
 	
-	IBOutlet id dvdPlayPauseButton;
 	IBOutlet id liveVideoToggleButton;
 	
 	IBOutlet id videoSpeedSlider;
@@ -59,7 +56,6 @@
 
 - (IBAction)selectVideosTab:(id)sender;
 - (IBAction)selectPhotosTab:(id)sender;
-- (IBAction)selectDVDTab:(id)sender;
 - (IBAction)selectLiveTab:(id)sender;
 - (IBAction)selectScriptureTab:(id)sender;
 
@@ -67,14 +63,6 @@
 - (IBAction)toggleAudio:(id)sender;
 
 - (IBAction)juiceGoToBlack:(id)sender;
-
-- (IBAction)playDVDVideo:(id)sender;
-- (IBAction)fastForwardDVDVideo:(id)sender;
-- (IBAction)rewindDVDVideo:(id)sender;
-- (IBAction)skipForwardDVDVideo:(id)sender;
-- (IBAction)skipBackwardDVDVideo:(id)sender;
-- (IBAction)returnToMenuDVDVideo:(id)sender;
-- (IBAction)ejectMountedDVD:(id)sender;
 
 - (IBAction)toggleLiveVideo:(id)sender;
 

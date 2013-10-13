@@ -62,8 +62,6 @@
 		503CD3AD0CD2F0750045BE3D /* LiveVideo.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A70CD2F0750045BE3D /* LiveVideo.tiff */; };
 		503CD3AE0CD2F0750045BE3D /* Photos-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A80CD2F0750045BE3D /* Photos-On.tiff */; };
 		503CD3AF0CD2F0750045BE3D /* Photos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A90CD2F0750045BE3D /* Photos.tiff */; };
-		503CD3B00CD2F0750045BE3D /* DVD-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3AA0CD2F0750045BE3D /* DVD-On.tiff */; };
-		503CD3B10CD2F0750045BE3D /* DVD.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3AB0CD2F0750045BE3D /* DVD.tiff */; };
 		503CD3B90CD2F5EB0045BE3D /* Looping-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3B50CD2F5EB0045BE3D /* Looping-On.tiff */; };
 		503CD3BA0CD2F5EB0045BE3D /* Looping-Off.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3B60CD2F5EB0045BE3D /* Looping-Off.tiff */; };
 		503CD3BB0CD2F5EB0045BE3D /* Audio-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3B70CD2F5EB0045BE3D /* Audio-On.tiff */; };
@@ -72,10 +70,6 @@
 		503CD7A00CD3228A0045BE3D /* IWMediaBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 503CD79E0CD3228A0045BE3D /* IWMediaBox.m */; };
 		503CDA570CD4283C0045BE3D /* QuickCue-Close.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CDA560CD4283C0045BE3D /* QuickCue-Close.tiff */; };
 		5044E97C0D07B94A00A57AB0 /* SafeBorders.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5044E97B0D07B94A00A57AB0 /* SafeBorders.tiff */; };
-		50481E1B0CD9B735005CE922 /* DVDMenu-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50481E170CD9B735005CE922 /* DVDMenu-P.tiff */; };
-		50481E1C0CD9B735005CE922 /* DVDMenu.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50481E180CD9B735005CE922 /* DVDMenu.tiff */; };
-		50481E1D0CD9B735005CE922 /* DVDEject.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50481E190CD9B735005CE922 /* DVDEject.tiff */; };
-		50481E1E0CD9B735005CE922 /* DVDEject-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50481E1A0CD9B735005CE922 /* DVDEject-P.tiff */; };
 		504D76A30D41EAF70083C6A3 /* AssignToSlide.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 504D76A20D41EAF70083C6A3 /* AssignToSlide.tiff */; };
 		504D76DB0D41F4240083C6A3 /* IWVideoPreview.m in Sources */ = {isa = PBXBuildFile; fileRef = 504D76DA0D41F4240083C6A3 /* IWVideoPreview.m */; };
 		5052BB9A0CF7A52E0013563D /* FontSize.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5052BB990CF7A52E0013563D /* FontSize.tiff */; };
@@ -123,20 +117,6 @@
 		50B3E1C90B708F6F005BDFC1 /* LibraryListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */; };
 		50B3E6C70B7BBEA9005BDFC1 /* Credits.bak.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3E6C50B7BBEA9005BDFC1 /* Credits.bak.rtf */; };
 		50D3904B0CD983DC00A19A3F /* BP.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D3904A0CD983DC00A19A3F /* BP.tiff */; };
-		50D390C70CD9A64300A19A3F /* DVDPlay-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D390C50CD9A64300A19A3F /* DVDPlay-P.tiff */; };
-		50D390C80CD9A64300A19A3F /* DVDPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D390C60CD9A64300A19A3F /* DVDPlay.tiff */; };
-		50D3910C0CD9AC8700A19A3F /* DVDForward-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391000CD9AC8700A19A3F /* DVDForward-P.tiff */; };
-		50D3910D0CD9AC8700A19A3F /* DVDForward.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391010CD9AC8700A19A3F /* DVDForward.tiff */; };
-		50D3910E0CD9AC8700A19A3F /* DVDPause-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391020CD9AC8700A19A3F /* DVDPause-P.tiff */; };
-		50D3910F0CD9AC8700A19A3F /* DVDPause.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391030CD9AC8700A19A3F /* DVDPause.tiff */; };
-		50D391100CD9AC8700A19A3F /* DVDRewind-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391040CD9AC8700A19A3F /* DVDRewind-P.tiff */; };
-		50D391110CD9AC8700A19A3F /* DVDRewind.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391050CD9AC8700A19A3F /* DVDRewind.tiff */; };
-		50D391120CD9AC8700A19A3F /* DVDSkipBack-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391060CD9AC8700A19A3F /* DVDSkipBack-P.tiff */; };
-		50D391130CD9AC8700A19A3F /* DVDSkipBack.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391070CD9AC8700A19A3F /* DVDSkipBack.tiff */; };
-		50D391140CD9AC8700A19A3F /* DVDSkipForward-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391080CD9AC8700A19A3F /* DVDSkipForward-P.tiff */; };
-		50D391150CD9AC8700A19A3F /* DVDSkipForward.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D391090CD9AC8700A19A3F /* DVDSkipForward.tiff */; };
-		50D391160CD9AC8700A19A3F /* DVDStop-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D3910A0CD9AC8700A19A3F /* DVDStop-P.tiff */; };
-		50D391170CD9AC8700A19A3F /* DVDStop.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D3910B0CD9AC8700A19A3F /* DVDStop.tiff */; };
 		50E760BC0B5D963400940090 /* IWTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E760BB0B5D963400940090 /* IWTableView.m */; };
 		50E760DB0B5D97D700940090 /* IWTableCellText.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E760DA0B5D97D700940090 /* IWTableCellText.m */; };
 		50E769FC0B5FE29100940090 /* IWSplitView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E769FB0B5FE29100940090 /* IWSplitView.m */; };
@@ -273,8 +253,6 @@
 		503CD3A70CD2F0750045BE3D /* LiveVideo.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LiveVideo.tiff; path = "Resources/Media Panel/LiveVideo.tiff"; sourceTree = "<group>"; };
 		503CD3A80CD2F0750045BE3D /* Photos-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Photos-On.tiff"; path = "Resources/Media Panel/Photos-On.tiff"; sourceTree = "<group>"; };
 		503CD3A90CD2F0750045BE3D /* Photos.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Photos.tiff; path = "Resources/Media Panel/Photos.tiff"; sourceTree = "<group>"; };
-		503CD3AA0CD2F0750045BE3D /* DVD-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVD-On.tiff"; path = "Resources/Media Panel/DVD-On.tiff"; sourceTree = "<group>"; };
-		503CD3AB0CD2F0750045BE3D /* DVD.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVD.tiff; path = "Resources/Media Panel/DVD.tiff"; sourceTree = "<group>"; };
 		503CD3B50CD2F5EB0045BE3D /* Looping-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Looping-On.tiff"; path = "Resources/Media Panel/Looping-On.tiff"; sourceTree = "<group>"; };
 		503CD3B60CD2F5EB0045BE3D /* Looping-Off.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Looping-Off.tiff"; path = "Resources/Media Panel/Looping-Off.tiff"; sourceTree = "<group>"; };
 		503CD3B70CD2F5EB0045BE3D /* Audio-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Audio-On.tiff"; path = "Resources/Media Panel/Audio-On.tiff"; sourceTree = "<group>"; };
@@ -284,10 +262,6 @@
 		503CD79F0CD3228A0045BE3D /* IWMediaBox.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IWMediaBox.h; sourceTree = "<group>"; };
 		503CDA560CD4283C0045BE3D /* QuickCue-Close.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "QuickCue-Close.tiff"; path = "Resources/QuickCue-Close.tiff"; sourceTree = "<group>"; };
 		5044E97B0D07B94A00A57AB0 /* SafeBorders.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SafeBorders.tiff; path = Resources/SafeBorders.tiff; sourceTree = "<group>"; };
-		50481E170CD9B735005CE922 /* DVDMenu-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDMenu-P.tiff"; path = "Resources/DVDPlayer/DVDMenu-P.tiff"; sourceTree = "<group>"; };
-		50481E180CD9B735005CE922 /* DVDMenu.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDMenu.tiff; path = Resources/DVDPlayer/DVDMenu.tiff; sourceTree = "<group>"; };
-		50481E190CD9B735005CE922 /* DVDEject.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDEject.tiff; path = Resources/DVDPlayer/DVDEject.tiff; sourceTree = "<group>"; };
-		50481E1A0CD9B735005CE922 /* DVDEject-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDEject-P.tiff"; path = "Resources/DVDPlayer/DVDEject-P.tiff"; sourceTree = "<group>"; };
 		504D76A20D41EAF70083C6A3 /* AssignToSlide.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = AssignToSlide.tiff; path = "Resources/Media Panel/AssignToSlide.tiff"; sourceTree = "<group>"; };
 		504D76D90D41F4240083C6A3 /* IWVideoPreview.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWVideoPreview.h; sourceTree = "<group>"; };
 		504D76DA0D41F4240083C6A3 /* IWVideoPreview.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWVideoPreview.m; sourceTree = "<group>"; };
@@ -348,20 +322,6 @@
 		50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryListing.m; sourceTree = "<group>"; };
 		50B3E6C60B7BBEA9005BDFC1 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.bak.rtf; sourceTree = "<group>"; };
 		50D3904A0CD983DC00A19A3F /* BP.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BP.tiff; path = Resources/BP.tiff; sourceTree = "<group>"; };
-		50D390C50CD9A64300A19A3F /* DVDPlay-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDPlay-P.tiff"; path = "Resources/DVDPlayer/DVDPlay-P.tiff"; sourceTree = "<group>"; };
-		50D390C60CD9A64300A19A3F /* DVDPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDPlay.tiff; path = Resources/DVDPlayer/DVDPlay.tiff; sourceTree = "<group>"; };
-		50D391000CD9AC8700A19A3F /* DVDForward-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDForward-P.tiff"; path = "Resources/DVDPlayer/DVDForward-P.tiff"; sourceTree = "<group>"; };
-		50D391010CD9AC8700A19A3F /* DVDForward.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDForward.tiff; path = Resources/DVDPlayer/DVDForward.tiff; sourceTree = "<group>"; };
-		50D391020CD9AC8700A19A3F /* DVDPause-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDPause-P.tiff"; path = "Resources/DVDPlayer/DVDPause-P.tiff"; sourceTree = "<group>"; };
-		50D391030CD9AC8700A19A3F /* DVDPause.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDPause.tiff; path = Resources/DVDPlayer/DVDPause.tiff; sourceTree = "<group>"; };
-		50D391040CD9AC8700A19A3F /* DVDRewind-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDRewind-P.tiff"; path = "Resources/DVDPlayer/DVDRewind-P.tiff"; sourceTree = "<group>"; };
-		50D391050CD9AC8700A19A3F /* DVDRewind.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDRewind.tiff; path = Resources/DVDPlayer/DVDRewind.tiff; sourceTree = "<group>"; };
-		50D391060CD9AC8700A19A3F /* DVDSkipBack-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDSkipBack-P.tiff"; path = "Resources/DVDPlayer/DVDSkipBack-P.tiff"; sourceTree = "<group>"; };
-		50D391070CD9AC8700A19A3F /* DVDSkipBack.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDSkipBack.tiff; path = Resources/DVDPlayer/DVDSkipBack.tiff; sourceTree = "<group>"; };
-		50D391080CD9AC8700A19A3F /* DVDSkipForward-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDSkipForward-P.tiff"; path = "Resources/DVDPlayer/DVDSkipForward-P.tiff"; sourceTree = "<group>"; };
-		50D391090CD9AC8700A19A3F /* DVDSkipForward.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDSkipForward.tiff; path = Resources/DVDPlayer/DVDSkipForward.tiff; sourceTree = "<group>"; };
-		50D3910A0CD9AC8700A19A3F /* DVDStop-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "DVDStop-P.tiff"; path = "Resources/DVDPlayer/DVDStop-P.tiff"; sourceTree = "<group>"; };
-		50D3910B0CD9AC8700A19A3F /* DVDStop.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DVDStop.tiff; path = Resources/DVDPlayer/DVDStop.tiff; sourceTree = "<group>"; };
 		50E760BA0B5D963400940090 /* IWTableView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IWTableView.h; sourceTree = "<group>"; };
 		50E760BB0B5D963400940090 /* IWTableView.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = IWTableView.m; sourceTree = "<group>"; };
 		50E760D90B5D97D700940090 /* IWTableCellText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IWTableCellText.h; sourceTree = "<group>"; };
@@ -544,7 +504,6 @@
 				86C07E6E0ECA16C0001676F7 /* SwitchRight.tiff */,
 				864502B60EAEF6EE009DEAE7 /* SearchTab.tiff */,
 				503CD3920CD2E8500045BE3D /* Media Panel */,
-				50D390C90CD9A64500A19A3F /* DVD Playback */,
 				50EA45050BF956F500685860 /* Preferences */,
 				507509EA0C0D30E800B902E2 /* Formatting Bar */,
 				5008D23D0C77F1C5003D870C /* Slides */,
@@ -648,8 +607,6 @@
 				503CD3A70CD2F0750045BE3D /* LiveVideo.tiff */,
 				503CD3A80CD2F0750045BE3D /* Photos-On.tiff */,
 				503CD3A90CD2F0750045BE3D /* Photos.tiff */,
-				503CD3AA0CD2F0750045BE3D /* DVD-On.tiff */,
-				503CD3AB0CD2F0750045BE3D /* DVD.tiff */,
 				864502780EAEA55B009DEAE7 /* Scripture-On.tiff */,
 				864502790EAEA55B009DEAE7 /* Scripture.tiff */,
 			);
@@ -730,31 +687,6 @@
 				5008D77A0C785566003D870C /* DarkScrollerArrowDown1.tif */,
 			);
 			name = "Subclassed Interface";
-			sourceTree = "<group>";
-		};
-		50D390C90CD9A64500A19A3F /* DVD Playback */ = {
-			isa = PBXGroup;
-			children = (
-				50481E170CD9B735005CE922 /* DVDMenu-P.tiff */,
-				50481E180CD9B735005CE922 /* DVDMenu.tiff */,
-				50481E190CD9B735005CE922 /* DVDEject.tiff */,
-				50481E1A0CD9B735005CE922 /* DVDEject-P.tiff */,
-				50D391000CD9AC8700A19A3F /* DVDForward-P.tiff */,
-				50D391010CD9AC8700A19A3F /* DVDForward.tiff */,
-				50D391020CD9AC8700A19A3F /* DVDPause-P.tiff */,
-				50D391030CD9AC8700A19A3F /* DVDPause.tiff */,
-				50D391040CD9AC8700A19A3F /* DVDRewind-P.tiff */,
-				50D391050CD9AC8700A19A3F /* DVDRewind.tiff */,
-				50D391060CD9AC8700A19A3F /* DVDSkipBack-P.tiff */,
-				50D391070CD9AC8700A19A3F /* DVDSkipBack.tiff */,
-				50D391080CD9AC8700A19A3F /* DVDSkipForward-P.tiff */,
-				50D391090CD9AC8700A19A3F /* DVDSkipForward.tiff */,
-				50D3910A0CD9AC8700A19A3F /* DVDStop-P.tiff */,
-				50D3910B0CD9AC8700A19A3F /* DVDStop.tiff */,
-				50D390C50CD9A64300A19A3F /* DVDPlay-P.tiff */,
-				50D390C60CD9A64300A19A3F /* DVDPlay.tiff */,
-			);
-			name = "DVD Playback";
 			sourceTree = "<group>";
 		};
 		50E760BD0B5D964200940090 /* Interface Elements */ = {
@@ -921,8 +853,6 @@
 				503CD3AD0CD2F0750045BE3D /* LiveVideo.tiff in Resources */,
 				503CD3AE0CD2F0750045BE3D /* Photos-On.tiff in Resources */,
 				503CD3AF0CD2F0750045BE3D /* Photos.tiff in Resources */,
-				503CD3B00CD2F0750045BE3D /* DVD-On.tiff in Resources */,
-				503CD3B10CD2F0750045BE3D /* DVD.tiff in Resources */,
 				503CD3B90CD2F5EB0045BE3D /* Looping-On.tiff in Resources */,
 				503CD3BA0CD2F5EB0045BE3D /* Looping-Off.tiff in Resources */,
 				503CD3BB0CD2F5EB0045BE3D /* Audio-On.tiff in Resources */,
@@ -931,24 +861,6 @@
 				503CDA570CD4283C0045BE3D /* QuickCue-Close.tiff in Resources */,
 				5061C5D20CD938480021CFDB /* TabsFiller.tiff in Resources */,
 				50D3904B0CD983DC00A19A3F /* BP.tiff in Resources */,
-				50D390C70CD9A64300A19A3F /* DVDPlay-P.tiff in Resources */,
-				50D390C80CD9A64300A19A3F /* DVDPlay.tiff in Resources */,
-				50D3910C0CD9AC8700A19A3F /* DVDForward-P.tiff in Resources */,
-				50D3910D0CD9AC8700A19A3F /* DVDForward.tiff in Resources */,
-				50D3910E0CD9AC8700A19A3F /* DVDPause-P.tiff in Resources */,
-				50D3910F0CD9AC8700A19A3F /* DVDPause.tiff in Resources */,
-				50D391100CD9AC8700A19A3F /* DVDRewind-P.tiff in Resources */,
-				50D391110CD9AC8700A19A3F /* DVDRewind.tiff in Resources */,
-				50D391120CD9AC8700A19A3F /* DVDSkipBack-P.tiff in Resources */,
-				50D391130CD9AC8700A19A3F /* DVDSkipBack.tiff in Resources */,
-				50D391140CD9AC8700A19A3F /* DVDSkipForward-P.tiff in Resources */,
-				50D391150CD9AC8700A19A3F /* DVDSkipForward.tiff in Resources */,
-				50D391160CD9AC8700A19A3F /* DVDStop-P.tiff in Resources */,
-				50D391170CD9AC8700A19A3F /* DVDStop.tiff in Resources */,
-				50481E1B0CD9B735005CE922 /* DVDMenu-P.tiff in Resources */,
-				50481E1C0CD9B735005CE922 /* DVDMenu.tiff in Resources */,
-				50481E1D0CD9B735005CE922 /* DVDEject.tiff in Resources */,
-				50481E1E0CD9B735005CE922 /* DVDEject-P.tiff in Resources */,
 				50A6DEDD0CE9676A00A7E1C9 /* App.icns in Resources */,
 				5031737C0CF69F0700EEFF79 /* Icon-SongFile.tiff in Resources */,
 				503173A60CF6A3B900EEFF79 /* Icon-Folder.tiff in Resources */,

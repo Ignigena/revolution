@@ -777,7 +777,7 @@ Gw
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
                 <button toolTip="Scripture lookup" id="2468">
-                    <rect key="frame" x="290" y="15" width="30" height="33"/>
+                    <rect key="frame" x="290" y="48" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Scripture" imagePosition="only" alignment="center" alternateImage="Scripture-On" inset="2" id="2469">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -799,7 +799,7 @@ Gw
                     </connections>
                 </button>
                 <imageView id="1075">
-                    <rect key="frame" x="290" y="-33" width="30" height="48"/>
+                    <rect key="frame" x="290" y="0.0" width="30" height="48"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="TabsFiller" id="2383"/>
                 </imageView>
@@ -808,7 +808,7 @@ Gw
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                     <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="1kH-Ac-Phi">
                         <rect key="frame" x="0.0" y="0.0" width="573" height="155"/>
-                        <autoresizingMask key="autoresizingMask"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <customView id="949" customClass="MediaThumbnailBrowser">
                                 <rect key="frame" x="0.0" y="0.0" width="573" height="145"/>
@@ -816,12 +816,12 @@ Gw
                             </customView>
                         </subviews>
                     </clipView>
-                    <scroller key="horizontalScroller" verticalHuggingPriority="750" id="2417">
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" id="2417">
                         <rect key="frame" x="-100" y="-100" width="586" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" id="2416">
-                        <rect key="frame" x="558" y="0.0" width="15" height="155"/>
+                        <rect key="frame" x="557" y="0.0" width="16" height="155"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
@@ -858,19 +858,8 @@ Gw
                         <action selector="toggleLooping:" target="846" id="1141"/>
                     </connections>
                 </button>
-                <button toolTip="DVD player" id="851">
-                    <rect key="frame" x="290" y="81" width="30" height="33"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="DVD" imagePosition="only" alignment="center" alternateImage="DVD-On" inset="2" id="2379">
-                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system" size="10"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="selectDVDTab:" target="846" id="893"/>
-                    </connections>
-                </button>
                 <button toolTip="Live video background" id="850">
-                    <rect key="frame" x="290" y="48" width="30" height="33"/>
+                    <rect key="frame" x="290" y="81" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LiveVideo" imagePosition="only" alignment="center" alternateImage="LiveVideo-On" inset="2" id="2378">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -922,9 +911,6 @@ Gw
                 <outlet property="assignToSlideButton" destination="2004" id="2693"/>
                 <outlet property="audioButton" destination="855" id="2692"/>
                 <outlet property="captureView" destination="2748" id="2777"/>
-                <outlet property="dvdPlayPauseButton" destination="1146" id="1560"/>
-                <outlet property="dvdPlaybackView" destination="1145" id="1149"/>
-                <outlet property="dvdTab" destination="851" id="889"/>
                 <outlet property="goToBlackButton" destination="856" id="2694"/>
                 <outlet property="livePlaybackView" destination="1237" id="1254"/>
                 <outlet property="liveTab" destination="850" id="890"/>
@@ -946,165 +932,6 @@ Gw
                 <outlet property="videoDeviceSelector" destination="2719" id="2776"/>
                 <outlet property="videosTab" destination="848" id="887"/>
             </connections>
-        </customView>
-        <customView id="1145" userLabel="DVDPlayback">
-            <rect key="frame" x="0.0" y="0.0" width="573" height="155"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <button wantsLayer="YES" verticalHuggingPriority="750" id="2484">
-                    <rect key="frame" x="293" y="33" width="31" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="roundTextured" title="eject" bezelStyle="texturedRounded" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2485">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
-                    </buttonCell>
-                </button>
-                <button wantsLayer="YES" verticalHuggingPriority="750" id="2481">
-                    <rect key="frame" x="250" y="33" width="35" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="roundTextured" title="menu" bezelStyle="texturedRounded" alignment="center" controlSize="mini" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2482">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="miniSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="returnToMenuDVDVideo:" target="846" id="2486"/>
-                    </connections>
-                </button>
-                <textField verticalHuggingPriority="750" id="2470" customClass="IWTableHeaderTextField">
-                    <rect key="frame" x="1" y="131" width="573" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="DVD Playback Controls" id="2471">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button wantsLayer="YES" id="1161">
-                    <rect key="frame" x="347" y="67" width="35" height="35"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="DVDSkipForward" imagePosition="overlaps" alignment="center" alternateImage="DVDSkipForward-P" imageScaling="proportionallyDown" inset="2" id="2391">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="skipForwardDVDVideo:" target="846" id="1228"/>
-                    </connections>
-                </button>
-                <button wantsLayer="YES" id="1159">
-                    <rect key="frame" x="193" y="67" width="35" height="35"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="DVDSkipBack" imagePosition="overlaps" alignment="center" alternateImage="DVDSkipBack-P" imageScaling="proportionallyDown" inset="2" id="2390">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="skipBackwardDVDVideo:" target="846" id="1229"/>
-                    </connections>
-                </button>
-                <button wantsLayer="YES" id="1157">
-                    <rect key="frame" x="226" y="61" width="41" height="41"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="DVDRewind" imagePosition="overlaps" alignment="center" alternateImage="DVDRewind-P" imageScaling="proportionallyDown" inset="2" id="2389">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="system" size="10"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="rewindDVDVideo:" target="846" id="1230"/>
-                    </connections>
-                </button>
-                <button wantsLayer="YES" id="1155">
-                    <rect key="frame" x="308" y="61" width="41" height="41"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="DVDForward" imagePosition="overlaps" alignment="center" alternateImage="DVDForward-P" imageScaling="proportionallyDown" inset="2" id="2388">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="system" size="10"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="fastForwardDVDVideo:" target="846" id="1231"/>
-                    </connections>
-                </button>
-                <button wantsLayer="YES" id="1146">
-                    <rect key="frame" x="265" y="57" width="45" height="45"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <decimal key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="DVDPlay" imagePosition="overlaps" alignment="center" alternateImage="DVDPlay-P" imageScaling="proportionallyDown" inset="2" id="2387">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="system" size="10"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="playDVDVideo:" target="846" id="1154"/>
-                    </connections>
-                </button>
-            </subviews>
         </customView>
         <customView id="1237" userLabel="LiveVideo">
             <rect key="frame" x="0.0" y="0.0" width="573" height="155"/>
@@ -1162,7 +989,7 @@ Gw
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="1869">
-                <rect key="frame" x="7" y="11" width="415" height="201"/>
+                <rect key="frame" x="0.0" y="0.0" width="415" height="201"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="1877">
@@ -1696,18 +1523,6 @@ DQ
         <image name="AssignToSlide" width="80" height="19"/>
         <image name="Audio-Off" width="31" height="19"/>
         <image name="Audio-On" width="31" height="19"/>
-        <image name="DVD" width="30" height="33"/>
-        <image name="DVD-On" width="30" height="33"/>
-        <image name="DVDForward" width="41" height="41"/>
-        <image name="DVDForward-P" width="41" height="41"/>
-        <image name="DVDPlay" width="45" height="45"/>
-        <image name="DVDPlay-P" width="45" height="45"/>
-        <image name="DVDRewind" width="41" height="41"/>
-        <image name="DVDRewind-P" width="41" height="41"/>
-        <image name="DVDSkipBack" width="35" height="35"/>
-        <image name="DVDSkipBack-P" width="35" height="35"/>
-        <image name="DVDSkipForward" width="35" height="35"/>
-        <image name="DVDSkipForward-P" width="35" height="35"/>
         <image name="GoToBlack" width="80" height="19"/>
         <image name="InsertPlaylist" width="99" height="19"/>
         <image name="InsertSong" width="89" height="19"/>
