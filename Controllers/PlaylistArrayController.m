@@ -6,6 +6,9 @@
 //
 //
 
+#import "MyDocument.h"
+#import "Controller.h"
+#import "Playlist.h"
 #import "PlaylistArrayController.h"
 
 #define PlaylistDataType @"RevolutionPlaylist"
@@ -15,6 +18,20 @@
 - (void) awakeFromNib
 {
 	[playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PlaylistDataType, nil]];
+}
+
+// Called whenever the table selection changes
+- (void)tableViewSelectionDidChange:(NSNotification *)notification
+{
+    MyDocument *sharedDocument = [[NSDocumentController sharedDocumentController] currentDocument];
+    
+    // Just make sure that the user is clicking on an actual row
+    if ([[notification object] selectedRow] < 0 ||
+        [[notification object] selectedRow] >= [self.arrangedObjects count]) {
+        [sharedDocument playlistSelectWithID: -1];
+    } else {
+        [sharedDocument playlistSelectWithID: [[notification object] selectedRow]];
+    }	
 }
 
 - (BOOL)draggingEnabled

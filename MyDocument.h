@@ -64,6 +64,8 @@
 
 @property (copy) NSMutableArray *playlist;
 
+- (void)playlistSelectWithID:(int)songID;
+
 - (void)checkEmptyLibrary;
 - (IBAction)removeFromPlaylist:(id)sender;
 - (IBAction)closePlaylistSheet:(id)sender;

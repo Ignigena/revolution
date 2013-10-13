@@ -14,6 +14,7 @@
 #import "RSDarkScroller.h"
 #import "IWTableCellText.h"
 #import "LibraryListing.h"
+#import "Playlist.h"
 
 @implementation MyDocument
 
@@ -147,6 +148,161 @@
 	return YES;
 }
 
+- (void)playlistSelectWithID:(int)songID {
+    // Blank out the presenter screen.
+	//[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
+    
+    // Prevent data loss if the user is currently editing a slide.
+    /*if ([[docSlideViewer worshipSlides] count] > 0)
+        [docSlideViewer saveAllSlidesForSong: previousSelectedPlaylist];
+    previousSelectedPlaylist = songName;*/
+    
+    if (songID == -1) {
+        // Empty the slide viewer
+        [docSlideViewer setWorshipSlides:nil notesSlides:nil mediaRefs:nil];
+        
+        // Reset the title bar
+        [worshipTitleBar setStringValue: @""];
+        
+        // Hide the CCLI bar and button
+        [worshipCCLIBar setHidden: YES];
+        [worshipCCLIButton setHidden: YES];
+        
+        // Disable the toolbar buttons
+        [toolbarNewSlide setEnabled: NO];
+        [toolbarNextSlide setEnabled: NO];
+        [toolbarPrevSlide setEnabled: NO];
+    } else {
+        Playlist *selectedSong = playlist[songID];
+        NSString *songName = selectedSong.playlistTitle;
+        
+        // Use the name of the song as the location of the song file
+        NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", songName];
+        
+        // Check to see if the song file exists or not
+        if ([[NSFileManager defaultManager] fileExistsAtPath: [worshipSlideFile stringByExpandingTildeInPath]]) {
+            [docSlideViewer setWorshipSlides: nil notesSlides: nil mediaRefs: nil];
+            
+            // The song file exists, process the file
+            [docSlideViewer setEditor: NO];
+            NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [songName componentsSeparatedByString:@"/"]];
+            NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
+            [worshipTitleBar setStringValue: [songDisplayText componentsSeparatedByString:@"."][0]];
+            
+            NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
+            
+            [docSlideViewer setWorshipSlides:readSlideFileContents[@"Slides"] notesSlides:readSlideFileContents[@"Flags"] mediaRefs:readSlideFileContents[@"Media"]];
+            
+            NSLog(@"READ: CCLI information");
+            
+            // Read CCLI information
+            NSString *ccliOverviewText = @"";
+            
+            if (readSlideFileContents[@"CCLI Copyright Year"]) {
+                [songCopyright setStringValue: readSlideFileContents[@"CCLI Copyright Year"]];
+                ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", readSlideFileContents[@"CCLI Copyright Year"]]];
+            } else {
+                [songCopyright setStringValue: @""];
+            }
+            
+            if (readSlideFileContents[@"CCLI Artist"]) {
+                [songArtist setStringValue: readSlideFileContents[@"CCLI Artist"]];
+                ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", readSlideFileContents[@"CCLI Artist"]]];
+            } else {
+                [songArtist setStringValue: @""];
+            }
+            
+            if (readSlideFileContents[@"CCLI Publisher"]) {
+                [songPublisher setStringValue: readSlideFileContents[@"CCLI Publisher"]];
+                ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", readSlideFileContents[@"CCLI Publisher"]]];
+            } else {
+                [songPublisher setStringValue: @""];
+            }
+            
+            if (readSlideFileContents[@"CCLI Song Number"]) {
+                [songNumber setStringValue: readSlideFileContents[@"CCLI Song Number"]];
+            } else {
+                [songNumber setStringValue: @""];
+            }
+            
+            [worshipCCLIBar setStringValue: ccliOverviewText];
+            
+            // Autosize and reposition the title bar and CCLI information
+            [worshipTitleBar setFrame:NSMakeRect([worshipTitleBar frame].origin.x, [worshipTitleBar frame].origin.y, [[worshipTitleBar cell] cellSize].width, [worshipTitleBar frame].size.height)];
+            [worshipCCLIBar setFrameOrigin:NSMakePoint([worshipTitleBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [[worshipTitleBar cell] cellSize].width] intValue], [worshipCCLIBar frame].origin.y)];
+            [worshipCCLIBar setFrame:NSMakeRect([worshipCCLIBar frame].origin.x, [worshipCCLIBar frame].origin.y, [[worshipCCLIBar cell] cellSize].width, [worshipCCLIBar frame].size.height)];
+            [worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];
+            
+            [worshipCCLIBar setHidden: NO];
+            [worshipCCLIButton setHidden: NO];
+            
+            [[worshipTitleBar superview] setNeedsDisplay: YES];
+            
+            // Set up the slide viewer pane
+            [docSlideScroller setHasVerticalScroller: YES];
+            [docSlideViewer setClickedSlideAtIndex: -1];
+            
+            // Enable the toolbar buttons
+            [toolbarNewSlide setEnabled: YES];
+            [toolbarNextSlide setEnabled: YES];
+            [toolbarPrevSlide setEnabled: YES];
+            
+            // Reset the undo manager
+            [[self undoManager] removeAllActions];
+            
+            if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"0"]) {
+                [formatterToolbar placeTop: self];
+            } else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"2"]) {
+                [formatterToolbar placeBottom: self];
+            } else {
+                [formatterToolbar placeCentre: self];
+            }
+            
+            if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"0"]) {
+                [formatterToolbar alignLeft: self];
+            } else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"1"]) {
+                [formatterToolbar alignRight: self];
+            } else {
+                [formatterToolbar alignCentre: self];
+            }
+            
+            // Try to read the transition speed
+            // If not set, apply a default
+            if (!readSlideFileContents[@"Transition Speed"]) {
+                [formatterToolbar transitionSpeed: 1.0];
+            } else {
+                [formatterToolbar transitionSpeed: [readSlideFileContents[@"Transition Speed"] floatValue]];
+            }
+            
+            if (!readSlideFileContents[@"Font Family"]) {
+                [formatterToolbar fontFamily: @"default"];
+            } else {
+                [formatterToolbar fontFamily: [NSString stringWithFormat: @"%@", readSlideFileContents[@"Font Family"]]];
+            }
+            
+            if (!readSlideFileContents[@"Font Size"]) {
+                if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
+                    [formatterToolbar setFormatFontSize: [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]];
+                else
+                    [formatterToolbar setFormatFontSize: 72.0];
+            } else {
+                [formatterToolbar setFormatFontSize: [readSlideFileContents[@"Font Size"] floatValue]];
+            }
+            
+            //[songDisplaySplitter release];
+            //[readSlideFileContents release];
+        } else {
+            // The song file does not exist
+            NSAlert *alert = [[NSAlert alloc] init];
+            [alert addButtonWithTitle:@"OK"];
+            [alert setMessageText:[NSString stringWithFormat: @"\"%@\" Not Found", songName]];
+            [alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
+            [alert setAlertStyle:NSCriticalAlertStyle];
+            [alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
+        }
+    }
+}
+
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError
 {
     NSPrintInfo *printInfo = [NSPrintInfo sharedPrintInfo];
@@ -155,169 +311,6 @@
     NSPrintOperation *printJob = [NSPrintOperation printOperationWithView:docSlideViewer printInfo: printInfo];
 
     return printJob;
-}
-
-// Called whenever the table selection changes
-- (void)tableViewSelectionDidChange:(NSNotification *) notification
-{
-	// Blank out the presenter screen
-	[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
-	
-	if ([[docSlideViewer worshipSlides] count] > 0)
-		[docSlideViewer saveAllSlidesForSong: previousSelectedPlaylist];
-		/*
-	// Just make sure that the user is clicking on an actual row
-	if ([[notification object] selectedRow] < 0 || [[notification object] selectedRow] >= [worshipPlaylist count]) {
-		NSLog(@"User is clicking on empty row");
-		
-		// Empty the slide viewer
-		[docSlideViewer setWorshipSlides:nil notesSlides:nil mediaRefs:nil];
-		
-		// Reset the title bar
-		[worshipTitleBar setStringValue: @""];
-		
-		// Hide the CCLI bar and button
-		[worshipCCLIBar setHidden: YES];
-		[worshipCCLIButton setHidden: YES];
-		
-		// Disable the toolbar buttons
-		[toolbarNewSlide setEnabled: NO];
-		[toolbarNextSlide setEnabled: NO];
-		[toolbarPrevSlide setEnabled: NO];
-		
-		return;
-	}
-	
-	previousSelectedPlaylist = worshipPlaylist[[[notification object] selectedRow]];
-	
-	// Use the name of the song as the location of the song file
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", worshipPlaylist[[[notification object] selectedRow]]];
-	
-	//[self sendDataToAllNodes: [[worshipPlaylist objectAtIndex: [[notification object] selectedRow]] dataUsingEncoding: NSUTF8StringEncoding]];
-	
-	// Check to see if the song file exists or not
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [worshipSlideFile stringByExpandingTildeInPath]]) {
-		NSLog(@"The song in the playlist has a valid file");
-		[docSlideViewer setWorshipSlides: nil notesSlides: nil mediaRefs: nil];
-	
-		// The song file exists, process the file
-		[docSlideViewer setEditor: NO];
-		NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [worshipPlaylist[[[notification object] selectedRow]] componentsSeparatedByString:@"/"]];
-		NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
-		[worshipTitleBar setStringValue: [songDisplayText componentsSeparatedByString:@"."][0]];
-		
-		NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
-		
-		[docSlideViewer setWorshipSlides:readSlideFileContents[@"Slides"] notesSlides:readSlideFileContents[@"Flags"] mediaRefs:readSlideFileContents[@"Media"]];
-		
-		NSLog(@"READ: CCLI information");
-		
-		// Read CCLI information
-		NSString *ccliOverviewText = @"";
-			
-		if (readSlideFileContents[@"CCLI Copyright Year"]) {
-			[songCopyright setStringValue: readSlideFileContents[@"CCLI Copyright Year"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", readSlideFileContents[@"CCLI Copyright Year"]]];
-		} else {
-			[songCopyright setStringValue: @""];
-		}
-		
-		if (readSlideFileContents[@"CCLI Artist"]) {
-			[songArtist setStringValue: readSlideFileContents[@"CCLI Artist"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", readSlideFileContents[@"CCLI Artist"]]];
-		} else {
-			[songArtist setStringValue: @""];
-		}
-			
-		if (readSlideFileContents[@"CCLI Publisher"]) {
-			[songPublisher setStringValue: readSlideFileContents[@"CCLI Publisher"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", readSlideFileContents[@"CCLI Publisher"]]];
-		} else {
-			[songPublisher setStringValue: @""];
-		}
-			
-		if (readSlideFileContents[@"CCLI Song Number"]) {
-			[songNumber setStringValue: readSlideFileContents[@"CCLI Song Number"]];
-		} else {
-			[songNumber setStringValue: @""];
-		}
-		
-		[worshipCCLIBar setStringValue: ccliOverviewText];
-		
-		// Autosize and reposition the title bar and CCLI information
-		[worshipTitleBar setFrame:NSMakeRect([worshipTitleBar frame].origin.x, [worshipTitleBar frame].origin.y, [[worshipTitleBar cell] cellSize].width, [worshipTitleBar frame].size.height)];
-		[worshipCCLIBar setFrameOrigin:NSMakePoint([worshipTitleBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [[worshipTitleBar cell] cellSize].width] intValue], [worshipCCLIBar frame].origin.y)];
-		[worshipCCLIBar setFrame:NSMakeRect([worshipCCLIBar frame].origin.x, [worshipCCLIBar frame].origin.y, [[worshipCCLIBar cell] cellSize].width, [worshipCCLIBar frame].size.height)];
-		[worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];
-		
-		[worshipCCLIBar setHidden: NO];
-		[worshipCCLIButton setHidden: NO];
-		
-		[[worshipTitleBar superview] setNeedsDisplay: YES];
-		
-		// Set up the slide viewer pane
-		[docSlideScroller setHasVerticalScroller: YES];
-		[docSlideViewer setClickedSlideAtIndex: -1];
-		
-		// Enable the toolbar buttons
-		[toolbarNewSlide setEnabled: YES];
-		[toolbarNextSlide setEnabled: YES];
-		[toolbarPrevSlide setEnabled: YES];
-		
-		// Reset the undo manager
-		[[self undoManager] removeAllActions];
-		
-		if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"0"]) {
-			[formatterToolbar placeTop: self];
-		} else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"2"]) {
-			[formatterToolbar placeBottom: self];
-		} else {
-			[formatterToolbar placeCentre: self];
-		}
-		
-		if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"0"]) {
-			[formatterToolbar alignLeft: self];
-		} else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"1"]) {
-			[formatterToolbar alignRight: self];
-		} else {
-			[formatterToolbar alignCentre: self];
-		}
-		
-		// Try to read the transition speed
-		// If not set, apply a default
-		if (!readSlideFileContents[@"Transition Speed"]) {
-			[formatterToolbar transitionSpeed: 1.0];
-		} else {
-			[formatterToolbar transitionSpeed: [readSlideFileContents[@"Transition Speed"] floatValue]];
-		}
-			
-		if (!readSlideFileContents[@"Font Family"]) {
-			[formatterToolbar fontFamily: @"default"];
-		} else {
-			[formatterToolbar fontFamily: [NSString stringWithFormat: @"%@", readSlideFileContents[@"Font Family"]]];
-		}
-		
-		if (!readSlideFileContents[@"Font Size"]) {
-			if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
-				[formatterToolbar setFormatFontSize: [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]];
-			else
-				[formatterToolbar setFormatFontSize: 72.0];
-		} else {
-			[formatterToolbar setFormatFontSize: [readSlideFileContents[@"Font Size"] floatValue]];
-		}
-			
-		//[songDisplaySplitter release];
-		//[readSlideFileContents release];
-	} else {
-		// The song file does not exist
-		NSAlert *alert = [[NSAlert alloc] init];
-		[alert addButtonWithTitle:@"OK"];
-		[alert setMessageText:[NSString stringWithFormat: @"\"%@\" Not Found", worshipPlaylist[[[notification object] selectedRow]]]];
-		[alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
-		[alert setAlertStyle:NSCriticalAlertStyle];
-		[alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
-	}*/
-	
 }
 
 - (IBAction)editCCLIDetails:(id)sender
