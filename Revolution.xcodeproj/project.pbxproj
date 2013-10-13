@@ -124,7 +124,6 @@
 		50EA44FF0BF9524700685860 /* PreferencesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 50EA44FE0BF9524700685860 /* PreferencesController.m */; };
 		50ECBAF20BBCB3570070D7F8 /* AddSongSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 50ECBAF10BBCB3570070D7F8 /* AddSongSheet.m */; };
 		50F0A7A10BB4EF04007F9C82 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F0A7A00BB4EF04007F9C82 /* Quartz.framework */; };
-		50F0A7F80BB4F062007F9C82 /* Presentation Background Mixer.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 50F0A7F70BB4F062007F9C82 /* Presentation Background Mixer.qtz */; };
 		50F0AA1B0BB7A08E007F9C82 /* MediaThumbnailBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F0AA1A0BB7A08E007F9C82 /* MediaThumbnailBrowser.m */; };
 		50F332150D0A98A30038EBDF /* ProWorshipHelp in Resources */ = {isa = PBXBuildFile; fileRef = 50F331CE0D0A98A30038EBDF /* ProWorshipHelp */; };
 		862B0FB40E9AB43B00C50042 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862B0FB30E9AB43B00C50042 /* QuickLook.framework */; };
@@ -332,7 +331,6 @@
 		50ECBAF00BBCB3570070D7F8 /* AddSongSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddSongSheet.h; sourceTree = "<group>"; };
 		50ECBAF10BBCB3570070D7F8 /* AddSongSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddSongSheet.m; sourceTree = "<group>"; };
 		50F0A7A00BB4EF04007F9C82 /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
-		50F0A7F70BB4F062007F9C82 /* Presentation Background Mixer.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Presentation Background Mixer.qtz"; sourceTree = "<group>"; };
 		50F0AA190BB7A08E007F9C82 /* MediaThumbnailBrowser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MediaThumbnailBrowser.h; sourceTree = "<group>"; };
 		50F0AA1A0BB7A08E007F9C82 /* MediaThumbnailBrowser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MediaThumbnailBrowser.m; sourceTree = "<group>"; };
 		50F331CF0D0A98A30038EBDF /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/ProWorshipHelp; sourceTree = "<group>"; };
@@ -514,7 +512,6 @@
 				50A104050C6D82F4001CF707 /* MediaButton.tiff */,
 				506E93DF0C6F9F850043ED8A /* PlaylistAdd.tiff */,
 				5066A3850CB0A79300BCD7CE /* PlaylistAddFolder.tiff */,
-				50F0A7F70BB4F062007F9C82 /* Presentation Background Mixer.qtz */,
 				501D93BA0C912BCA002CA657 /* DeleteWidget.tiff */,
 				5024B39C0B50FC7300D4249E /* Playlist.icns */,
 				5024B4D70B52242D00D4249E /* Song File.icns */,
@@ -787,7 +784,6 @@
 				5024B39D0B50FC7300D4249E /* Playlist.icns in Resources */,
 				5024B4D80B52242D00D4249E /* Song File.icns in Resources */,
 				50B3E6C70B7BBEA9005BDFC1 /* Credits.bak.rtf in Resources */,
-				50F0A7F80BB4F062007F9C82 /* Presentation Background Mixer.qtz in Resources */,
 				507509C90C0BE8A300B902E2 /* GeneralPreferences.tiff in Resources */,
 				507509CF0C0BECAF00B902E2 /* SoftwareUpdate.tiff in Resources */,
 				50750A520C0D382A00B902E2 /* FormattingPreferences.tiff in Resources */,

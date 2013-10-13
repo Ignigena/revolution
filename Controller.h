@@ -3,7 +3,6 @@
 #import <Quartz/Quartz.h>
 #import <QTKit/QTKit.h>
 #import "Presenter.h"
-#import <iLifeControls/NFIWindow.h>
 #import "PresenterWindow.h"
 
 @class eSellerateObject;

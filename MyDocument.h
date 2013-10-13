@@ -23,7 +23,7 @@
     NSMutableArray * receiverList;
 	
     IBOutlet id playlistTable;
-	IBOutlet NFIWindow *documentWindow;
+	IBOutlet NSWindow *documentWindow;
 	IBOutlet id worshipTitleBar;
 	IBOutlet id worshipCCLIBar;
 	IBOutlet id worshipCCLIButton;
