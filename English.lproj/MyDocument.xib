@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
-        <deployment version="1050" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
         <plugIn identifier="com.apple.QTKitIBPlugin" version="3336"/>
     </dependencies>
@@ -776,7 +775,7 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="893" height="182"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
-                <button toolTip="Scripture lookup" id="2468">
+                <button identifier="scripture" toolTip="Scripture lookup" id="2468">
                     <rect key="frame" x="290" y="48" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Scripture" imagePosition="only" alignment="center" alternateImage="Scripture-On" inset="2" id="2469">
@@ -784,7 +783,7 @@ Gw
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectScriptureTab:" target="846" id="2506"/>
+                        <action selector="selectMediaTab:" target="846" id="7Tc-RV-WU3"/>
                     </connections>
                 </button>
                 <button id="2004">
@@ -858,7 +857,7 @@ Gw
                         <action selector="toggleLooping:" target="846" id="1141"/>
                     </connections>
                 </button>
-                <button toolTip="Live video background" id="850">
+                <button identifier="live" toolTip="Live video background" id="850">
                     <rect key="frame" x="290" y="81" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LiveVideo" imagePosition="only" alignment="center" alternateImage="LiveVideo-On" inset="2" id="2378">
@@ -866,10 +865,10 @@ Gw
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectLiveTab:" target="846" id="894"/>
+                        <action selector="selectMediaTab:" target="846" id="4ze-RK-dLb"/>
                     </connections>
                 </button>
-                <button toolTip="Photo backgrounds" id="849">
+                <button identifier="photos" toolTip="Photo backgrounds" id="849">
                     <rect key="frame" x="290" y="114" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Photos" imagePosition="only" alignment="center" alternateImage="Photos-On" inset="2" id="2377">
@@ -877,18 +876,18 @@ Gw
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectPhotosTab:" target="846" id="892"/>
+                        <action selector="selectMediaTab:" target="846" id="DdH-iT-OMl"/>
                     </connections>
                 </button>
-                <button toolTip="Video backgrounds" id="848">
+                <button identifier="videos" toolTip="Video backgrounds" id="848">
                     <rect key="frame" x="290" y="147" width="30" height="34"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Videos" imagePosition="only" alignment="center" alternateImage="Videos-On" inset="2" id="2376">
+                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Videos" imagePosition="overlaps" alignment="center" alternateImage="Videos-On" inset="2" id="2376">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectVideosTab:" target="846" id="886"/>
+                        <action selector="selectMediaTab:" target="846" id="4Wg-4c-21o"/>
                     </connections>
                 </button>
                 <qtMovieView wantsLayer="YES" alphaValue="0.0" id="2459">

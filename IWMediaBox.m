@@ -32,8 +32,8 @@
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectionFormatDidChange:) name:QTCaptureConnectionFormatDescriptionDidChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceAttributeWillChange:) name:QTCaptureDeviceAttributeWillChangeNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceAttributeDidChange:) name:QTCaptureDeviceAttributeDidChangeNotification object:nil];
-	
-	[self selectVideosTab:self];
+    
+    [self selectMediaTab:videosTab];
 }
 
 /////////////////////////////////
@@ -265,124 +265,64 @@
 // Tab switching (wouldn't it be easier to do an NSTabView?) //
 ///////////////////////////////////////////////////////////////
 
-- (IBAction)selectVideosTab:(id)sender
+- (IBAction)selectMediaTab:(id)sender
 {
-	[videosTab setState: NSOnState];
-	[photosTab setState: NSOffState];
-	[liveTab setState: NSOffState];
-	[scriptureTab setState: NSOffState];
-	
-	if ([livePlaybackView superview]==self)
-		[livePlaybackView removeFromSuperview];
-	
-	if (searchPopup)
-		[self toggleSearchPopup: nil];
-	
-	if ([scriptureView superview]==self)
-		[scriptureView removeFromSuperview];
-	
-	[mediaThumbnailBrowser setMediaListing: 0];
-	[[mediaThumbnailBrowser enclosingScrollView] setHidden: NO];
-	
-	[loopingButton setHidden: NO];
-	[audioButton setHidden: NO];
-	[assignToSlideButton setHidden: NO];
-	[goToBlackButton setHidden: NO];
-	
-	[captureSession stopRunning];
-	
-	[self setNeedsDisplay: YES];
-}
+    NSString *clickedTab = [(NSButton *)sender identifier];
+    NSArray *parentView = [self subviews];
+    for (NSView *view in parentView) {
+        if ([view isKindOfClass:[NSButton class]]) {
+            [[view identifier] isEqualToString:clickedTab] ? [(NSButton *)view setState: NSOnState] : [(NSButton *)view setState: NSOffState];
+        }
+    }
 
-- (IBAction)selectPhotosTab:(id)sender
-{
-	[videosTab setState: NSOffState];
-	[photosTab setState: NSOnState];
-	[liveTab setState: NSOffState];
-	[scriptureTab setState: NSOffState];
-	
-	if ([livePlaybackView superview]==self)
-		[livePlaybackView removeFromSuperview];
-	
-	if (searchPopup)
-		[self toggleSearchPopup: nil];
-	
-	if ([scriptureView superview]==self)
-		[scriptureView removeFromSuperview];
-	
-	[mediaThumbnailBrowser setMediaListing: 1];
-	[[mediaThumbnailBrowser enclosingScrollView] setHidden: NO];
-	
-	[loopingButton setHidden: YES];
-	[audioButton setHidden: YES];
-	[assignToSlideButton setHidden: NO];
-	[goToBlackButton setHidden: NO];
-	
-	[captureSession stopRunning];
-	
-	[self setNeedsDisplay: YES];
-}
+    if ([clickedTab isEqualToString:@"videos"] || [clickedTab isEqualToString:@"photos"]) {
+        [mediaThumbnailBrowser setMediaListing: [clickedTab isEqualToString:@"videos"] ? 0 : 1];
+        [[mediaThumbnailBrowser enclosingScrollView] setHidden: NO];
 
-- (IBAction)selectLiveTab:(id)sender
-{
-	[videosTab setState: NSOffState];
-	[photosTab setState: NSOffState];
-	[liveTab setState: NSOnState];
-	[scriptureTab setState: NSOffState];
-	
-	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
+        [loopingButton setHidden: [clickedTab isEqualToString:@"videos"] ? NO : YES];
+        [audioButton setHidden: [clickedTab isEqualToString:@"videos"] ? NO : YES];
+        [assignToSlideButton setHidden: NO];
+        [goToBlackButton setHidden: NO];
+    } else {
+        [[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
+        [loopingButton setHidden: YES];
+        [audioButton setHidden: YES];
+        [assignToSlideButton setHidden: YES];
+        [goToBlackButton setHidden: YES];
+    }
 
-	if ([livePlaybackView superview]!=self)
-		[self addSubview: livePlaybackView];
-	
-	if (searchPopup)
-		[self toggleSearchPopup: nil];
-	
-	if ([scriptureView superview]==self)
-		[scriptureView removeFromSuperview];
-	
-	[livePlaybackView setFrameOrigin: NSMakePoint(320,27)];
-	
-	[loopingButton setHidden: YES];
-	[audioButton setHidden: YES];
-	[assignToSlideButton setHidden: YES];
-	[goToBlackButton setHidden: NO];
-	
-	if ([[[[NSApp delegate] mainPresenterViewConnect] liveCameraView] session] != captureSession)
-		[[[[NSApp delegate] mainPresenterViewConnect] liveCameraView] setSession: captureSession];
-	
-	[captureSession startRunning];
-	
-	[self setNeedsDisplay: YES];
-}
+    if ([clickedTab isEqualToString:@"live"]) {
+        if ([livePlaybackView superview]!=self)
+            [self addSubview: livePlaybackView];
 
-- (IBAction)selectScriptureTab:(id)sender
-{
-	[videosTab setState: NSOffState];
-	[photosTab setState: NSOffState];
-	[liveTab setState: NSOffState];
-	[scriptureTab setState: NSOnState];
-	
-	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
-	
-	if ([livePlaybackView superview]==self)
-		[livePlaybackView removeFromSuperview];
-	
-	if ([scriptureView superview]!=self)
-		[self addSubview: scriptureView];
-	
-	[self toggleSearchPopup: nil];
-	
-	[scriptureView setFrameOrigin: NSMakePoint(320,0)];
-	
-	[loopingButton setHidden: YES];
-	[audioButton setHidden: YES];
-	[assignToSlideButton setHidden: YES];
-	[goToBlackButton setHidden: YES];
-	
-	[captureSession stopRunning];
-	
-	[self setNeedsDisplay: YES];
+        [livePlaybackView setFrameOrigin: NSMakePoint(320,27)];
+        [goToBlackButton setHidden: NO];
+
+        if ([[[[NSApp delegate] mainPresenterViewConnect] liveCameraView] session] != captureSession)
+            [[[[NSApp delegate] mainPresenterViewConnect] liveCameraView] setSession: captureSession];
+
+        [captureSession startRunning];
+    } else {
+        if ([livePlaybackView superview]==self)
+            [livePlaybackView removeFromSuperview];
+
+        [captureSession stopRunning];
+    }
+    
+    if ([clickedTab isEqualToString:@"scripture"]) {
+        if ([scriptureView superview]!=self)
+            [self addSubview: scriptureView];
+        [scriptureView setFrameOrigin: NSMakePoint(320,0)];
+        [self toggleSearchPopup: nil];
+    } else {
+        if (searchPopup)
+            [self toggleSearchPopup: nil];
+        
+        if ([scriptureView superview]==self)
+            [scriptureView removeFromSuperview];
+    }
+
+    [self setNeedsDisplay: YES];
 }
 
 /////////////////////

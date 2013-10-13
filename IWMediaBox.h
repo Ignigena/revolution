@@ -7,9 +7,6 @@
 @interface IWMediaBox : NSView
 {
 	IBOutlet id videosTab;
-	IBOutlet id photosTab;
-	IBOutlet id liveTab;
-	IBOutlet id scriptureTab;
 	
 	IBOutlet id loopingButton;
 	IBOutlet id audioButton;
@@ -54,10 +51,7 @@
 
 - (IBAction)setMediaTransitionSpeed:(id)sender;
 
-- (IBAction)selectVideosTab:(id)sender;
-- (IBAction)selectPhotosTab:(id)sender;
-- (IBAction)selectLiveTab:(id)sender;
-- (IBAction)selectScriptureTab:(id)sender;
+- (IBAction)selectMediaTab:(NSButton *)sender;
 
 - (IBAction)toggleLooping:(id)sender;
 - (IBAction)toggleAudio:(id)sender;
