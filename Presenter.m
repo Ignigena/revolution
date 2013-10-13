@@ -21,9 +21,9 @@
 		NSLog(@"----------------------------------------");
 		NSLog(@"PRESENTATION WINDOW SETUP/INITIALIZATION");
 		
-		CALayer *masterLayer = [[CALayer layer] retain];
-		presentationTextLayer = [[CATextLayer layer] retain];
-		presentationTextLayerOutgoing = [[CATextLayer layer] retain];
+		CALayer *masterLayer = [CALayer layer];
+		presentationTextLayer = [CATextLayer layer];
+		presentationTextLayerOutgoing = [CATextLayer layer];
 		
 		[self setLayer:masterLayer]; 
 		[self setWantsLayer:YES];
@@ -57,7 +57,7 @@
 		[[self layer] addSublayer: presentationTextLayerOutgoing];
 		
 		NSLog(@"PRESENTATION: CCLI licensing layer initializing");
-		ccliLayer = [[CALayer layer] retain];
+		ccliLayer = [CALayer layer];
 		ccliLayer.cornerRadius = 8;
 		ccliLayer.borderWidth = 1;
 		ccliLayer.borderColor = kCGColorWhite;
@@ -69,30 +69,14 @@
 		
 		ccliLayerTextMain = [CATextLayer layer];
 		ccliLayerTextMain.alignmentMode = kCAAlignmentCenter;
-		ccliLayerTextMain.font = @"Helvetica Neue Light";
+		ccliLayerTextMain.font = (__bridge CFTypeRef)(@"Helvetica Neue Light");
 		ccliLayerTextMain.fontSize = 16.0;
 		
 		[[self layer] addSublayer: ccliLayer];
 		
-		if (![[NSApp delegate] registered]) {
-			NSLog(@"PRESENTATION: Unregistered watermark");
-			CATextLayer *unregisteredOverlayText = [CATextLayer layer];
-		
-			unregisteredOverlayText.string = @"ProWorship Unregistered Demo Copy\n ";
-			unregisteredOverlayText.alignmentMode = kCAAlignmentCenter;
-			unregisteredOverlayText.font = @"Georgia";
-			unregisteredOverlayText.fontSize = 40.0;
-			unregisteredOverlayText.opacity = 0.6;
-		
-			unregisteredOverlayText.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
-			[unregisteredOverlayText addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinY relativeTo:@"superlayer" attribute:kCAConstraintMinY]];
-		
-			[[self layer] addSublayer: unregisteredOverlayText];
-		}
-		
 		NSLog(@"PRESENTATION: Registering defaults");
-		presentationText = [[NSString alloc] initWithString: @" "];
-		outgoingPresentationText = [[NSString alloc] initWithString: @" "];
+		presentationText = @" ";
+		outgoingPresentationText = @" ";
 		
 		presentationTextAlpha = 1.0;
 		outgoingPresentationTextAlpha = 0.0;
@@ -115,9 +99,9 @@
 
 float heightForStringDrawingPresenter(NSAttributedString *myString, float desiredWidth)
 {
-	NSTextStorage *textStorage = [[[NSTextStorage alloc] initWithAttributedString:myString] autorelease];
-	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(desiredWidth, FLT_MAX)] autorelease];
-	NSLayoutManager *layoutManager = [[[NSLayoutManager alloc] init] autorelease];
+	NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:myString];
+	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize: NSMakeSize(desiredWidth, FLT_MAX)];
+	NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
 
 	[textContainer setLineFragmentPadding: 0.0];
 
@@ -715,13 +699,6 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 - (NSDictionary *)outgoingPresenterSlideTextAttrs
 {
     return outgoingPresenterSlideTextAttrs;
-}
-
-- (void)dealloc
-{
-	[presentationText release];
-	
-	[super dealloc];
 }
 
 - (NSSize)presentationWindowSize

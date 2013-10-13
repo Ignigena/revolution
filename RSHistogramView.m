@@ -28,7 +28,6 @@
 		buffer.width = [imageRep pixelsWide];
 		buffer.height = [imageRep pixelsHigh];
 		buffer.rowBytes = [imageRep bytesPerRow];
-	[imageRep release];
 	
 	// Set up the vImage histogram array
 	histograms[0] = histogramA;

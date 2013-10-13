@@ -37,12 +37,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	[self stopListening: self];
-	[remoteControls release];
-	[super dealloc];
-}
-
 - (BOOL) instantiateAndAddRemoteControlDeviceWithClass: (Class) clazz {
 	RemoteControl* remoteControl = [[clazz alloc] initWithDelegate: delegate];
 	if (remoteControl) {

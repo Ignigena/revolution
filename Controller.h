@@ -5,26 +5,15 @@
 #import "Presenter.h"
 #import <iLifeControls/NFIWindow.h>
 #import "PresenterWindow.h"
-#import "DVDPlayerWindow.h"
-#import "IWVideoView.h"
-#import "BLIPConnection.h"
-#import "BLIP.h"
-#import "RemoteControlContainer.h"
-#import "AppleRemote.h"
-#import "KeyspanFrontRowControl.h"
 
 @class eSellerateObject;
 
-@interface Controller : NSObject <TCPListenerDelegate, BLIPConnectionDelegate>
+@interface Controller : NSObject
 {	
 	IBOutlet NSWindow *splasher;
 	
-	RemoteControlContainer* remoteControl;
-	
 	NSNetServiceBrowser *_serviceBrowser;
     NSMutableArray *_serviceList;
-	BLIPListener *_receiver_listener;
-	BLIPConnection *connectedListener;
 	IBOutlet id networkNodeContent;
 	IBOutlet id networkNodeServices;
 	IBOutlet id networkNodeReceiverToggle;
@@ -33,11 +22,8 @@
 	Presenter *mainPresenterView;
 	NSWindow *presentationWindow;
 	NSWindow *presentationBGWindow;
-	IBOutlet IWVideoView *videoPlaybackGLView;
 	NSWindow *videoPlaybackGLWindow;
-	IBOutlet IWVideoView *videoPlaybackGLIncomingView;
 	NSWindow *videoPlaybackGLIncomingWindow;
-	DVDPlayerWindow *dvdPlayerWindow;
 	
 	BOOL willGoToBlack;
 	BOOL incomingOnTop;
@@ -75,23 +61,7 @@
 - (IBAction)toggleNetworkNodeSettings:(id)sender;
 - (IBAction)toggleNetworkNodeReceiver:(id)sender;
 
-- (void)runDVDSetup;
-- (BOOL)searchMountedDVD;
-- (BOOL)openMedia:(NSString *)media isVolume:(BOOL)isVolume;
-- (BOOL)isValidMedia:(NSString *)inPath folder:(FSRef *)fileRefP;
-- (void)logMediaInfo;
-- (void)closeMedia;
-- (BOOL)hasMedia;
-
 - (void)runThumbnailSetup;
-
-- (void)runDVDPlay;
-- (void)runDVDStop;
-- (void)runDVDScanForward;
-- (void)runDVDScanBackward;
-- (void)runDVDJumpForward;
-- (void)runDVDJumpBackward;
-- (void)runDVDBackToMenu;
 
 - (IBAction)newPlaylist:(id)sender;
 - (IBAction)loadRecent:(id)sender;
@@ -114,14 +84,6 @@
 - (IBAction)toggleAudio:(id)sender;
 
 - (void)crossFadeMedia:(NSTimer *)timer;
-
-- (IBAction)buyOnline:(id)sender;
-- (IBAction)runDemo:(id)sender;
-- (IBAction)validateRegistration:(id)sender;
-
-- (void)setRegistered:(BOOL)yn;
-- (BOOL)registered;
-- (void)updateSN;
 
 - (NSWindow *)splasher;
 

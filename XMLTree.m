@@ -13,7 +13,7 @@
 
 +(XMLTree *)treeWithURL:(NSURL *)url
 {
-    return [[[XMLTree alloc] initWithURL:url] autorelease];
+    return [[XMLTree alloc] initWithURL:url];
 }   // end treeWithURL
 
 
@@ -21,13 +21,13 @@
 
 +(XMLTree *)treeWithCFXMLTreeRef:(CFXMLTreeRef)ref
 {
-    return [[[XMLTree alloc] initWithCFXMLTreeRef:ref] autorelease];
+    return [[XMLTree alloc] initWithCFXMLTreeRef:ref];
 }   // end treeWithCFXMLTreeRef
 
 
 +(XMLTree *)treeWithData:(NSData *)data
 {
-    return [[[XMLTree alloc] initWithData:data] autorelease];
+    return [[XMLTree alloc] initWithData:data];
 }   // end treeWithData
 
 
@@ -67,7 +67,6 @@
         CFRetain( _node );
     }	// end if: valid ref
     else{
-        [self release];
         self = nil;
     }	// end else: no good
     
@@ -88,7 +87,7 @@
     
     tree = CFXMLTreeCreateWithDataFromURL(
                                            kCFAllocatorDefault,
-                                           (CFURLRef)url,
+                                           (__bridge CFURLRef)url,
                                            kCFXMLParserSkipWhitespace, 
                                            NULL ); //CFIndex
     // Defer to the ...with tree... init
@@ -118,8 +117,8 @@
     
     tree = CFXMLTreeCreateFromData(
                                    kCFAllocatorDefault,
-                                    (CFDataRef)inData,
-                                    (CFURLRef)url,
+                                    (__bridge CFDataRef)inData,
+                                    (__bridge CFURLRef)url,
                                     kCFXMLParserSkipWhitespace,
                                     NULL);
 
@@ -150,7 +149,6 @@
 
     _tree = NULL;
     _node = NULL;
-    [super dealloc]; //added TWB
 
 }	// end dealloc
 
@@ -204,7 +202,7 @@
 
 
     // Call C-code
-    resultRef = XMLTreeXPath( (CFMutableStringRef)[xpath mutableCopy], _tree );
+    resultRef = XMLTreeXPath( (__bridge CFMutableStringRef)[xpath mutableCopy], _tree );
 
     // Not null?
     if( resultRef != NULL ){
@@ -215,7 +213,7 @@
         // String?
         if( resultID == CFStringGetTypeID()  ){
     
-            result = [NSString stringWithString:(NSString *)resultRef];
+            result = [NSString stringWithString:(__bridge NSString *)resultRef];
         }	// end if: string
     
         // Else, tree?
@@ -365,7 +363,7 @@
                 eInfo = *(CFXMLElementInfo *)CFXMLNodeGetInfoPtr(childNode);                
                 childAttrVal = (CFStringRef)CFDictionaryGetValue(
                                                                  eInfo.attributes,
-                                                                 attrName );
+                                                                 (__bridge const void *)(attrName) );
                 CFRetain( childAttrVal );
                 
                 // Attribute matches
@@ -409,7 +407,7 @@
     if( _tree == NULL )
         return nil;
     
-    descTree = XMLTreeDescendentNamed( (CFStringRef)name, _tree );
+    descTree = XMLTreeDescendentNamed( (__bridge CFStringRef)name, _tree );
     
     if( descTree == NULL )
         return nil;
@@ -434,7 +432,7 @@
     if( _node == NULL )
         return nil;
 
-    return [NSString stringWithString:(NSString *)CFXMLNodeGetString(_node)];
+    return [NSString stringWithString:(__bridge NSString *)CFXMLNodeGetString(_node)];
 }	// end name
 
 
@@ -481,7 +479,7 @@
 
     eInfo = *(CFXMLElementInfo *)CFXMLNodeGetInfoPtr(_node);
 
-    return [[(NSDictionary *)eInfo.attributes retain] autorelease];
+    return (__bridge NSDictionary *)eInfo.attributes;
 }	// end attributes
 
 
@@ -495,7 +493,7 @@
     if( _tree == NULL )
         return nil;
 
-    return [[[[[self attributes] objectForKey:name] description] retain] autorelease];
+    return [[[self attributes] objectForKey:name] description];
 }	// end attributeNamed:
 
 
@@ -514,7 +512,7 @@
 
         case kCFXMLNodeTypeDocument:
         case kCFXMLNodeTypeElement:
-            XMLTreeDescription( (CFMutableStringRef)descr, _tree );
+            XMLTreeDescription( (__bridge CFMutableStringRef)descr, _tree );
             break;
             
         case kCFXMLNodeTypeProcessingInstruction:
@@ -531,7 +529,7 @@
         case kCFXMLNodeTypeElementTypeDeclaration:
         case kCFXMLNodeTypeAttributeListDeclaration:
         default:
-            [descr appendString:(NSString *)CFXMLNodeGetString(_node)];
+            [descr appendString:(__bridge NSString *)CFXMLNodeGetString(_node)];
     }	// end switch
 
     return descr;
@@ -554,8 +552,8 @@
         return nil;
 
     
-    NSString *string = [[[NSString alloc] initWithData:(NSData *)xmlData
-                                              encoding:NSASCIIStringEncoding] autorelease];
+    NSString *string = [[NSString alloc] initWithData:(__bridge NSData *)xmlData
+                                              encoding:NSASCIIStringEncoding];
     if( xmlData != NULL )	//because it is retained by us after creating it with
         CFRelease(xmlData); 	//CFXMLTreeCreateXMLData() and we're finished with it - TWB
     return string;

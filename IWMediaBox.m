@@ -50,8 +50,7 @@
 - (void)refreshVideoDevices
 {
 	[self willChangeValueForKey:@"videoDevices"];
-	[videoDevices release];
-	videoDevices = [[[QTCaptureDevice inputDevicesWithMediaType:QTMediaTypeVideo] arrayByAddingObjectsFromArray:[QTCaptureDevice inputDevicesWithMediaType:QTMediaTypeMuxed]] retain];
+	videoDevices = [[QTCaptureDevice inputDevicesWithMediaType:QTMediaTypeVideo] arrayByAddingObjectsFromArray:[QTCaptureDevice inputDevicesWithMediaType:QTMediaTypeMuxed]];
 	[self didChangeValueForKey:@"videoDevices"];
 	
 	if (![videoDevices containsObject:[self selectedVideoDevice]]) {
@@ -65,7 +64,6 @@
 		// Remove the old device input from the session and close the device
 		[captureSession removeInput:videoDeviceInput];
 		[[videoDeviceInput device] close];
-		[videoDeviceInput release];
 		videoDeviceInput = nil;
 	}
 	
@@ -83,7 +81,6 @@
 		
 		success = [captureSession addInput:videoDeviceInput error:&error];
 		if (!success) {
-			[videoDeviceInput release];
 			videoDeviceInput = nil;
 			[selectedVideoDevice close];
 			return;
@@ -195,7 +192,7 @@
 	return captureSession;
 }
 
-- (IBAction)setTransitionSpeed:(id)sender
+- (IBAction)setMediaTransitionSpeed:(id)sender
 {
 	float actualTransitionSpeed;
 	
@@ -281,7 +278,6 @@
 	if ([dvdPlaybackView superview]==self)
 		[dvdPlaybackView removeFromSuperview];
 		
-	[[NSApp delegate] runDVDStop];
 	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
 	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
@@ -318,7 +314,6 @@
 	if ([dvdPlaybackView superview]==self)
 		[dvdPlaybackView removeFromSuperview];
 	
-	[[NSApp delegate] runDVDStop];
 	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
 	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
@@ -387,11 +382,7 @@
 	[scriptureTab setState: NSOffState];
 	
 	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
-	
-	if ([dvdPlaybackView superview]==self)
-		[dvdPlaybackView removeFromSuperview];
-		
-	[[NSApp delegate] runDVDStop];
+
 	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
 	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
@@ -428,11 +419,7 @@
 	[scriptureTab setState: NSOnState];
 	
 	[[mediaThumbnailBrowser enclosingScrollView] setHidden: YES];
-	
-	if ([dvdPlaybackView superview]==self)
-		[dvdPlaybackView removeFromSuperview];
-	
-	[[NSApp delegate] runDVDStop];
+
 	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
 	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
 	
@@ -482,71 +469,37 @@
 - (IBAction)playDVDVideo:(id)sender
 {
 	[self juiceGoToBlack: self];
-	
-	[[NSApp delegate] runDVDPlay];
-	
-	// Toggle between the "Play" and "Pause" button
-	OSStatus isDVDPlaying;
-	DVDGetState(&isDVDPlaying);
-	
-	if (isDVDPlaying == kDVDStatePlaying) {
-		[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPause"]];
-		[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPause-P"]];
-	} else {
-		[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
-		[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
-	}
 }
 
 - (IBAction)fastForwardDVDVideo:(id)sender
 {
 	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
 	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
-		
-	[[NSApp delegate] runDVDScanForward];
 }
 
 - (IBAction)rewindDVDVideo:(id)sender
 {
 	[dvdPlayPauseButton setImage: [NSImage imageNamed:@"DVDPlay"]];
 	[dvdPlayPauseButton setAlternateImage: [NSImage imageNamed:@"DVDPlay-P"]];
-		
-	[[NSApp delegate] runDVDScanBackward];
 }
 
 - (IBAction)skipForwardDVDVideo:(id)sender
 {
-	[[NSApp delegate] runDVDJumpForward];
+
 }
 
 - (IBAction)skipBackwardDVDVideo:(id)sender
 {
-	[[NSApp delegate] runDVDJumpBackward];
+
 }
 
 - (IBAction)returnToMenuDVDVideo:(id)sender
 {
-	[[NSApp delegate] runDVDBackToMenu];
 }
 
 - (IBAction)ejectMountedDVD:(id)sender
 {
-	NSArray *volumes = [[NSWorkspace sharedWorkspace] mountedRemovableMedia];
 
-	int i, count = [volumes count];
-	for (i = 0; i < count; i++)
-	{
-		/* get the next volume path, and append the standard name for the
-		media folder on a DVD-Video volume */
-		NSString *path = [[volumes objectAtIndex:i] stringByAppendingString:@"/VIDEO_TS"];
-
-		if ([[NSApp delegate] openMedia:path isVolume:YES]) {
-			NSLog(@"A DVD was found ... ejecting");
-			[[NSApp delegate] closeMedia];
-			[[NSWorkspace sharedWorkspace] unmountAndEjectDeviceAtPath:path];
-			break;
-		}
-	}
 }
 
 ////////////////////////
@@ -579,7 +532,6 @@
 	} else {
 		[[searchPopupButton window] removeChildWindow:searchPopup];
 		[searchPopup orderOut:self];
-		[searchPopup release];
 		searchPopup = nil;
 	}
 }
@@ -593,13 +545,13 @@
 	unsigned i;
 	
 	NSURL *scriptureLookupURL = [NSURL URLWithString:[[NSString stringWithFormat:@"http://iscripture.org/api/search.php?s=%@+%@:%@&v=%@&t=passage", [scriptureBook titleOfSelectedItem], [scriptureChapter stringValue], [scriptureVerses stringValue], [scriptureTranslation titleOfSelectedItem]] stringByReplacingOccurrencesOfString:@" " withString:@"+"]];
-	XMLTree *scriptureLookupXML = [[[XMLTree alloc] initWithURL:scriptureLookupURL] retain];
+	XMLTree *scriptureLookupXML = [[XMLTree alloc] initWithURL:scriptureLookupURL];
 	//NSXMLDocument *scriptureLookupXMLdoc = [[[NSXMLDocument alloc] initWithContentsOfURL:scriptureLookupURL options:NSXMLDocumentTidyXML error:nil] retain];
 	
 	if ([[NSString stringWithFormat: @"%@", [scriptureLookupXML descendentNamed:@"found"]] isEqualToString: @"true"]) {
 		[self toggleSearchPopup: nil];
 		
-		NSString *scripturePreviewText = [NSString stringWithString: @"{\\rtf1\\ansi\\ansicpg1252\\cocoartf949\\cocoasubrtf420{\\fonttbl\\f0\\fswiss\\fcharset0 Helvetica;}{\\colortbl;\\red229\\green229\\blue229;}\\vieww9000\\viewh8400\\viewkind0 \\pard\\tx560\\tx1120\\tx1680\\tx2240\\tx2800\\tx3360\\tx3920\\tx4480\\tx5040\\tx5600\\tx6160\\tx6720\\qj\\pardirnatural \\f0 \\cf1"];
+		NSString *scripturePreviewText = @"{\\rtf1\\ansi\\ansicpg1252\\cocoartf949\\cocoasubrtf420{\\fonttbl\\f0\\fswiss\\fcharset0 Helvetica;}{\\colortbl;\\red229\\green229\\blue229;}\\vieww9000\\viewh8400\\viewkind0 \\pard\\tx560\\tx1120\\tx1680\\tx2240\\tx2800\\tx3360\\tx3920\\tx4480\\tx5040\\tx5600\\tx6160\\tx6720\\qj\\pardirnatural \\f0 \\cf1";
 		
 		NSLog(@"ISCRIPTURE.ORG: Match found!");
 		NSLog(@"ISCRIPTURE.ORG: %i matching verses.", [[scriptureLookupXML descendentNamed:@"query"] count]-2);

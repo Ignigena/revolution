@@ -55,7 +55,7 @@
 - (QTCaptureDevice *)controllableDevice;
 - (QTCaptureSession *)captureSession;
 
-- (IBAction)setTransitionSpeed:(id)sender;
+- (IBAction)setMediaTransitionSpeed:(id)sender;
 
 - (IBAction)selectVideosTab:(id)sender;
 - (IBAction)selectPhotosTab:(id)sender;

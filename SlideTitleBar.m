@@ -41,9 +41,6 @@
 	[bottomBorder lineToPoint:NSMakePoint(rect.size.width, 0)];
 	[bottomBorder setLineWidth:0.5];
 	[bottomBorder stroke];
-	
-	[titleBackground release];
-	[titleBackgroundDark release];
 }
 
 @end

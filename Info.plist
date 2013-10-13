@@ -53,28 +53,28 @@
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
 	<string>1.2, Copyright © 2007-2008 Renovatio Software.  All Rights Reserved.</string>
+	<key>CFBundleHelpBookFolder</key>
+	<string>ProWorshipHelp</string>
+	<key>CFBundleHelpBookName</key>
+	<string>ProWorship Help</string>
 	<key>CFBundleIconFile</key>
 	<string>App.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.Renovatio.ProWorship</string>
-	<key>LSTypeIsPackage</key>
-	<string>FALSE</string>
+	<string>com.albertmartin.Revolution</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>${PRODUCT_NAME}</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.3</string>
 	<key>CFBundleSignature</key>
 	<string>IWOR</string>
 	<key>CFBundleVersion</key>
-	<string>1.2</string>
-	<key>CFBundleShortVersionString</key>
-	<string>1.2</string>
-	<key>CFBundleHelpBookFolder</key>
-	<string>ProWorshipHelp</string>
-	<key>CFBundleHelpBookName</key>
-	<string>ProWorship Help</string>
+	<string>1.3</string>
+	<key>LSTypeIsPackage</key>
+	<string>FALSE</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>

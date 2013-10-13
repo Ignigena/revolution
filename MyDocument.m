@@ -75,27 +75,6 @@
 	[thumbnailScroller setPictureListing: [[NSApp delegate] picturesMediaListing]];
 	[thumbnailScroller setMediaListing: 0];
 	
-	_listener = [[BLIPListener alloc] initWithPort: 1776];
-	_listener.delegate = self;
-	_listener.pickAvailablePort = YES;
-	_listener.bonjourServiceType = @"_revolution_broadcast._tcp";
-	[_listener open];
-	
-	receiverBrowser = [[NSNetServiceBrowser alloc] init];
-    receiverList = [[NSMutableArray alloc] init];
-    [receiverBrowser setDelegate:self];
-    
-    [receiverBrowser searchForServicesOfType:@"_revolution_receiver._tcp." inDomain:@""];
-	
-	// Hide the video panel until the user opens it
-	// No need to animate because this is not visible to the user
-	//[rightSplitterView setSplitterPosition:1 animate:NO];
-	
-	// Release custom scroll bar classes
-	[darkScrollerPlaylist release];
-	[darkScrollerLibrary release];
-	[darkScrollerSlides release];
-	
 	[self performSelector: @selector(checkEmptyLibrary) withObject: nil afterDelay: 0.1];
 	NSLog(@"done ...");
 }
@@ -116,36 +95,9 @@
     }
 }
 
-- (void)sendDataToAllNodes:(NSData *)data
-{
-	unsigned i;
-	
-	for (i=0; i<[receiverList count]; i++) {
-		BLIPConnection *connection = [[BLIPConnection alloc] initToNetService: [receiverList objectAtIndex: i]];
-		
-		if(connection)
-			[connection open];
-		
-		BLIPRequest *r = [connection request];
-		r.body = data;
-		//BLIPResponse *response = 
-		[r send];
-		
-		if(connection)
-			[connection close];
-		
-		//response.onComplete = $target(self,gotResponse:);
-	}
-}
-
-- (void) gotResponse: (BLIPResponse*)response
-{
-    NSLog(@"%@", response.bodyString);
-}   
-
 - (void)checkEmptyLibrary
 {
-	[[libraryListing dataSource] loadReloadLibraryList];
+	[(LibraryListing *)[libraryListing dataSource] loadReloadLibraryList];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
@@ -230,7 +182,6 @@
 	[worshipPlaylist setArray: [unarchiver decodeObjectForKey:@"PlaylistSongFiles"]];
 	
 	[unarchiver finishDecoding];
-	[unarchiver release];
 	
 	NSUserDefaults  *defaults = [NSUserDefaults standardUserDefaults];
 	[defaults setObject:[NSString stringWithFormat: @"%@", [self fileURL]] forKey:@"LastOpenedDocument"];
@@ -477,14 +428,13 @@
 		[alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
-		[alert release];
 	}
 	
 }
 
 - (IBAction)removeFromPlaylist:(id)sender
 {
-	NSLog(@"Deleting %i", [playlistTable selectedRow]);
+	NSLog(@"Deleting %li", (long)[playlistTable selectedRow]);
 	
 	// Just make sure that the user is clicking on an actual row
 	if ([playlistTable selectedRow] < 0 || [playlistTable selectedRow] >= [worshipPlaylist count])

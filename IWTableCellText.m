@@ -39,7 +39,7 @@
 		}
 	}
 	
-	NSAttributedString *attrStr = [[[NSAttributedString alloc] initWithString:[[songDisplayText componentsSeparatedByString:@"."] objectAtIndex: 0] attributes:attrs] autorelease];
+	NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:[[songDisplayText componentsSeparatedByString:@"."] objectAtIndex: 0] attributes:attrs];
 
     [self setAttributedStringValue:attrStr];
 	

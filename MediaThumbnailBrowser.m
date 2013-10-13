@@ -64,8 +64,6 @@
 			[clickedSlideBorder setLineWidth: 2.0];
 			[clickedSlideBorder stroke];
 		}
-		
-		[mediaThumbnail release];
 	}
 	
 	//NSLog(@"%f", [[[self enclosingScrollView] verticalScroller] floatValue]);
@@ -179,9 +177,6 @@
 
 - (void)setMediaListing:(int)type
 {
-	if (mediaListing)
-		[mediaListing release];
-	
 	mediaType = type;
 	
 	if (type==1) { mediaListing = [[NSMutableArray alloc] initWithArray: backgroundPictureListing copyItems: YES]; }
@@ -195,15 +190,11 @@
 
 - (void)setMovieListing:(NSArray *)aMovieListing
 {
-	[backgroundMovieListing release];
-	
 	backgroundMovieListing = [[NSMutableArray alloc] initWithArray: aMovieListing copyItems: YES];
 }
 
 - (void)setPictureListing:(NSArray *)aPictureListing
 {
-	[backgroundPictureListing release];
-	
 	backgroundPictureListing = [[NSMutableArray alloc] initWithArray: aPictureListing copyItems: YES];
 }
 

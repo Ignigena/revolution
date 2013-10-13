@@ -178,7 +178,7 @@
 - (IBAction)applySkipSlide:(id)sender;
 
 // Song management support
-- (IBAction)setTransitionSpeed:(id)sender;
+- (IBAction)setSlidesTransitionSpeed:(id)sender;
 - (void)setFontFamily:(NSString *)font;
 
 

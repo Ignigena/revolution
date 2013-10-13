@@ -31,7 +31,7 @@ static PreferencesController *sharedPreferencesController = nil;
 {
 	NSUserDefaults *standardUserDefaults = [NSUserDefaults standardUserDefaults];
 	
-	id toolbar = [[[NSToolbar alloc] initWithIdentifier:@"preferences toolbar"] autorelease];
+	id toolbar = [[NSToolbar alloc] initWithIdentifier:@"preferences toolbar"];
     [toolbar setAllowsUserCustomization:NO];
     [toolbar setAutosavesConfiguration:NO];
 	[toolbar setSizeMode:NSToolbarSizeModeDefault];
@@ -156,7 +156,7 @@ static PreferencesController *sharedPreferencesController = nil;
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)identifier willBeInsertedIntoToolbar:(BOOL)willBeInserted 
 {
-	NSToolbarItem *item = [[[NSToolbarItem alloc] initWithItemIdentifier:identifier] autorelease];
+	NSToolbarItem *item = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
 	if ([identifier isEqualToString:GeneralToolbarItemIdentifier]) {
 		[item setLabel:GeneralToolbarItemIdentifier];
 		[item setImage:[NSImage imageNamed:@"GeneralPreferences"]];
@@ -284,21 +284,17 @@ static PreferencesController *sharedPreferencesController = nil;
 		if ([[[sender selectedCell] title] isEqualToString: @"Enabled"]) {
 			NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource: @"do shell script \"/bin/chmod a+r /System/Library/QuickTime/QuickTimeUSBVDCDigitizer.component/Contents/MacOS/QuickTimeUSBVDCDigitizer; /bin/chmod u+rx /System/Library/QuickTime/QuickTimeUSBVDCDigitizer.component/Contents/MacOS/QuickTimeUSBVDCDigitizer\" with administrator privileges"];
 			returnDescriptor = [scriptObject executeAndReturnError: nil];
-			[scriptObject release];
 		} else {
 			NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource: @"do shell script \"/bin/chmod a-rwx /System/Library/QuickTime/QuickTimeUSBVDCDigitizer.component/Contents/MacOS/QuickTimeUSBVDCDigitizer\" with administrator privileges"];
 			returnDescriptor = [scriptObject executeAndReturnError: nil];
-			[scriptObject release];
 		}
 	} else {
 		if ([[[sender selectedCell] title] isEqualToString: @"Enabled"]) {
 			NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource: @"do shell script \"/bin/chmod a+r /System/Library/QuickTime/QuickTimeUSBVDCDigitizer.component/Contents/MacOS/QuickTimeUSBVDCDigitizer /System/Library/PrivateFrameworks/CoreMediaIOServicesPrivate.framework/Versions/A/Resources/VDC.plugin/Contents/MacOS/VDC; /bin/chmod u+rx /System/Library/QuickTime/QuickTimeUSBVDCDigitizer.component/Contents/MacOS/QuickTimeUSBVDCDigitizer /System/Library/PrivateFrameworks/CoreMediaIOServicesPrivate.framework/Versions/A/Resources/VDC.plugin/Contents/MacOS/VDC\" with administrator privileges"];
 			returnDescriptor = [scriptObject executeAndReturnError: nil];
-			[scriptObject release];
 		} else {
 			NSAppleScript* scriptObject = [[NSAppleScript alloc] initWithSource: @"do shell script \"/bin/chmod a-rwx /System/Library/QuickTime/QuickTimeUSBVDCDigitizer.component/Contents/MacOS/QuickTimeUSBVDCDigitizer /System/Library/PrivateFrameworks/CoreMediaIOServicesPrivate.framework/Versions/A/Resources/VDC.plugin/Contents/MacOS/VDC\" with administrator privileges"];
 			returnDescriptor = [scriptObject executeAndReturnError: nil];
-			[scriptObject release];
 		}
 	}
 	
@@ -315,7 +311,6 @@ static PreferencesController *sharedPreferencesController = nil;
 				[alert setInformativeText: @"You must restart any program currently running that you wish to use your iSight camera with (iChat, Photobooth, etc.)"];
 				[alert setAlertStyle: NSInformationalAlertStyle];
 				[alert beginSheetModalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo: nil];
-				[alert release];
 			} else {
 				NSAlert *alert = [[NSAlert alloc] init];
 				[alert addButtonWithTitle: @"OK"];
@@ -323,7 +318,6 @@ static PreferencesController *sharedPreferencesController = nil;
 				[alert setInformativeText: @"You must restart ProWorship for the changes to take effect. Your iSight has been temporarily disabled and will not be accessable from iChat, Photobooth, etc until you enable it again."];
 				[alert setAlertStyle: NSCriticalAlertStyle];
 				[alert beginSheetModalForWindow:[self window] modalDelegate:nil didEndSelector:nil contextInfo: nil];
-				[alert release];
 			}
 		}
 	}

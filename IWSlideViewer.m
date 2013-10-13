@@ -123,7 +123,7 @@
 	///////////////////////////////////////////////
 	// Setup the size information for the slides //
 	maskingRect = NSMakeRect(0, 0, 292, 276);
-	bgPath = [[NSBezierPath bezierPath] retain];
+	bgPath = [NSBezierPath bezierPath];
 	float radius = 18;
 	radius = MIN(radius, 0.5f * MIN(NSWidth(maskingRect), NSHeight(maskingRect)));
 	NSRect roundRect = NSInsetRect(maskingRect, radius, radius);
@@ -202,9 +202,9 @@
 // Calculate the height of a string for positioning
 float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desiredWidth)
 {
-	NSTextStorage *textStorage = [[[NSTextStorage alloc] initWithString:myString] autorelease];
-	NSTextContainer *textContainer = [[[NSTextContainer alloc] initWithContainerSize: NSMakeSize(desiredWidth, 1e7)] autorelease];
-	NSLayoutManager *layoutManager = [[[NSLayoutManager alloc] init] autorelease];
+	NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:myString];
+	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize: NSMakeSize(desiredWidth, 1e7)];
+	NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
 
 	[textStorage addAttribute: NSFontAttributeName value: desiredFont range: NSMakeRange(0, [textStorage length])];
 	[textContainer setLineFragmentPadding: 0.0]; // padding usually is not appropriate for string drawing
@@ -434,34 +434,12 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	pageCount = ceilf(pageCount);
 	if (pageCount <= 0) { pageCount = 1; }
 	
-	NSLog(@"%i", pageCount);
+	NSLog(@"%f", pageCount);
 	
     range->location = 1;
     range->length = pageCount;
 
     return YES;
-}
-
-- (void)dealloc
-{
-	[self setEditor: NO];
-
-	[deleteWidget release];
-	
-	[slideToolbarFlag release];
-	[flagMenu release];
-	[slideToolbarMove release];
-	[slideToolbarCopy release];
-	
-	[inslideTextEditor release];
-	
-	[worshipSlideTextPara release];
-	[flagTextPara release];
-	
-	[textShadow release];
-	
-	[worshipSlides release];
-	[super dealloc];
 }
 
 - (void)updateGrid
@@ -511,7 +489,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	clickedIndex = [self slideIndexForPoint:mouseDownPoint];
 	
 	NSLog(@"%i", clickedIndex);
-	NSLog(@"%i", [worshipSlides count]);
+	NSLog(@"%lu", (unsigned long)[worshipSlides count]);
 	
 	if (clickedIndex>=[worshipSlides count]) {
 		if (editSlideAtIndex != -1) {
@@ -627,7 +605,6 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		[worshipSlideText drawInRect:worshipTextView withAttributes: worshipSlideTextAttrs];
 		
 		[dragImage unlockFocus];
-		[dragImage retain];
 	}
 }
 
@@ -889,7 +866,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	if (aSlidesNotesArray) { slidesNotes = [[NSMutableArray alloc] initWithArray: aSlidesNotesArray copyItems: YES]; }
 	if (aMediaRefsArray) { mediaReferences = [[NSMutableArray alloc] initWithArray: aMediaRefsArray copyItems: YES]; }
 	else {
-		NSMutableArray *blankMediaRefs = [[[NSMutableArray alloc] init] autorelease];
+		NSMutableArray *blankMediaRefs = [[NSMutableArray alloc] init];
 		unsigned i;
 	
 		for (i = 0; i < [worshipSlides count]; i++)
@@ -1056,7 +1033,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	NSShowAnimationEffect(NSAnimationEffectDisappearingItemDefault, screenPoint, NSMakeSize(100, 100), nil, nil, nil);
 	
-	[[[[[super window] delegate] undoManager] prepareWithInvocationTarget:self] insertNewSlide:[worshipSlides objectAtIndex:slideIndex] slideFlag:[slidesNotes objectAtIndex:slideIndex] slideMedia:[mediaReferences objectAtIndex:slideIndex] slideIndex:slideIndex];
+	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] insertNewSlide:[worshipSlides objectAtIndex:slideIndex] slideFlag:[slidesNotes objectAtIndex:slideIndex] slideMedia:[mediaReferences objectAtIndex:slideIndex] slideIndex:slideIndex];
 	
 	// Remove the slide and refresh the view
 	[worshipSlides removeObjectAtIndex: slideIndex];
@@ -1076,7 +1053,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	if (!index)
 		index = clickedSlideAtIndex;
 		
-	[[[[[super window] delegate] undoManager] prepareWithInvocationTarget:self] deleteSlideAtIndex:index+1];
+	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] deleteSlideAtIndex:index+1];
 	
 	[worshipSlides insertObject:[worshipSlides objectAtIndex:index] atIndex: index+1];
 	[slidesNotes insertObject:[slidesNotes objectAtIndex:index] atIndex: index+1];
@@ -1124,7 +1101,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	if (slideFile)
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", slideFile] stringByExpandingTildeInPath] atomically:TRUE];
 	else
-		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [[[playlistTable dataSource] worshipPlaylist] objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath] atomically:TRUE];
+		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [[(MyDocument *)[playlistTable dataSource] worshipPlaylist] objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath] atomically:TRUE];
 }
 
 //////////////////////////
@@ -1186,7 +1163,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		[self setNeedsDisplay: YES];
 	}
 	
-	[[[[[super window] delegate] undoManager] prepareWithInvocationTarget:self] deleteSlideAtIndex:index];
+	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] deleteSlideAtIndex:index];
 	
 	[worshipSlides insertObject: slideText atIndex: index];
 	[slidesNotes insertObject: slideFlag atIndex: index];
@@ -1240,8 +1217,8 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 
 - (void)setSlideAlignment:(int)alignment
 {
-	[[[[[super window] delegate] undoManager] prepareWithInvocationTarget:self] setSlideAlignment:alignmentValue];
-	[[[[super window] delegate] undoManager] setActionName:@"Change Slide Alignment"];
+	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] setSlideAlignment:alignmentValue];
+	[[(MyDocument *)[[super window] delegate] undoManager] setActionName:@"Change Slide Alignment"];
 	
 	[[[NSApp delegate] mainPresenterViewConnect] setAlignment:alignment];
 	alignmentValue = alignment;
@@ -1250,15 +1227,15 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 
 - (void)setSlideLayout:(int)layout
 {
-	[[[[[super window] delegate] undoManager] prepareWithInvocationTarget:self] setSlideLayout:layoutValue];
-	[[[[super window] delegate] undoManager] setActionName:@"Change Slide Layout"];
+	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] setSlideLayout:layoutValue];
+	[[(MyDocument *)[[super window] delegate] undoManager] setActionName:@"Change Slide Layout"];
 	
 	[[[NSApp delegate] mainPresenterViewConnect] setLayout:layout];
 	layoutValue = layout;
 	[self saveAllSlidesForSong:nil];
 }
 
-- (IBAction)setTransitionSpeed:(id)sender
+- (IBAction)setSlidesTransitionSpeed:(id)sender
 {
 	float actualTransitionSpeed;
 	
@@ -1337,7 +1314,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		clickedSlideAtIndex = [self slideIndexForPoint: [self convertPoint:[theEvent locationInWindow] fromView:nil]];
 		[self setNeedsDisplay: YES];
 		
-		NSMenu *theMenu = [[[NSMenu alloc] initWithTitle:@"Contextual Menu"] autorelease];
+		NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Contextual Menu"];
 		
 		if ([[slidesNotes objectAtIndex: clickedSlideAtIndex] isEqualToString: @"Skip"]) {
 			[theMenu insertItemWithTitle:@"Remove Skip" action:@selector(applySkipSlide:) keyEquivalent: @"" atIndex:0];

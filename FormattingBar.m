@@ -86,9 +86,6 @@
 	[layoutTopButton setState: layoutTopButtonState];
 	[layoutCentreButton setState: layoutCentreButtonState];
 	[layoutBottomButton setState: layoutBottomButtonState];
-	
-	[formattingBackground release];
-	[transitionSpeedBar release];
 }
 
 - (IBAction)alignLeft:(id)sender

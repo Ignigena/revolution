@@ -71,7 +71,7 @@
 {
 	[[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [folderTitleField stringValue]] stringByExpandingTildeInPath] attributes:nil];
 	
-	[[importerLibraryView dataSource] loadReloadLibraryList];
+	[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 	[importerLibraryView reloadData];
 	
 	[NSApp endSheet:newFolderSheet];
@@ -107,7 +107,7 @@
 			
 			[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 	
-			[[importerLibraryView dataSource] loadReloadLibraryList];
+			[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 			[importerLibraryView reloadData];
 			[documentPlaylistTable reloadData];
 			
@@ -136,7 +136,7 @@
 	
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 		
-		[[importerLibraryView dataSource] loadReloadLibraryList];
+		[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 		[importerLibraryView reloadData];
 		[documentPlaylistTable reloadData];
 	

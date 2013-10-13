@@ -11,7 +11,6 @@
 	
 	IWTableCellText *tableCellText = [[IWTableCellText alloc] init];
 	[[[self tableColumns] objectAtIndex: 0] setDataCell: tableCellText];
-	[tableCellText release];
 }
 
 - (id)_highlightColorForCell:(NSCell *)cell
@@ -53,7 +52,7 @@
 			worshipSongPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@/", [worshipSongFileSplit objectAtIndex: 0]];
 		} else {
 			worshipSongFile = [worshipSongFileSplit objectAtIndex: 0];
-			worshipSongPath = [NSString stringWithString: @"~/Library/Application Support/ProWorship/"];
+			worshipSongPath = @"~/Library/Application Support/ProWorship/";
 		}
 		
 		NSLog(@"%@", worshipSongPath);
@@ -62,11 +61,9 @@
 
 		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [worshipSongPath stringByExpandingTildeInPath] destination: @"" files: deleteFile tag: 0];
 		
-		[[self delegate] loadReloadLibraryList];
+		[(LibraryListing *)[self delegate] loadReloadLibraryList];
 		[self reloadData];
 	}
-		
-	[anAlert autorelease];
 }
 
 @end

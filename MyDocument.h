@@ -15,14 +15,11 @@
 #import "MediaThumbnailBrowser.h"
 #import "IWVideoPreview.h"
 #import "IWMediaBox.h"
-#import "BLIPConnection.h"
 
-@interface MyDocument : NSDocument <TCPListenerDelegate, BLIPConnectionDelegate>
+@interface MyDocument : NSDocument
 {
 	NSMutableArray *worshipPlaylist;
 	
-	BLIPListener *_listener;
-	NSNetServiceBrowser * receiverBrowser;
     NSMutableArray * receiverList;
 	
     IBOutlet id playlistTable;
@@ -41,7 +38,6 @@
 	IBOutlet id videoPreviewController;
 	IBOutlet id videoPreviewController2;
 	IBOutlet id videoPreviewDisplay;
-	IBOutlet IWVideoView* videoPreviewDisplayGL;
 	IBOutlet id loopingToggle;
 	
 	IBOutlet id addSongSheet;
@@ -68,7 +64,6 @@
 }
 
 - (void)sendDataToAllNodes:(NSData *)data;
-- (void) gotResponse: (BLIPResponse*)response;
 
 - (void)checkEmptyLibrary;
 - (IBAction)removeFromPlaylist:(id)sender;

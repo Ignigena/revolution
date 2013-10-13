@@ -164,16 +164,6 @@
 }
 
 
-- (void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [borderColor release];
-    [_MABackgroundColor release];
-    
-    [super dealloc];
-}
-
-
 #pragma mark Geometry
 
 
@@ -460,7 +450,7 @@
     [NSGraphicsContext restoreGraphicsState];
     [bg unlockFocus];
     
-    return [NSColor colorWithPatternImage:[bg autorelease]];
+    return [NSColor colorWithPatternImage:bg];
 }
 
 
@@ -794,13 +784,12 @@
 
 
 - (NSColor *)windowBackgroundColor {
-    return [[_MABackgroundColor retain] autorelease];
+    return _MABackgroundColor;
 }
 
 
 - (void)setBackgroundColor:(NSColor *)value {
     if (_MABackgroundColor != value) {
-        [_MABackgroundColor release];
         _MABackgroundColor = [value copy];
         
         [self _updateBackground];
@@ -809,13 +798,12 @@
 
 
 - (NSColor *)borderColor {
-    return [[borderColor retain] autorelease];
+    return borderColor;
 }
 
 
 - (void)setBorderColor:(NSColor *)value {
     if (borderColor != value) {
-        [borderColor release];
         borderColor = [value copy];
         
         [self _updateBackground];

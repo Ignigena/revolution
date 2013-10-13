@@ -65,7 +65,6 @@
 	} else {
 		[[addButton window] removeChildWindow:gettingStartedAddButton];
         [gettingStartedAddButton orderOut:self];
-        [gettingStartedAddButton release];
         gettingStartedAddButton = nil;
 	}
 	
@@ -96,8 +95,6 @@
 							if ([self containsString:[librarySearchField stringValue] inString:[NSString stringWithFormat: @"%@", [[[NSArray alloc] initWithArray: [[subLibraryListing objectAtIndex:subIndex] componentsSeparatedByString:@"/"]] objectAtIndex: 1]]])
 								[libraryListingText setObject:[NSNull null] forKey:subActualLibraryListing];
 						}
-						
-						[subActualLibraryListing release];
 					}
 				}
 			} else {
@@ -118,10 +115,6 @@
 				}
 			}
 		}
-		
-			
-		[songLibrarySplitter release];
-		[actualLibraryListing release];
 	}
 }
 

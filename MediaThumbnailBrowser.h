@@ -2,7 +2,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "IWSplitView.h"
-#import "IWVideoView.h"
 
 @interface MediaThumbnailBrowser : NSView
 {
@@ -32,8 +31,6 @@
 	IBOutlet id liveTabText;
 	
 	IBOutlet IWSplitView *splitterView;
-	
-	IBOutlet IWVideoView* videoPreviewDisplayGL;
 }
 
 - (void)updateGrid;

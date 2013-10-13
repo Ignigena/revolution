@@ -10,7 +10,6 @@
 	
 	IWTableCellText *tableCellText = [[IWTableCellText alloc] init];
 	[[[self tableColumns] objectAtIndex: 0] setDataCell: tableCellText];
-	[tableCellText release];
 }
 
 - (id)_highlightColorForCell:(NSCell *)cell

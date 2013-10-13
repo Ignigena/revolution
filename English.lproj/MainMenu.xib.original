@@ -15,6 +15,7 @@
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<string>com.binarymethod.BGHUDAppKitPlugin</string>
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="656357343">
@@ -977,7 +978,7 @@
 									<string key="NSFrame">{{19, 182}, {121, 19}}</string>
 									<reference key="NSSuperview" ref="542832495"/>
 									<bool key="NSEnabled">YES</bool>
-									<object class="NSSegmentedCell" key="NSCell" id="743557994">
+									<object class="BGHUDSegmentedCell" key="NSCell" id="743557994">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">131072</int>
 										<reference key="NSSupport" ref="26"/>
@@ -1011,6 +1012,7 @@
 											</object>
 										</object>
 										<int key="NSSegmentStyle">2</int>
+										<string key="themeKey">gradientTheme</string>
 									</object>
 								</object>
 								<object class="NSPopUpButton" id="809694478">
@@ -1019,7 +1021,7 @@
 									<string key="NSFrame">{{16, 235}, {126, 22}}</string>
 									<reference key="NSSuperview" ref="542832495"/>
 									<bool key="NSEnabled">YES</bool>
-									<object class="NSPopUpButtonCell" key="NSCell" id="456920962">
+									<object class="BGHUDPopUpButtonCell" key="NSCell" id="456920962">
 										<int key="NSCellFlags">-2076049856</int>
 										<int key="NSCellFlags2">133120</int>
 										<reference key="NSSupport" ref="26"/>
@@ -1076,6 +1078,7 @@
 										<bool key="NSUsesItemFromMenu">YES</bool>
 										<bool key="NSAltersState">YES</bool>
 										<int key="NSArrowPosition">2</int>
+										<string key="themeKey">gradientTheme</string>
 									</object>
 								</object>
 								<object class="NSSegmentedControl" id="544317363">
@@ -1084,7 +1087,7 @@
 									<string key="NSFrame">{{19, 158}, {120, 19}}</string>
 									<reference key="NSSuperview" ref="542832495"/>
 									<bool key="NSEnabled">YES</bool>
-									<object class="NSSegmentedCell" key="NSCell" id="816176984">
+									<object class="BGHUDSegmentedCell" key="NSCell" id="816176984">
 										<int key="NSCellFlags">67239424</int>
 										<int key="NSCellFlags2">131072</int>
 										<reference key="NSSupport" ref="26"/>
@@ -1114,6 +1117,7 @@
 										</object>
 										<int key="NSSelectedSegment">1</int>
 										<int key="NSSegmentStyle">2</int>
+										<string key="themeKey">gradientTheme</string>
 									</object>
 								</object>
 								<object class="NSTextField" id="537068101">
@@ -1141,7 +1145,7 @@
 									<string key="NSFrame">{{17, 77}, {123, 18}}</string>
 									<reference key="NSSuperview" ref="542832495"/>
 									<bool key="NSEnabled">YES</bool>
-									<object class="NSButtonCell" key="NSCell" id="355659437">
+									<object class="BGHUDButtonCell" key="NSCell" id="355659437">
 										<int key="NSCellFlags">-2080244224</int>
 										<int key="NSCellFlags2">131072</int>
 										<string key="NSContents">Draws Background</string>
@@ -1160,9 +1164,10 @@
 										<string key="NSKeyEquivalent"/>
 										<int key="NSPeriodicDelay">200</int>
 										<int key="NSPeriodicInterval">25</int>
+										<string key="themeKey">gradientTheme</string>
 									</object>
 								</object>
-								<object class="NSColorWell" id="245808547">
+								<object class="BGHUDColorWell" id="245808547">
 									<reference key="NSNextResponder" ref="542832495"/>
 									<int key="NSvFlags">268</int>
 									<object class="NSMutableSet" key="NSDragTypes">
@@ -1180,6 +1185,7 @@
 										<int key="NSColorSpace">1</int>
 										<bytes key="NSRGB">MCAwIDAAA</bytes>
 									</object>
+									<string key="themeKey">gradientTheme</string>
 									<bool key="useTransparentWell">NO</bool>
 								</object>
 								<object class="NSButton" id="90170163">
@@ -1188,7 +1194,7 @@
 									<string key="NSFrame">{{19, 40}, {120, 19}}</string>
 									<reference key="NSSuperview" ref="542832495"/>
 									<bool key="NSEnabled">YES</bool>
-									<object class="NSButtonCell" key="NSCell" id="1063741856">
+									<object class="BGHUDButtonCell" key="NSCell" id="1063741856">
 										<int key="NSCellFlags">604110336</int>
 										<int key="NSCellFlags2">134217728</int>
 										<string key="NSContents">Turn On Node</string>
@@ -1205,6 +1211,7 @@
 										<string key="NSKeyEquivalent"/>
 										<int key="NSPeriodicDelay">200</int>
 										<int key="NSPeriodicInterval">25</int>
+										<string key="themeKey">gradientTheme</string>
 									</object>
 								</object>
 							</object>
@@ -3658,28 +3665,28 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
 					<integer value="3" id="11"/>
 					<integer value="0" id="8"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
 					<string>{{-1328, 460}, {126, 54}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
 					<reference ref="11"/>
 					<reference ref="8"/>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
+					<string>com.binarymethod.BGHUDAppKitPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<reference ref="5"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>

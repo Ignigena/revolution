@@ -51,9 +51,7 @@
 }
 
 - (void)finishedFileConversion:(NSNotification *)aNotification
-{
-	[conversion release];
-	
+{	
 	NSString *fileContents = [NSString stringWithContentsOfFile:conversionSave encoding: NSUTF8StringEncoding error:nil];
 	
 	if (fileContents) {
@@ -124,7 +122,7 @@
 	
 	[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [songTitle stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 	
-	[[importerLibraryView dataSource] loadReloadLibraryList];
+	[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 	[importerLibraryView reloadData];
 	[documentPlaylistTable reloadData];
 	

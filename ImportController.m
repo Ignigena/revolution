@@ -23,11 +23,11 @@
 	NSMutableArray *blankNotes = [NSMutableArray arrayWithCapacity: [scriptureSlides count]];
 	[scriptureFile setObject:blankNotes forKey:@"Flags"];
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithString: @"~/Library/Application Support/ProWorship/Scripture/"] stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithString: @"~/Library/Application Support/ProWorship/Scripture/"] stringByExpandingTildeInPath] attributes: nil]; }
+	if ([[NSFileManager defaultManager] fileExistsAtPath: [@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath] attributes: nil]; }
 		
 	[scriptureFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Scripture/%@.iwsf", ref] stringByExpandingTildeInPath] atomically:TRUE];
 		
-	[[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] dataSource] loadReloadLibraryList];
+	[(LibraryListing *)[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] dataSource] loadReloadLibraryList];
 	[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] reloadData];
 	
 	[[[[NSDocumentController sharedDocumentController] currentDocument] worshipPlaylist] addObject: [NSString stringWithFormat: @"Scripture/%@.iwsf", ref]];

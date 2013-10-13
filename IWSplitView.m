@@ -71,8 +71,6 @@ subview1Animation, nil]];
                isSplitterAnimating = YES;
                [animation startAnimation];
                isSplitterAnimating = NO;
-
-               [animation release];
        } else {
                [subview0 setFrame:subview0EndFrame];
                [subview1 setFrame:subview1EndFrame];
