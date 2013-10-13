@@ -775,8 +775,13 @@ Gw
             <rect key="frame" x="0.0" y="0.0" width="893" height="182"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
             <subviews>
+                <imageView id="1075">
+                    <rect key="frame" x="290" y="0.0" width="30" height="84"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="axesIndependently" image="TabsFiller" id="2383"/>
+                </imageView>
                 <button identifier="scripture" toolTip="Scripture lookup" id="2468">
-                    <rect key="frame" x="290" y="48" width="30" height="33"/>
+                    <rect key="frame" x="290" y="81" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
                     <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Scripture" imagePosition="only" alignment="center" alternateImage="Scripture-On" inset="2" id="2469">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -797,11 +802,6 @@ Gw
                         <action selector="assignMediaToSlide:" target="657" id="2166"/>
                     </connections>
                 </button>
-                <imageView id="1075">
-                    <rect key="frame" x="290" y="0.0" width="30" height="48"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="TabsFiller" id="2383"/>
-                </imageView>
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="952" customClass="RSDarkScrollView">
                     <rect key="frame" x="320" y="27" width="573" height="155"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
@@ -857,17 +857,6 @@ Gw
                         <action selector="toggleLooping:" target="846" id="1141"/>
                     </connections>
                 </button>
-                <button identifier="live" toolTip="Live video background" id="850">
-                    <rect key="frame" x="290" y="81" width="30" height="33"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LiveVideo" imagePosition="only" alignment="center" alternateImage="LiveVideo-On" inset="2" id="2378">
-                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                        <font key="font" metaFont="system" size="10"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="selectMediaTab:" target="846" id="4ze-RK-dLb"/>
-                    </connections>
-                </button>
                 <button identifier="photos" toolTip="Photo backgrounds" id="849">
                     <rect key="frame" x="290" y="114" width="30" height="33"/>
                     <autoresizingMask key="autoresizingMask"/>
@@ -911,9 +900,6 @@ Gw
                 <outlet property="audioButton" destination="855" id="2692"/>
                 <outlet property="captureView" destination="2748" id="2777"/>
                 <outlet property="goToBlackButton" destination="856" id="2694"/>
-                <outlet property="livePlaybackView" destination="1237" id="1254"/>
-                <outlet property="liveTab" destination="850" id="890"/>
-                <outlet property="liveVideoToggleButton" destination="1243" id="2474"/>
                 <outlet property="loopingButton" destination="854" id="2691"/>
                 <outlet property="mediaThumbnailBrowser" destination="949" id="950"/>
                 <outlet property="moviePreview1" destination="2437" id="2778"/>
@@ -928,58 +914,8 @@ Gw
                 <outlet property="scriptureView" destination="2487" id="2504"/>
                 <outlet property="searchPopupButton" destination="2534" id="2576"/>
                 <outlet property="searchPopupView" destination="2542" id="2575"/>
-                <outlet property="videoDeviceSelector" destination="2719" id="2776"/>
                 <outlet property="videosTab" destination="848" id="887"/>
             </connections>
-        </customView>
-        <customView id="1237" userLabel="LiveVideo">
-            <rect key="frame" x="0.0" y="0.0" width="573" height="155"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-            <subviews>
-                <popUpButton toolTip="Choose the video input to use" wantsLayer="YES" verticalHuggingPriority="750" id="2719">
-                    <rect key="frame" x="204" y="55" width="105" height="25"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <contentFilters>
-                        <ciFilter name="CIColorControls">
-                            <configuration>
-                                <decimal key="inputBrightness" value="-0.3"/>
-                                <real key="inputContrast" value="0.5"/>
-                                <null key="inputImage"/>
-                                <integer key="inputSaturation" value="1"/>
-                            </configuration>
-                        </ciFilter>
-                    </contentFilters>
-                    <popUpButtonCell key="cell" type="roundTextured" title="Video Input" bezelStyle="texturedRounded" alignment="center" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="2722" id="2720">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="smallSystem"/>
-                        <menu key="menu" title="OtherViews" id="2721">
-                            <items>
-                                <menuItem title="Video Input" state="on" id="2722"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
-                <textField verticalHuggingPriority="750" id="2472" customClass="IWTableHeaderTextField">
-                    <rect key="frame" x="1" y="131" width="573" height="24"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Live Video Streaming" id="2473">
-                        <font key="font" metaFont="smallSystem"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <button toolTip="Enable/disable live video playback" id="1243">
-                    <rect key="frame" x="311" y="45" width="45" height="45"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="LiveOff" imagePosition="overlaps" alignment="center" alternateImage="LiveOff-Down" imageScaling="proportionallyDown" inset="2" id="2395">
-                        <behavior key="behavior" lightByContents="YES"/>
-                        <font key="font" metaFont="system" size="10"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="toggleLiveVideo:" target="846" id="1255"/>
-                    </connections>
-                </button>
-            </subviews>
         </customView>
         <window title="Panel" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="1868" userLabel="CCLISheet" customClass="AddSongSheet">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
@@ -1531,10 +1467,6 @@ DQ
         <image name="LayoutCenter-P" width="31" height="20"/>
         <image name="LayoutTop" width="31" height="20"/>
         <image name="LayoutTop-P" width="31" height="20"/>
-        <image name="LiveOff" width="33" height="34"/>
-        <image name="LiveOff-Down" width="33" height="34"/>
-        <image name="LiveVideo" width="30" height="33"/>
-        <image name="LiveVideo-On" width="30" height="33"/>
         <image name="Looping-Off" width="31" height="19"/>
         <image name="Looping-On" width="31" height="19"/>
         <image name="MediaButton" width="19" height="13"/>

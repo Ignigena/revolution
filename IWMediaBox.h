@@ -14,10 +14,7 @@
 	IBOutlet id goToBlackButton;
 	
 	IBOutlet id mediaThumbnailBrowser;
-	IBOutlet id livePlaybackView;
 	IBOutlet id scriptureView;
-	
-	IBOutlet id liveVideoToggleButton;
 	
 	IBOutlet id videoSpeedSlider;
 	IBOutlet id videoSpeedArea;
@@ -30,24 +27,10 @@
 	IBOutlet id scriptureVerses;
 	IBOutlet id scripturePreviewView;
 	MAAttachedWindow *searchPopup;
-	
-	QTCaptureSession *captureSession;
-	QTCaptureDeviceInput *videoDeviceInput;
-	IBOutlet id videoDeviceSelector;
-	IBOutlet QTCaptureView *captureView;
+
 	IBOutlet QTMovieView *moviePreview1;
 	IBOutlet QTMovieView *moviePreview2;
-	NSArray *videoDevices;
 }
-
-- (void)devicesDidChange:(NSNotification *)notification;
-- (void)refreshVideoDevices;
-- (NSArray *)videoDevices;
-- (void)setSelectedVideoDevice:(QTCaptureDevice *)selectedVideoDevice;
-- (QTCaptureDevice *)selectedVideoDevice;
-- (NSString *)mediaFormatSummary;
-- (QTCaptureDevice *)controllableDevice;
-- (QTCaptureSession *)captureSession;
 
 - (IBAction)setMediaTransitionSpeed:(id)sender;
 
@@ -57,8 +40,6 @@
 - (IBAction)toggleAudio:(id)sender;
 
 - (IBAction)juiceGoToBlack:(id)sender;
-
-- (IBAction)toggleLiveVideo:(id)sender;
 
 - (IBAction)goToWebsite:(id)sender;
 - (IBAction)toggleSearchPopup:(id)sender;

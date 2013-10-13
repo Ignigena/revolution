@@ -58,8 +58,6 @@
 		503173C60CF6D00800EEFF79 /* IWLibrarySearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 503173C50CF6D00800EEFF79 /* IWLibrarySearch.m */; };
 		503CD3900CD2E84D0045BE3D /* Videos-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD38E0CD2E84D0045BE3D /* Videos-On.tiff */; };
 		503CD3910CD2E84D0045BE3D /* Videos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD38F0CD2E84D0045BE3D /* Videos.tiff */; };
-		503CD3AC0CD2F0750045BE3D /* LiveVideo-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A60CD2F0750045BE3D /* LiveVideo-On.tiff */; };
-		503CD3AD0CD2F0750045BE3D /* LiveVideo.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A70CD2F0750045BE3D /* LiveVideo.tiff */; };
 		503CD3AE0CD2F0750045BE3D /* Photos-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A80CD2F0750045BE3D /* Photos-On.tiff */; };
 		503CD3AF0CD2F0750045BE3D /* Photos.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3A90CD2F0750045BE3D /* Photos.tiff */; };
 		503CD3B90CD2F5EB0045BE3D /* Looping-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503CD3B50CD2F5EB0045BE3D /* Looping-On.tiff */; };
@@ -135,10 +133,6 @@
 		864502760EAE9106009DEAE7 /* NSImage+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 864502740EAE9106009DEAE7 /* NSImage+QuickLook.m */; };
 		8645027A0EAEA55B009DEAE7 /* Scripture-On.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502780EAEA55B009DEAE7 /* Scripture-On.tiff */; };
 		8645027B0EAEA55B009DEAE7 /* Scripture.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502790EAEA55B009DEAE7 /* Scripture.tiff */; };
-		864502930EAEE0D0009DEAE7 /* LiveOff-Down.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8645028F0EAEE0D0009DEAE7 /* LiveOff-Down.tiff */; };
-		864502940EAEE0D0009DEAE7 /* LiveOff.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502900EAEE0D0009DEAE7 /* LiveOff.tiff */; };
-		864502950EAEE0D0009DEAE7 /* LiveOn-Down.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502910EAEE0D0009DEAE7 /* LiveOn-Down.tiff */; };
-		864502960EAEE0D0009DEAE7 /* LiveOn.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502920EAEE0D0009DEAE7 /* LiveOn.tiff */; };
 		864502AB0EAEEE56009DEAE7 /* iScripture.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502AA0EAEEE56009DEAE7 /* iScripture.tiff */; };
 		864502B70EAEF6EE009DEAE7 /* SearchTab.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864502B60EAEF6EE009DEAE7 /* SearchTab.tiff */; };
 		864504DD0EAF902F009DEAE7 /* XMLTree.m in Sources */ = {isa = PBXBuildFile; fileRef = 864504DB0EAF902F009DEAE7 /* XMLTree.m */; };
@@ -149,8 +143,6 @@
 		864506ED0EB22FEA009DEAE7 /* MediaTabBGActive.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864506EC0EB22FEA009DEAE7 /* MediaTabBGActive.tiff */; };
 		864508A50EB3BBC3009DEAE7 /* RSHistogramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 864508A40EB3BBC3009DEAE7 /* RSHistogramView.m */; };
 		864508B80EB3C39A009DEAE7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 864508B70EB3C39A009DEAE7 /* Accelerate.framework */; };
-		8645096B0EB9237C009DEAE7 /* VideoSourceSelect.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864509690EB9237C009DEAE7 /* VideoSourceSelect.tiff */; };
-		8645096C0EB9237C009DEAE7 /* VideoSourceSelect-on.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 8645096A0EB9237C009DEAE7 /* VideoSourceSelect-on.tiff */; };
 		8669F1E50ECA39C100640634 /* NetworkNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8669F1E40ECA39C100640634 /* NetworkNodeController.m */; };
 		868DEE920EC752F900C001A7 /* RSDarkButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 868DEE910EC752F900C001A7 /* RSDarkButtonCell.m */; };
 		86C07E650ECA12EA001676F7 /* NodeSettingsBackground.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 86C07E640ECA12EA001676F7 /* NodeSettingsBackground.tiff */; };
@@ -245,8 +237,6 @@
 		503173C50CF6D00800EEFF79 /* IWLibrarySearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IWLibrarySearch.m; sourceTree = "<group>"; };
 		503CD38E0CD2E84D0045BE3D /* Videos-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Videos-On.tiff"; path = "Resources/Media Panel/Videos-On.tiff"; sourceTree = "<group>"; };
 		503CD38F0CD2E84D0045BE3D /* Videos.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Videos.tiff; path = "Resources/Media Panel/Videos.tiff"; sourceTree = "<group>"; };
-		503CD3A60CD2F0750045BE3D /* LiveVideo-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "LiveVideo-On.tiff"; path = "Resources/Media Panel/LiveVideo-On.tiff"; sourceTree = "<group>"; };
-		503CD3A70CD2F0750045BE3D /* LiveVideo.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LiveVideo.tiff; path = "Resources/Media Panel/LiveVideo.tiff"; sourceTree = "<group>"; };
 		503CD3A80CD2F0750045BE3D /* Photos-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Photos-On.tiff"; path = "Resources/Media Panel/Photos-On.tiff"; sourceTree = "<group>"; };
 		503CD3A90CD2F0750045BE3D /* Photos.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Photos.tiff; path = "Resources/Media Panel/Photos.tiff"; sourceTree = "<group>"; };
 		503CD3B50CD2F5EB0045BE3D /* Looping-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Looping-On.tiff"; path = "Resources/Media Panel/Looping-On.tiff"; sourceTree = "<group>"; };
@@ -345,10 +335,6 @@
 		864502750EAE9106009DEAE7 /* NSImage+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSImage+QuickLook.h"; sourceTree = "<group>"; };
 		864502780EAEA55B009DEAE7 /* Scripture-On.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Scripture-On.tiff"; path = "Resources/Media Panel/Scripture-On.tiff"; sourceTree = "<group>"; };
 		864502790EAEA55B009DEAE7 /* Scripture.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Scripture.tiff; path = "Resources/Media Panel/Scripture.tiff"; sourceTree = "<group>"; };
-		8645028F0EAEE0D0009DEAE7 /* LiveOff-Down.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "LiveOff-Down.tiff"; path = "Resources/Media Panel/LiveOff-Down.tiff"; sourceTree = "<group>"; };
-		864502900EAEE0D0009DEAE7 /* LiveOff.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LiveOff.tiff; path = "Resources/Media Panel/LiveOff.tiff"; sourceTree = "<group>"; };
-		864502910EAEE0D0009DEAE7 /* LiveOn-Down.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "LiveOn-Down.tiff"; path = "Resources/Media Panel/LiveOn-Down.tiff"; sourceTree = "<group>"; };
-		864502920EAEE0D0009DEAE7 /* LiveOn.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = LiveOn.tiff; path = "Resources/Media Panel/LiveOn.tiff"; sourceTree = "<group>"; };
 		864502AA0EAEEE56009DEAE7 /* iScripture.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = iScripture.tiff; path = "Resources/Media Panel/iScripture.tiff"; sourceTree = "<group>"; };
 		864502B60EAEF6EE009DEAE7 /* SearchTab.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SearchTab.tiff; path = Resources/SearchTab.tiff; sourceTree = "<group>"; };
 		864504DB0EAF902F009DEAE7 /* XMLTree.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XMLTree.m; sourceTree = "<group>"; };
@@ -361,8 +347,6 @@
 		864508A30EB3BBC3009DEAE7 /* RSHistogramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSHistogramView.h; sourceTree = "<group>"; };
 		864508A40EB3BBC3009DEAE7 /* RSHistogramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSHistogramView.m; sourceTree = "<group>"; };
 		864508B70EB3C39A009DEAE7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
-		864509690EB9237C009DEAE7 /* VideoSourceSelect.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = VideoSourceSelect.tiff; path = "Resources/Media Panel/VideoSourceSelect.tiff"; sourceTree = "<group>"; };
-		8645096A0EB9237C009DEAE7 /* VideoSourceSelect-on.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "VideoSourceSelect-on.tiff"; path = "Resources/Media Panel/VideoSourceSelect-on.tiff"; sourceTree = "<group>"; };
 		8669F1E30ECA39C100640634 /* NetworkNodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkNodeController.h; sourceTree = "<group>"; };
 		8669F1E40ECA39C100640634 /* NetworkNodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkNodeController.m; sourceTree = "<group>"; };
 		868DEE900EC752F900C001A7 /* RSDarkButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSDarkButtonCell.h; sourceTree = "<group>"; };
@@ -578,24 +562,16 @@
 				864506C70EB1511D009DEAE7 /* InsertSong.tiff */,
 				864506CE0EB153D6009DEAE7 /* InsertPlaylist.tiff */,
 				864502AA0EAEEE56009DEAE7 /* iScripture.tiff */,
-				8645028F0EAEE0D0009DEAE7 /* LiveOff-Down.tiff */,
-				864502900EAEE0D0009DEAE7 /* LiveOff.tiff */,
-				864502910EAEE0D0009DEAE7 /* LiveOn-Down.tiff */,
-				864502920EAEE0D0009DEAE7 /* LiveOn.tiff */,
 				504D76A20D41EAF70083C6A3 /* AssignToSlide.tiff */,
 				50D3904A0CD983DC00A19A3F /* BP.tiff */,
 				5061C5D10CD938480021CFDB /* TabsFiller.tiff */,
 				503CD3BD0CD2F6F60045BE3D /* GoToBlack.tiff */,
-				864509690EB9237C009DEAE7 /* VideoSourceSelect.tiff */,
-				8645096A0EB9237C009DEAE7 /* VideoSourceSelect-on.tiff */,
 				503CD3B50CD2F5EB0045BE3D /* Looping-On.tiff */,
 				503CD3B60CD2F5EB0045BE3D /* Looping-Off.tiff */,
 				503CD3B70CD2F5EB0045BE3D /* Audio-On.tiff */,
 				503CD3B80CD2F5EB0045BE3D /* Audio-Off.tiff */,
 				503CD38E0CD2E84D0045BE3D /* Videos-On.tiff */,
 				503CD38F0CD2E84D0045BE3D /* Videos.tiff */,
-				503CD3A60CD2F0750045BE3D /* LiveVideo-On.tiff */,
-				503CD3A70CD2F0750045BE3D /* LiveVideo.tiff */,
 				503CD3A80CD2F0750045BE3D /* Photos-On.tiff */,
 				503CD3A90CD2F0750045BE3D /* Photos.tiff */,
 				864502780EAEA55B009DEAE7 /* Scripture-On.tiff */,
@@ -839,8 +815,6 @@
 				5066A3870CB0A79300BCD7CE /* PlaylistAddFolder.tiff in Resources */,
 				503CD3900CD2E84D0045BE3D /* Videos-On.tiff in Resources */,
 				503CD3910CD2E84D0045BE3D /* Videos.tiff in Resources */,
-				503CD3AC0CD2F0750045BE3D /* LiveVideo-On.tiff in Resources */,
-				503CD3AD0CD2F0750045BE3D /* LiveVideo.tiff in Resources */,
 				503CD3AE0CD2F0750045BE3D /* Photos-On.tiff in Resources */,
 				503CD3AF0CD2F0750045BE3D /* Photos.tiff in Resources */,
 				503CD3B90CD2F5EB0045BE3D /* Looping-On.tiff in Resources */,
@@ -874,10 +848,6 @@
 				86431CA00E858C9D0088D644 /* MyDocument.xib in Resources */,
 				8645027A0EAEA55B009DEAE7 /* Scripture-On.tiff in Resources */,
 				8645027B0EAEA55B009DEAE7 /* Scripture.tiff in Resources */,
-				864502930EAEE0D0009DEAE7 /* LiveOff-Down.tiff in Resources */,
-				864502940EAEE0D0009DEAE7 /* LiveOff.tiff in Resources */,
-				864502950EAEE0D0009DEAE7 /* LiveOn-Down.tiff in Resources */,
-				864502960EAEE0D0009DEAE7 /* LiveOn.tiff in Resources */,
 				864502AB0EAEEE56009DEAE7 /* iScripture.tiff in Resources */,
 				864502B70EAEF6EE009DEAE7 /* SearchTab.tiff in Resources */,
 				864504ED0EAF9293009DEAE7 /* search.xml in Resources */,
@@ -885,8 +855,6 @@
 				864506CF0EB153D6009DEAE7 /* InsertPlaylist.tiff in Resources */,
 				864506E50EB22C70009DEAE7 /* ShowOnScreen.tiff in Resources */,
 				864506ED0EB22FEA009DEAE7 /* MediaTabBGActive.tiff in Resources */,
-				8645096B0EB9237C009DEAE7 /* VideoSourceSelect.tiff in Resources */,
-				8645096C0EB9237C009DEAE7 /* VideoSourceSelect-on.tiff in Resources */,
 				86C07E650ECA12EA001676F7 /* NodeSettingsBackground.tiff in Resources */,
 				86C07E6F0ECA16C0001676F7 /* SwitchLeft.tiff in Resources */,
 				86C07E700ECA16C0001676F7 /* SwitchRight.tiff in Resources */,
