@@ -17,11 +17,11 @@
 	NSMutableDictionary *scriptureFile = [[NSMutableDictionary alloc] init];
 	NSMutableArray *scriptureSlides = [[NSMutableArray alloc] init];
 		
-	[scriptureFile setObject:ref forKey:@"Song Title"];
-	[scriptureFile setObject:scriptureSlides forKey:@"Slides"];
+	scriptureFile[@"Song Title"] = ref;
+	scriptureFile[@"Slides"] = scriptureSlides;
 		
 	NSMutableArray *blankNotes = [NSMutableArray arrayWithCapacity: [scriptureSlides count]];
-	[scriptureFile setObject:blankNotes forKey:@"Flags"];
+	scriptureFile[@"Flags"] = blankNotes;
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath: [@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath] attributes: nil]; }
 		

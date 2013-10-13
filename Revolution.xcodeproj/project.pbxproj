@@ -51,7 +51,6 @@
 		5024B39D0B50FC7300D4249E /* Playlist.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5024B39C0B50FC7300D4249E /* Playlist.icns */; };
 		5024B4D80B52242D00D4249E /* Song File.icns in Resources */ = {isa = PBXBuildFile; fileRef = 5024B4D70B52242D00D4249E /* Song File.icns */; };
 		502B5F670D27568400058839 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B5F660D27568400058839 /* QuartzCore.framework */; };
-		502B60220D2756BE00058839 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B60210D2756BE00058839 /* QuickTime.framework */; };
 		502B60450D2756C600058839 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 502B60440D2756C600058839 /* OpenGL.framework */; };
 		5031737C0CF69F0700EEFF79 /* Icon-SongFile.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5031737B0CF69F0700EEFF79 /* Icon-SongFile.tiff */; };
 		503173A60CF6A3B900EEFF79 /* Icon-Folder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 503173A50CF6A3B900EEFF79 /* Icon-Folder.tiff */; };
@@ -229,7 +228,6 @@
 		5024B39C0B50FC7300D4249E /* Playlist.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Playlist.icns; sourceTree = "<group>"; };
 		5024B4D70B52242D00D4249E /* Song File.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Song File.icns"; sourceTree = "<group>"; };
 		502B5F660D27568400058839 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
-		502B60210D2756BE00058839 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		502B60440D2756C600058839 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		5031737B0CF69F0700EEFF79 /* Icon-SongFile.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Icon-SongFile.tiff"; path = "Resources/Icon-SongFile.tiff"; sourceTree = "<group>"; };
 		503173A50CF6A3B900EEFF79 /* Icon-Folder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Icon-Folder.tiff"; path = "Resources/Icon-Folder.tiff"; sourceTree = "<group>"; };
@@ -374,7 +372,6 @@
 				509D9E940B96CD8000767E64 /* QTKit.framework in Frameworks */,
 				50F0A7A10BB4EF04007F9C82 /* Quartz.framework in Frameworks */,
 				502B5F670D27568400058839 /* QuartzCore.framework in Frameworks */,
-				502B60220D2756BE00058839 /* QuickTime.framework in Frameworks */,
 				502B60450D2756C600058839 /* OpenGL.framework in Frameworks */,
 				862B0FB40E9AB43B00C50042 /* QuickLook.framework in Frameworks */,
 				864508B80EB3C39A009DEAE7 /* Accelerate.framework in Frameworks */,
@@ -390,7 +387,6 @@
 			isa = PBXGroup;
 			children = (
 				502B60440D2756C600058839 /* OpenGL.framework */,
-				502B60210D2756BE00058839 /* QuickTime.framework */,
 				509D9E930B96CD8000767E64 /* QTKit.framework */,
 				50F0A7A00BB4EF04007F9C82 /* Quartz.framework */,
 				502B5F660D27568400058839 /* QuartzCore.framework */,
@@ -981,9 +977,9 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"\"$(SRCROOT)\"",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../Desktop/QuartzComposerPerformer/Performer 9_22_06\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_DEVELOPER_DIR)/DotMac SDK 2.0\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_5 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
@@ -1007,8 +1003,8 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/iLifeControls.build/Release/iLifeControls.build/Objects-normal/i386\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/iLifeControls.build/Release/iLifeControls.build/Objects-normal/ppc\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_2 = "";
+				LIBRARY_SEARCH_PATHS_QUOTED_3 = "";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_2 = "\"$(SRCROOT)\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -1038,9 +1034,9 @@
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_3)",
 					"\"$(SRCROOT)\"",
 				);
-				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)/../../Desktop/QuartzComposerPerformer/Performer 9_22_06\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)\"";
-				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "\"$(SYSTEM_DEVELOPER_DIR)/DotMac SDK 2.0\"";
+				FRAMEWORK_SEARCH_PATHS_QUOTED_3 = "";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_5 = "\"$(SRCROOT)\"";
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
@@ -1061,8 +1057,8 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_4)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_2 = "\"$(SRCROOT)/iLifeControls.build/Release/iLifeControls.build/Objects-normal/i386\"";
-				LIBRARY_SEARCH_PATHS_QUOTED_3 = "\"$(SRCROOT)/iLifeControls.build/Release/iLifeControls.build/Objects-normal/ppc\"";
+				LIBRARY_SEARCH_PATHS_QUOTED_2 = "";
+				LIBRARY_SEARCH_PATHS_QUOTED_3 = "";
 				LIBRARY_SEARCH_PATHS_QUOTED_4 = "\"$(SRCROOT)\"";
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;

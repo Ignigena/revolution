@@ -493,7 +493,7 @@
     if( _tree == NULL )
         return nil;
 
-    return [[[self attributes] objectForKey:name] description];
+    return [[self attributes][name] description];
 }	// end attributeNamed:
 
 

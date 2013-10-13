@@ -9,7 +9,7 @@
 - (id)initWithFrame:(NSRect)frameRect
 {
 	if ((self = [super initWithFrame:frameRect]) != nil) {
-		[self registerForDraggedTypes:[NSArray arrayWithObjects: NSColorPboardType, NSFilenamesPboardType, nil]];
+		[self registerForDraggedTypes:@[NSColorPboardType, NSFilenamesPboardType]];
 		clickedSlideAtIndex = -1;
 	}
 	return self;
@@ -48,11 +48,11 @@
 		// Draw the thumbnail
 		NSRect backgroundRect = NSMakeRect(thumbRect.origin.x, thumbRect.origin.y, 70, 70);
 		NSString *thumbnailPath;
-		NSArray *moviePathSplitter = [[NSArray alloc] initWithArray: [[mediaListing objectAtIndex:index] componentsSeparatedByString:@"/"]];
-		NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[moviePathSplitter objectAtIndex:[moviePathSplitter count]-1] componentsSeparatedByString:@"."]];
+		NSArray *moviePathSplitter = [[NSArray alloc] initWithArray: [mediaListing[index] componentsSeparatedByString:@"/"]];
+		NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [moviePathSplitter[[moviePathSplitter count]-1] componentsSeparatedByString:@"."]];
 		
-		if (mediaType==1) { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
-		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [movieNameSplitter objectAtIndex: 0]]; }
+		if (mediaType==1) { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", movieNameSplitter[0]]; }
+		else { thumbnailPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", movieNameSplitter[0]]; }
 		
 		NSImage *mediaThumbnail = [[NSImage alloc] initWithContentsOfFile: [thumbnailPath stringByExpandingTildeInPath]];
 		[mediaThumbnail setFlipped: YES];
@@ -131,7 +131,7 @@
 		//else
 		//	[[[[NSDocumentController sharedDocumentController] currentDocument] videoPreviewDisplay] setUpdateTimeCode: YES];
 			
-		[[NSApp delegate] presentJuice: [[mediaListing objectAtIndex: clickedIndex] stringByExpandingTildeInPath]];
+		[[NSApp delegate] presentJuice: [mediaListing[clickedIndex] stringByExpandingTildeInPath]];
 		
 		//[[[NSApp delegate] mainPresenterViewConnect] setVideoFile: [QTMovie movieWithFile:[[mediaListing objectAtIndex: clickedIndex] stringByExpandingTildeInPath] error:nil]];
 	}
@@ -216,32 +216,32 @@
 		unsigned filesIndex;
 		
 		for (filesIndex = 0; filesIndex <= [files count]-1; filesIndex++) {
-			NSLog(@"%@", [files objectAtIndex:filesIndex] );
+			NSLog(@"%@", files[filesIndex] );
 			
 			// Make sure it is of type "MOV" and a thumbnail is not already saved
-			if ([[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"mov"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"avi"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"mpg"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"mpeg"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"mp4"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"qtz"]) {
+			if ([[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"mov"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"avi"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"mpg"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"mpeg"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"mp4"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"qtz"]) {
 				//Copy to the Movies folder
 				NSLog(@"Movie file");
-				if ([[NSFileManager defaultManager] copyPath:[files objectAtIndex:filesIndex] toPath:[[NSString stringWithFormat: @"~/Movies/ProWorship/%@", [[files objectAtIndex:filesIndex] lastPathComponent]] stringByExpandingTildeInPath] handler:nil]) {
+				if ([[NSFileManager defaultManager] copyPath:files[filesIndex] toPath:[[NSString stringWithFormat: @"~/Movies/ProWorship/%@", [files[filesIndex] lastPathComponent]] stringByExpandingTildeInPath] handler:nil]) {
 					[[NSApp delegate] runThumbnailSetup];
 					[self setMovieListing: [[NSApp delegate] moviesMediaListing]];
 					[self setPictureListing: [[NSApp delegate] picturesMediaListing]];
 					[self setMediaListing:mediaType];
 					[[self enclosingScrollView] reflectScrolledClipView:[[self enclosingScrollView] contentView]];
 				}
-			} else if([[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"tiff"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"tif"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"jpeg"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"jpg"] ||
-				[[[[files objectAtIndex:filesIndex] pathExtension] lowercaseString] isEqualToString: @"png"]) {
+			} else if([[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"tiff"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"tif"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"jpeg"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"jpg"] ||
+				[[[files[filesIndex] pathExtension] lowercaseString] isEqualToString: @"png"]) {
 				//Copy to the Pictures folder
 				NSLog(@"Picture file");
-				if ([[NSFileManager defaultManager] copyPath:[files objectAtIndex:filesIndex] toPath:[[NSString stringWithFormat: @"~/Pictures/ProWorship/%@", [[files objectAtIndex:filesIndex] lastPathComponent]] stringByExpandingTildeInPath] handler:nil]) {
+				if ([[NSFileManager defaultManager] copyPath:files[filesIndex] toPath:[[NSString stringWithFormat: @"~/Pictures/ProWorship/%@", [files[filesIndex] lastPathComponent]] stringByExpandingTildeInPath] handler:nil]) {
 					[[NSApp delegate] runThumbnailSetup];
 					[self setMovieListing: [[NSApp delegate] moviesMediaListing]];
 					[self setPictureListing: [[NSApp delegate] picturesMediaListing]];

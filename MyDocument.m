@@ -44,7 +44,7 @@
 	[[[NSApp delegate] splasher] orderOut: nil];
 	
 	RSDarkScroller *darkScrollerPlaylist = [[RSDarkScroller alloc] init];
-	[playlistTable registerForDraggedTypes: [NSArray arrayWithObject:IWPlaylistDataType]];
+	[playlistTable registerForDraggedTypes: @[IWPlaylistDataType]];
 	[[playlistTable enclosingScrollView] setVerticalScroller: darkScrollerPlaylist];
 	[playlistTable reloadData];
 	
@@ -65,7 +65,7 @@
 	// Set up the split view that will open up the media panel
 	// Fix the Interface Builder mess
 	[rightSplitterView setFrame: NSMakeRect(250,20,893,671)];
-	[[[rightSplitterView subviews] objectAtIndex:0] addSubview: mediaBoxContent];
+	[[rightSplitterView subviews][0] addSubview: mediaBoxContent];
 	//[worshipTitleBarContainer setOrigin: NSMakePoint(0, 452)
 	[worshipTitleBarContainer setFrame: NSMakeRect(0, 452, [worshipTitleBarContainer bounds].size.width, [worshipTitleBarContainer bounds].size.height+1)];
 	[docSlideScroller setFrame: NSMakeRect(0, [docSlideScroller frame].origin.y, [docSlideScroller frame].size.width, 413)];
@@ -118,8 +118,8 @@
        } else {
        // Do whatever else you want to do in this delegate.
 	// how to resize a horizontal split view so that the left frame stays a constant size
-    NSView *top = [[sender subviews] objectAtIndex:0];      // get the two sub views
-    NSView *bottom = [[sender subviews] objectAtIndex:1];
+    NSView *top = [sender subviews][0];      // get the two sub views
+    NSView *bottom = [sender subviews][1];
     //float dividerThickness = [sender dividerThickness];         // and the divider thickness
     NSRect newFrame = [sender frame];                           // get the new size of the whole splitView
     NSRect topFrame = [top frame];                            // current size of the left subview
@@ -139,7 +139,7 @@
 
 - (BOOL)splitView:(NSSplitView *)sender canCollapseSubview:(NSView *)subview
 {
-    if ([[sender subviews] objectAtIndex:1] == subview)
+    if ([sender subviews][1] == subview)
        return NO;
 
     return YES;
@@ -208,7 +208,7 @@
 /* Required method for the NSTableDataSource protocol. */
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn*)aTableColumn row:(int)rowIndex
 {
-    return [worshipPlaylist objectAtIndex:rowIndex];
+    return worshipPlaylist[rowIndex];
 }
 
 // Copies table row to pasteboard when it is determined a drag should begin
@@ -216,12 +216,12 @@
 {
 	[docSlideViewer setEditor: NO];
 	
-	NSArray *songTitle = [NSArray arrayWithObject:[worshipPlaylist objectAtIndex: [rowIndexes firstIndex]]];
+	NSArray *songTitle = @[worshipPlaylist[[rowIndexes firstIndex]]];
 	draggingTableRowStart = [rowIndexes firstIndex];
 	
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:songTitle];
 
-    [pboard declareTypes:[NSArray arrayWithObject:IWPlaylistDataType] owner:self];
+    [pboard declareTypes:@[IWPlaylistDataType] owner:self];
     [pboard setData:data forType:IWPlaylistDataType];
 
     return YES;
@@ -252,7 +252,7 @@
 	
 	if (row <= 0) row = 0;
 	
-	[worshipPlaylist insertObject:[songTitle objectAtIndex: [songTitle count]-1] atIndex:row];
+	[worshipPlaylist insertObject:songTitle[[songTitle count]-1] atIndex:row];
 	
 	if (draggingTableRowStart!=-1 && draggingTableRowStart!=row) {
 		if (draggingTableRowStart>=row) { draggingTableRowStart++; }
@@ -300,10 +300,10 @@
 		return;
 	}
 	
-	previousSelectedPlaylist = [worshipPlaylist objectAtIndex: [[notification object] selectedRow]];
+	previousSelectedPlaylist = worshipPlaylist[[[notification object] selectedRow]];
 	
 	// Use the name of the song as the location of the song file
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [worshipPlaylist objectAtIndex: [[notification object] selectedRow]]];
+	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", worshipPlaylist[[[notification object] selectedRow]]];
 	
 	//[self sendDataToAllNodes: [[worshipPlaylist objectAtIndex: [[notification object] selectedRow]] dataUsingEncoding: NSUTF8StringEncoding]];
 	
@@ -314,42 +314,42 @@
 	
 		// The song file exists, process the file
 		[docSlideViewer setEditor: NO];
-		NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [[worshipPlaylist objectAtIndex: [[notification object] selectedRow]] componentsSeparatedByString:@"/"]];
-		NSString *songDisplayText = [songDisplaySplitter objectAtIndex: [songDisplaySplitter count]-1];
-		[worshipTitleBar setStringValue: [[songDisplayText componentsSeparatedByString:@"."] objectAtIndex: 0]];
+		NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [worshipPlaylist[[[notification object] selectedRow]] componentsSeparatedByString:@"/"]];
+		NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
+		[worshipTitleBar setStringValue: [songDisplayText componentsSeparatedByString:@"."][0]];
 		
 		NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
 		
-		[docSlideViewer setWorshipSlides:[readSlideFileContents objectForKey:@"Slides"] notesSlides:[readSlideFileContents objectForKey:@"Flags"] mediaRefs:[readSlideFileContents objectForKey:@"Media"]];
+		[docSlideViewer setWorshipSlides:readSlideFileContents[@"Slides"] notesSlides:readSlideFileContents[@"Flags"] mediaRefs:readSlideFileContents[@"Media"]];
 		
 		NSLog(@"READ: CCLI information");
 		
 		// Read CCLI information
 		NSString *ccliOverviewText = @"";
 			
-		if ([readSlideFileContents objectForKey:@"CCLI Copyright Year"]) {
-			[songCopyright setStringValue: [readSlideFileContents objectForKey:@"CCLI Copyright Year"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", [readSlideFileContents objectForKey:@"CCLI Copyright Year"]]];
+		if (readSlideFileContents[@"CCLI Copyright Year"]) {
+			[songCopyright setStringValue: readSlideFileContents[@"CCLI Copyright Year"]];
+			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", readSlideFileContents[@"CCLI Copyright Year"]]];
 		} else {
 			[songCopyright setStringValue: @""];
 		}
 		
-		if ([readSlideFileContents objectForKey:@"CCLI Artist"]) {
-			[songArtist setStringValue: [readSlideFileContents objectForKey:@"CCLI Artist"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", [readSlideFileContents objectForKey:@"CCLI Artist"]]];
+		if (readSlideFileContents[@"CCLI Artist"]) {
+			[songArtist setStringValue: readSlideFileContents[@"CCLI Artist"]];
+			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", readSlideFileContents[@"CCLI Artist"]]];
 		} else {
 			[songArtist setStringValue: @""];
 		}
 			
-		if ([readSlideFileContents objectForKey:@"CCLI Publisher"]) {
-			[songPublisher setStringValue: [readSlideFileContents objectForKey:@"CCLI Publisher"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", [readSlideFileContents objectForKey:@"CCLI Publisher"]]];
+		if (readSlideFileContents[@"CCLI Publisher"]) {
+			[songPublisher setStringValue: readSlideFileContents[@"CCLI Publisher"]];
+			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", readSlideFileContents[@"CCLI Publisher"]]];
 		} else {
 			[songPublisher setStringValue: @""];
 		}
 			
-		if ([readSlideFileContents objectForKey:@"CCLI Song Number"]) {
-			[songNumber setStringValue: [readSlideFileContents objectForKey:@"CCLI Song Number"]];
+		if (readSlideFileContents[@"CCLI Song Number"]) {
+			[songNumber setStringValue: readSlideFileContents[@"CCLI Song Number"]];
 		} else {
 			[songNumber setStringValue: @""];
 		}
@@ -379,17 +379,17 @@
 		// Reset the undo manager
 		[[self undoManager] removeAllActions];
 		
-		if ([[NSString stringWithFormat:@"%@", [readSlideFileContents objectForKey:@"Presenter Layout"]] isEqualToString: @"0"]) {
+		if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"0"]) {
 			[formatterToolbar placeTop: self];
-		} else if ([[NSString stringWithFormat:@"%@", [readSlideFileContents objectForKey:@"Presenter Layout"]] isEqualToString: @"2"]) {
+		} else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"2"]) {
 			[formatterToolbar placeBottom: self];
 		} else {
 			[formatterToolbar placeCentre: self];
 		}
 		
-		if ([[NSString stringWithFormat:@"%@", [readSlideFileContents objectForKey:@"Presenter Alignment"]] isEqualToString: @"0"]) {
+		if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"0"]) {
 			[formatterToolbar alignLeft: self];
-		} else if ([[NSString stringWithFormat:@"%@", [readSlideFileContents objectForKey:@"Presenter Alignment"]] isEqualToString: @"1"]) {
+		} else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"1"]) {
 			[formatterToolbar alignRight: self];
 		} else {
 			[formatterToolbar alignCentre: self];
@@ -397,25 +397,25 @@
 		
 		// Try to read the transition speed
 		// If not set, apply a default
-		if (![readSlideFileContents objectForKey:@"Transition Speed"]) {
+		if (!readSlideFileContents[@"Transition Speed"]) {
 			[formatterToolbar transitionSpeed: 1.0];
 		} else {
-			[formatterToolbar transitionSpeed: [[readSlideFileContents objectForKey:@"Transition Speed"] floatValue]];
+			[formatterToolbar transitionSpeed: [readSlideFileContents[@"Transition Speed"] floatValue]];
 		}
 			
-		if (![readSlideFileContents objectForKey:@"Font Family"]) {
+		if (!readSlideFileContents[@"Font Family"]) {
 			[formatterToolbar fontFamily: @"default"];
 		} else {
-			[formatterToolbar fontFamily: [NSString stringWithFormat: @"%@", [readSlideFileContents objectForKey:@"Font Family"]]];
+			[formatterToolbar fontFamily: [NSString stringWithFormat: @"%@", readSlideFileContents[@"Font Family"]]];
 		}
 		
-		if (![readSlideFileContents objectForKey:@"Font Size"]) {
+		if (!readSlideFileContents[@"Font Size"]) {
 			if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
 				[formatterToolbar setFormatFontSize: [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]];
 			else
 				[formatterToolbar setFormatFontSize: 72.0];
 		} else {
-			[formatterToolbar setFormatFontSize: [[readSlideFileContents objectForKey:@"Font Size"] floatValue]];
+			[formatterToolbar setFormatFontSize: [readSlideFileContents[@"Font Size"] floatValue]];
 		}
 			
 		//[songDisplaySplitter release];
@@ -424,7 +424,7 @@
 		// The song file does not exist
 		NSAlert *alert = [[NSAlert alloc] init];
 		[alert addButtonWithTitle:@"OK"];
-		[alert setMessageText:[NSString stringWithFormat: @"\"%@\" Not Found", [worshipPlaylist objectAtIndex: [[notification object] selectedRow]]]];
+		[alert setMessageText:[NSString stringWithFormat: @"\"%@\" Not Found", worshipPlaylist[[[notification object] selectedRow]]]];
 		[alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
@@ -458,34 +458,34 @@
 	
 	[docSlideViewer saveAllSlidesForSong: nil];
 	
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]];
+	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]];
 	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
 	
 	NSString *ccliOverviewText = @"";
 			
-		if ([readSlideFileContents objectForKey:@"CCLI Copyright Year"]) {
-			[songCopyright setStringValue: [readSlideFileContents objectForKey:@"CCLI Copyright Year"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", [readSlideFileContents objectForKey:@"CCLI Copyright Year"]]];
+		if (readSlideFileContents[@"CCLI Copyright Year"]) {
+			[songCopyright setStringValue: readSlideFileContents[@"CCLI Copyright Year"]];
+			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", readSlideFileContents[@"CCLI Copyright Year"]]];
 		} else {
 			[songCopyright setStringValue: @""];
 		}
 		
-		if ([readSlideFileContents objectForKey:@"CCLI Artist"]) {
-			[songArtist setStringValue: [readSlideFileContents objectForKey:@"CCLI Artist"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", [readSlideFileContents objectForKey:@"CCLI Artist"]]];
+		if (readSlideFileContents[@"CCLI Artist"]) {
+			[songArtist setStringValue: readSlideFileContents[@"CCLI Artist"]];
+			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", readSlideFileContents[@"CCLI Artist"]]];
 		} else {
 			[songArtist setStringValue: @""];
 		}
 			
-		if ([readSlideFileContents objectForKey:@"CCLI Publisher"]) {
-			[songPublisher setStringValue: [readSlideFileContents objectForKey:@"CCLI Publisher"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", [readSlideFileContents objectForKey:@"CCLI Publisher"]]];
+		if (readSlideFileContents[@"CCLI Publisher"]) {
+			[songPublisher setStringValue: readSlideFileContents[@"CCLI Publisher"]];
+			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", readSlideFileContents[@"CCLI Publisher"]]];
 		} else {
 			[songPublisher setStringValue: @""];
 		}
 			
-		if ([readSlideFileContents objectForKey:@"CCLI Song Number"]) {
-			[songNumber setStringValue: [readSlideFileContents objectForKey:@"CCLI Song Number"]];
+		if (readSlideFileContents[@"CCLI Song Number"]) {
+			[songNumber setStringValue: readSlideFileContents[@"CCLI Song Number"]];
 		} else {
 			[songNumber setStringValue: @""];
 		}
@@ -591,9 +591,9 @@
 
 - (NSString *)songDetailsWithKey:(NSString *)key
 {
-	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [worshipPlaylist objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath]];
+	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]] stringByExpandingTildeInPath]];
 	
-	return [readSlideFileContents objectForKey: key];
+	return readSlideFileContents[key];
 }
 
 @end

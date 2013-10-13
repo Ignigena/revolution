@@ -9,7 +9,7 @@
 	[self setRowHeight: 18];
 	
 	IWTableCellText *tableCellText = [[IWTableCellText alloc] init];
-	[[[self tableColumns] objectAtIndex: 0] setDataCell: tableCellText];
+	[[self tableColumns][0] setDataCell: tableCellText];
 }
 
 - (id)_highlightColorForCell:(NSCell *)cell

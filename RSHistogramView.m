@@ -48,7 +48,7 @@
     histograms[3] = histogramA;
 	
 	for(i = 0; i < 256; i++) {
-		NSLog(@"RED::%u  --  GREEN::%u  --  BLUE::%u", (unsigned long)(histogramR[i]), (unsigned long)(histogramG[i]), (unsigned long)(histogramB[i]));
+		NSLog(@"RED::%lu  --  GREEN::%lu  --  BLUE::%lu", (unsigned long)(histogramR[i]), (unsigned long)(histogramG[i]), (unsigned long)(histogramB[i]));
 		count = count + (unsigned long)(histogramR[i]) + (unsigned long)(histogramG[i]) + (unsigned long)(histogramB[i]);
 	}
 	

@@ -373,9 +373,9 @@
                                                 </connections>
                                             </button>
                                             <segmentedControl toolTip="Select which elements appear live on the screen" verticalHuggingPriority="750" id="2452">
-                                                <rect key="frame" x="512" y="7" width="177" height="19"/>
+                                                <rect key="frame" x="513" y="7" width="176" height="19"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                <segmentedCell key="cell" controlSize="small" state="on" alignment="left" style="texturedRounded" trackingMode="selectOne" id="2453">
+                                                <segmentedCell key="cell" controlSize="small" state="on" alignment="left" style="texturedSquare" trackingMode="selectOne" id="2453">
                                                     <font key="font" metaFont="smallSystem"/>
                                                     <segments>
                                                         <segment label="None" imageScaling="none"/>

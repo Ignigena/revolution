@@ -29,23 +29,21 @@
 {
 	NSOpenPanel* importFileSelector = [NSOpenPanel openPanel];
 	
-	[importFileSelector setAllowedFileTypes: [NSArray arrayWithObjects: @"doc", @"txt", @"ttxt", @"text", @"rtf", nil]];
+	[importFileSelector setAllowedFileTypes: @[@"doc", @"txt", @"ttxt", @"text", @"rtf"]];
 	[importFileSelector setAllowsOtherFileTypes: NO];
 	[importFileSelector setCanChooseDirectories: NO];
 	[importFileSelector setAllowsMultipleSelection: NO];
 
-	if ([importFileSelector runModalForDirectory:nil file:nil types:[NSArray arrayWithObjects: @"doc", @"txt", @"ttxt", @"text", @"rtf", nil]] == NSOKButton)
+	if ([importFileSelector runModalForDirectory:nil file:nil types:@[@"doc", @"txt", @"ttxt", @"text", @"rtf"]] == NSOKButton)
 	{			
-		NSString *filePath = [[importFileSelector filenames] objectAtIndex:0];
+		NSString *filePath = [importFileSelector filenames][0];
 		conversionSave = [NSString stringWithFormat: @"%@/%@.txt", NSTemporaryDirectory(), [filePath lastPathComponent]];
 		
 		conversion = [[NSTask alloc] init];
 		[conversion setLaunchPath:@"/usr/bin/textutil"];
-		[conversion setArguments: [NSArray arrayWithObjects:
-			@"-convert", @"txt",
+		[conversion setArguments: @[@"-convert", @"txt",
 			@"-output", conversionSave,
-			filePath,
-			nil]];
+			filePath]];
 		[conversion launch];
 	}
 }
@@ -97,12 +95,12 @@
 /* Required method for the NSTableDataSource protocol. */
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn*)aTableColumn row:(int)rowIndex
 {
-    return [slideImporterTemp objectAtIndex:rowIndex];
+    return slideImporterTemp[rowIndex];
 }
 
 - (void)tableView:(NSTableView *)aTableView setObjectValue:(id)anObject forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
 {
-	[slideImporterTemp replaceObjectAtIndex:rowIndex withObject:anObject];
+	slideImporterTemp[rowIndex] = anObject;
 }
 
 - (IBAction)doInsertIntoActiveDocument:(id)sender
@@ -116,9 +114,9 @@
 	for (i = 0; i < [slideImporterTemp count]; i++)
 		[blankNotes addObject: @""];
 	
-	[songFile setObject:[songTitle stringValue] forKey:@"Song Title"];
-	[songFile setObject:slideImporterTemp forKey:@"Slides"];
-	[songFile setObject:blankNotes forKey:@"Flags"];
+	songFile[@"Song Title"] = [songTitle stringValue];
+	songFile[@"Slides"] = slideImporterTemp;
+	songFile[@"Flags"] = blankNotes;
 	
 	[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [songTitle stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 	

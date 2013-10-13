@@ -22,10 +22,10 @@
 		
 	for (index = 1; index <= [libraryListing count]-1; index++) {
 		BOOL isDir;
-		NSString *currentPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [libraryListing objectAtIndex:index]];
+		NSString *currentPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", libraryListing[index]];
 			
-		if ([[NSFileManager defaultManager] fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
-			[storeInMenu addItemWithTitle:[libraryListing objectAtIndex:index] action:nil keyEquivalent:@""];
+		if ([[NSFileManager defaultManager] fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![libraryListing[index] isEqualToString: @"Thumbnails"]) {
+			[storeInMenu addItemWithTitle:libraryListing[index] action:nil keyEquivalent:@""];
 		}
 	}
 	
@@ -94,8 +94,8 @@
 			NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 			NSArray *songSlides = [self runCleanupScript: clipboard];
 			
-			[songFile setObject:[songTitleField stringValue] forKey:@"Song Title"];
-			[songFile setObject:songSlides forKey:@"Slides"];
+			songFile[@"Song Title"] = [songTitleField stringValue];
+			songFile[@"Slides"] = songSlides;
 			
 			NSMutableArray *blankNotes = [[NSMutableArray alloc] init];
 			unsigned i;
@@ -103,7 +103,7 @@
 			for (i = 0; i < [songSlides count]; i++)
 				[blankNotes addObject: @""];
 	
-			[songFile setObject:blankNotes forKey:@"Flags"];
+			songFile[@"Flags"] = blankNotes;
 			
 			[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 	
@@ -128,11 +128,11 @@
 		[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
 	
 		NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
-		NSArray *blankArray = [NSArray arrayWithObject: @""];
+		NSArray *blankArray = @[@""];
 	
-		[songFile setObject:[songTitleField stringValue] forKey:@"Song Title"];
-		[songFile setObject:blankArray forKey:@"Slides"];
-		[songFile setObject:blankArray forKey:@"Flags"];
+		songFile[@"Song Title"] = [songTitleField stringValue];
+		songFile[@"Slides"] = blankArray;
+		songFile[@"Flags"] = blankArray;
 	
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 		

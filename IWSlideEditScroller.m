@@ -12,7 +12,7 @@
 @implementation IWSlideEditScroller
 
 - (void)drawRect:(NSRect)rect {
-	[[[self subviews] objectAtIndex: 0] setFrame: rect];
+	[[self subviews][0] setFrame: rect];
 }
 
 @end

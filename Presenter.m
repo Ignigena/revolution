@@ -144,7 +144,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	if (!stroke) {
 		[standardUserDefaults setObject:@"-6" forKey:@"Text Stroke"];
 		[standardUserDefaults synchronize];
-		stroke = [NSNumber numberWithInt: -6];
+		stroke = @-6;
 	} if (!presentationFontSize) {
 		presentationFontSize = [[standardUserDefaults objectForKey:@"Text Size"] intValue];
 		if (!presentationFontSize) {
@@ -169,9 +169,9 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 		presentationTextBorderColour = [NSColor colorWithCalibratedWhite: 0.27 alpha: 1.0];
 	} if (!textKnocksOutStroke) {
 		if (![standardUserDefaults objectForKey:@"Text Knocks Out Stroke"]) {
-			[standardUserDefaults setObject:[NSArchiver archivedDataWithRootObject:[NSNumber numberWithInt:1]] forKey:@"Text Knocks Out Stroke"];
+			[standardUserDefaults setObject:[NSArchiver archivedDataWithRootObject:@1] forKey:@"Text Knocks Out Stroke"];
 			[standardUserDefaults synchronize];
-			textKnocksOutStroke = [NSNumber numberWithInt: 1];
+			textKnocksOutStroke = @1;
 		} else {
 			textKnocksOutStroke = [NSUnarchiver unarchiveObjectWithData: [standardUserDefaults objectForKey:@"Text Knocks Out Stroke"]];
 		}
@@ -200,7 +200,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 		[self setTextFormatting];
 		
 		[CATransaction begin];
-		[CATransaction setValue:[NSNumber numberWithFloat:0.0f] forKey:kCATransactionAnimationDuration];
+		[CATransaction setValue:@0.0f forKey:kCATransactionAnimationDuration];
 		
 		presentationTextLayerOutgoing.string = [[NSAttributedString alloc] initWithString: [self presentationText] attributes:presenterSlideTextAttrs];
 		presentationTextLayerOutgoing.opacity = 1.0;
@@ -217,7 +217,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 		[CATransaction commit];
 		
 		[CATransaction begin];
-		[CATransaction setValue:[NSNumber numberWithFloat:transitionTime] forKey:kCATransactionAnimationDuration];
+		[CATransaction setValue:@(transitionTime) forKey:kCATransactionAnimationDuration];
 		
 		presentationTextLayerOutgoing.opacity = 0.0;
 		presentationTextLayer.opacity = 1.0;
@@ -380,7 +380,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 
 - (void)setStrokeWeight:(int)strokeWeight
 {
-	stroke = [NSNumber numberWithInt: strokeWeight];
+	stroke = @(strokeWeight);
 	
 	[self setNeedsDisplay: YES];
 }
@@ -444,7 +444,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 
 - (void)setTextKnocksOutBorder:(int)textKnockout
 {
-	textKnocksOutStroke = [NSNumber numberWithInt: textKnockout];
+	textKnocksOutStroke = @(textKnockout);
 	
 	[self setNeedsDisplay: YES];
 }

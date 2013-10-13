@@ -10,7 +10,7 @@
 	[self setRowHeight: 18];
 	
 	IWTableCellText *tableCellText = [[IWTableCellText alloc] init];
-	[[[self tableColumns] objectAtIndex: 0] setDataCell: tableCellText];
+	[[self tableColumns][0] setDataCell: tableCellText];
 }
 
 - (id)_highlightColorForCell:(NSCell *)cell
@@ -48,16 +48,16 @@
 		NSArray *worshipSongFileSplit = [[NSArray alloc] initWithArray: [worshipSongFile componentsSeparatedByString:@"/"]];
 		
 		if ([worshipSongFileSplit count] > 1) {
-			worshipSongFile = [worshipSongFileSplit objectAtIndex: 1];
-			worshipSongPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@/", [worshipSongFileSplit objectAtIndex: 0]];
+			worshipSongFile = worshipSongFileSplit[1];
+			worshipSongPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@/", worshipSongFileSplit[0]];
 		} else {
-			worshipSongFile = [worshipSongFileSplit objectAtIndex: 0];
+			worshipSongFile = worshipSongFileSplit[0];
 			worshipSongPath = @"~/Library/Application Support/ProWorship/";
 		}
 		
 		NSLog(@"%@", worshipSongPath);
 		
-		NSArray  *deleteFile = [NSArray arrayWithObject: worshipSongFile];
+		NSArray  *deleteFile = @[worshipSongFile];
 
 		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [worshipSongPath stringByExpandingTildeInPath] destination: @"" files: deleteFile tag: 0];
 		

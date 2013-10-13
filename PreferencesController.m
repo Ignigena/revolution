@@ -58,7 +58,7 @@ static PreferencesController *sharedPreferencesController = nil;
 	unsigned index;
 	
 	for (index = 0; index <= [fontFamilies count]-1; index++)
-		[formattingFontFamily addItemWithTitle:[fontFamilies objectAtIndex: index]];
+		[formattingFontFamily addItemWithTitle:fontFamilies[index]];
 	
 	if ([standardUserDefaults objectForKey:@"Font Family"]==nil) {
 		[formattingFontFamily selectItemWithTitle: @"Lucida Grande"];
@@ -126,32 +126,26 @@ static PreferencesController *sharedPreferencesController = nil;
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar*)toolbar
 {
-	return [NSArray arrayWithObjects:
-		GeneralToolbarItemIdentifier,
+	return @[GeneralToolbarItemIdentifier,
 		FormattingToolbarItemIdentifier,
 		DisplayToolbarItemIdentifier,
-		CCLIToolbarItemIdentifier,
-		nil];
+		CCLIToolbarItemIdentifier];
 }
 
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar*)toolbar 
 {
-	return [NSArray arrayWithObjects:
-		GeneralToolbarItemIdentifier,
+	return @[GeneralToolbarItemIdentifier,
 		FormattingToolbarItemIdentifier,
 		DisplayToolbarItemIdentifier,
-		CCLIToolbarItemIdentifier,
-		nil];
+		CCLIToolbarItemIdentifier];
 }
 
 - (NSArray *)toolbarSelectableItemIdentifiers:(NSToolbar *)toolbar
 {
-	return [NSArray arrayWithObjects:
-		GeneralToolbarItemIdentifier,
+	return @[GeneralToolbarItemIdentifier,
 		FormattingToolbarItemIdentifier,
 		DisplayToolbarItemIdentifier,
-		CCLIToolbarItemIdentifier,
-		nil];
+		CCLIToolbarItemIdentifier];
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString *)identifier willBeInsertedIntoToolbar:(BOOL)willBeInserted 
@@ -215,7 +209,7 @@ static PreferencesController *sharedPreferencesController = nil;
 	windowFrame.origin.y = NSMaxY([[self window] frame]) - ([view frame].size.height + WINDOW_TITLE_HEIGHT);
 	
 	if ([[activeContentView subviews] count] != 0)
-		[[[activeContentView subviews] objectAtIndex:0] removeFromSuperview];
+		[[activeContentView subviews][0] removeFromSuperview];
 	[[self window] setFrame:windowFrame display:YES animate:flag];
 	
 	[activeContentView setFrame:[view frame]];

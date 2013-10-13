@@ -13,7 +13,7 @@
 {
 	// Setup presentation windows if more than one screen is present.
 	if ([[NSScreen screens] count] > 1) {
-		NSRect screenArea = [[[NSScreen screens] objectAtIndex:1] frame];
+		NSRect screenArea = [[NSScreen screens][1] frame];
 		presentationWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 
 		mainPresenterView = [[Presenter alloc] initWithFrame: screenArea];
@@ -65,15 +65,15 @@
 	
 	if ([moviesListing count] >= 1) {
 		for (index = 0; index <= [moviesListing count]-1; index++) {
-			currentPath = [NSString stringWithFormat: @"~/Movies/ProWorship/%@", [moviesListing objectAtIndex:index]];
+			currentPath = [NSString stringWithFormat: @"~/Movies/ProWorship/%@", moviesListing[index]];
 			NSString *movieType = [[currentPath pathExtension] lowercaseString];
 			
 			if ([movieType isEqualToString: @"mov"] || [movieType isEqualToString: @"avi"] || [movieType isEqualToString: @"mpg"] || [movieType isEqualToString: @"mpeg"] || [movieType isEqualToString: @"mp4"] || [movieType isEqualToString: @"qtz"]) {
-				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
+				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [[moviesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[moviesPathListing addObject: currentPath];
@@ -91,15 +91,15 @@
 	
 	if ([picturesListing count] >= 1) {
 		for (index = 0; index <= [picturesListing count]-1; index++) {
-			currentPath = [NSString stringWithFormat: @"~/Pictures/ProWorship/%@", [picturesListing objectAtIndex:index]];
+			currentPath = [NSString stringWithFormat: @"~/Pictures/ProWorship/%@", picturesListing[index]];
 			NSString *pictureType = [[currentPath pathExtension] lowercaseString];
 			
 			if ([pictureType isEqualToString: @"tiff"] || [pictureType isEqualToString: @"tif"] || [pictureType isEqualToString: @"jpg"] || [pictureType isEqualToString: @"jpeg"] || [pictureType isEqualToString: @"png"]) {
-				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
+				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [[picturesListing objectAtIndex:index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[picturesPathListing addObject: currentPath];
@@ -185,7 +185,7 @@
 	[[(MyDocument *)[[NSDocumentController sharedDocumentController] currentDocument] thumbnailScroller] removeFocus: self];
 	
 	// Turn off the live camera view
-	[qcPresentationBackground setValue:[NSNumber numberWithBool:NO] forInputKey:@"LiveEnable"];
+	[qcPresentationBackground setValue:@NO forInputKey:@"LiveEnable"];
 }
 
 - (void)presentJuice:(NSString *)path
@@ -326,11 +326,11 @@
 - (IBAction)makeBackgroundLive:(NSButton *)sender
 {
 	if ([sender state] == NSOnState) {
-		[qcPresentationBackground setValue:[NSNumber numberWithBool:YES] forInputKey:@"LiveEnable"];
+		[qcPresentationBackground setValue:@YES forInputKey:@"LiveEnable"];
 		[videoPlaybackGLWindow setLevel:NSScreenSaverWindowLevel-1];
 		[videoPlaybackGLIncomingWindow setLevel:NSScreenSaverWindowLevel-1];
 	} else {
-		[qcPresentationBackground setValue:[NSNumber numberWithBool:NO] forInputKey:@"LiveEnable"];
+		[qcPresentationBackground setValue:@NO forInputKey:@"LiveEnable"];
 		[videoPlaybackGLWindow setLevel:NSScreenSaverWindowLevel+3];
 		[videoPlaybackGLIncomingWindow setLevel:NSScreenSaverWindowLevel+2];
 	}

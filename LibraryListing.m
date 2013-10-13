@@ -70,26 +70,26 @@
 	
 	for (index = 0; index <= [libraryListing count]-1; index++) {
 		BOOL isDir;
-		NSString *currentPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [libraryListing objectAtIndex:index]];
+		NSString *currentPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", libraryListing[index]];
 		
-		NSString *actualLibraryListing = [libraryListing objectAtIndex:index];
+		NSString *actualLibraryListing = libraryListing[index];
 			
-		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
+		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![libraryListing[index] isEqualToString: @"Thumbnails"]) {
 			NSMutableArray *subLibraryListing = [[NSMutableArray alloc] initWithArray: [manager contentsOfDirectoryAtPath:[currentPath stringByExpandingTildeInPath] error:nil]];
 			
 			if ([subLibraryListing count]!=0) {
 				unsigned subIndex;
 				
 				for (subIndex = 0; subIndex <= [subLibraryListing count]-1; subIndex++) {
-					if ([[subLibraryListing objectAtIndex:subIndex] isEqualToString:@".DS_Store"]) {
+					if ([subLibraryListing[subIndex] isEqualToString:@".DS_Store"]) {
 						[subLibraryListing removeObjectAtIndex:subIndex];
 					} else {
-						NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [subLibraryListing objectAtIndex:subIndex]]];
-						[subLibraryListing replaceObjectAtIndex:subIndex withObject:subActualLibraryListing];
+						NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", libraryListing[index], subLibraryListing[subIndex]]];
+						subLibraryListing[subIndex] = subActualLibraryListing;
 					
 						if (filterResults) {
-							if ([self containsString:[librarySearchField stringValue] inString:[NSString stringWithFormat: @"%@", [[[NSArray alloc] initWithArray: [[subLibraryListing objectAtIndex:subIndex] componentsSeparatedByString:@"/"]] objectAtIndex: 1]]])
-								[libraryListingText setObject:[NSNull null] forKey:subActualLibraryListing];
+							if ([self containsString:[librarySearchField stringValue] inString:[NSString stringWithFormat: @"%@", [[NSArray alloc] initWithArray: [subLibraryListing[subIndex] componentsSeparatedByString:@"/"]][1]]])
+								libraryListingText[subActualLibraryListing] = [NSNull null];
 						}
 					}
 				}
@@ -99,15 +99,15 @@
 			
 			// Only create folders if not searching the Library
 			if (!filterResults)
-				[libraryListingText setObject:subLibraryListing forKey:actualLibraryListing];
+				libraryListingText[actualLibraryListing] = subLibraryListing;
 		} else {
-			if (![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
+			if (![libraryListing[index] isEqualToString: @"Thumbnails"]) {
 				if (filterResults) {
 					if ([self containsString:[librarySearchField stringValue] inString:actualLibraryListing])
-						[libraryListingText setObject:[NSNull null] forKey:actualLibraryListing];
+						libraryListingText[actualLibraryListing] = [NSNull null];
 				} else {
-					if (![[libraryListing objectAtIndex:index] isEqualToString:@".DS_Store"])
-					[libraryListingText setObject:[NSNull null] forKey:actualLibraryListing];
+					if (![libraryListing[index] isEqualToString:@".DS_Store"])
+					libraryListingText[actualLibraryListing] = [NSNull null];
 				}
 			}
 		}
@@ -126,7 +126,7 @@
 	if (item==nil) {
 		return [[libraryListingText allKeys] count];
 	} else {
-		return [[libraryListingText objectForKey:item] count];
+		return [libraryListingText[item] count];
 	}
 }
 
@@ -134,9 +134,9 @@
 - (id)outlineView:(NSOutlineView *)outlineView child:(int)index ofItem:(id)item
 {
 	if (item==nil) {
-		return [[[libraryListingText allKeys] sortedArrayUsingSelector:@selector(compare:)] objectAtIndex:index];
+		return [[libraryListingText allKeys] sortedArrayUsingSelector:@selector(compare:)][index];
 	} else {
-		return [[libraryListingText objectForKey:item] objectAtIndex:index];
+		return libraryListingText[item][index];
 	}
 }
 
@@ -149,7 +149,7 @@
 /* Required method for the NSOutlineViewDataSource protocol. */
 - (BOOL)outlineView:(NSOutlineView *)outlineView isItemExpandable:(id)item
 {
-	if ([libraryListingText objectForKey:item]!=[NSNull null] && [[libraryListingText objectForKey:item] count]>=1) {
+	if (libraryListingText[item]!=[NSNull null] && [libraryListingText[item] count]>=1) {
 		return YES;
 	} else {
 		return NO;
@@ -169,16 +169,16 @@
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
 	// Make sure we can't drag an expandable item in the list
-	if ([outlineView isExpandable:[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]])
+	if ([outlineView isExpandable:[outlineView itemAtRow:[outlineView rowForItem:items[0]]]])
 		return NO;
 	
-	if ([[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]] isEqual:@"[empty]"])
+	if ([[outlineView itemAtRow:[outlineView rowForItem:items[0]]] isEqual:@"[empty]"])
 		return NO;
 	
 	NSLog(@"%@", items);
 	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:items];
 
-    [pboard declareTypes:[NSArray arrayWithObject:IWPlaylistDataType] owner:self];
+    [pboard declareTypes:@[IWPlaylistDataType] owner:self];
 
     [pboard setData:data forType:IWPlaylistDataType];
 

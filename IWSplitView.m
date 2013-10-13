@@ -27,8 +27,8 @@
        if ([[self subviews] count] < 2)
                return;
 
-       NSView *subview0 = [[self subviews] objectAtIndex:0];
-       NSView *subview1 = [[self subviews] objectAtIndex:1];
+       NSView *subview0 = [self subviews][0];
+       NSView *subview1 = [self subviews][1];
 
        NSRect subview0EndFrame = [subview0 frame];
        NSRect subview1EndFrame = [subview1 frame];
@@ -53,16 +53,14 @@ subview0EndFrame.size.height - [self dividerThickness];
 
        // Update subviewEndFrame.origin so that the frame is positioned
        if (animate) {
-               NSDictionary *subview0Animation = [NSDictionary dictionaryWithObjectsAndKeys:
-                       subview0, NSViewAnimationTargetKey,
-                       [NSValue valueWithRect:subview0EndFrame], NSViewAnimationEndFrameKey, nil];
-               NSDictionary *subview1Animation = [NSDictionary dictionaryWithObjectsAndKeys:
-                       subview1, NSViewAnimationTargetKey,
-                       [NSValue valueWithRect:subview1EndFrame], NSViewAnimationEndFrameKey, nil];
+               NSDictionary *subview0Animation = @{NSViewAnimationTargetKey: subview0,
+                       NSViewAnimationEndFrameKey: [NSValue valueWithRect:subview0EndFrame]};
+               NSDictionary *subview1Animation = @{NSViewAnimationTargetKey: subview1,
+                       NSViewAnimationEndFrameKey: [NSValue valueWithRect:subview1EndFrame]};
 
                NSViewAnimation *animation = [[NSViewAnimation alloc]
-initWithViewAnimations:[NSArray arrayWithObjects:subview0Animation,
-subview1Animation, nil]];
+initWithViewAnimations:@[subview0Animation,
+subview1Animation]];
 
                [animation setAnimationBlockingMode:NSAnimationBlocking];
                [animation setDuration:0.4];
@@ -82,10 +80,10 @@ subview1Animation, nil]];
 */
 - (float)splitterPosition {
        if ([self isVertical])
-               return [self frame].size.width - [[[self subviews] objectAtIndex:0]
+               return [self frame].size.width - [[self subviews][0]
 frame].size.width;
        else
-               return [self frame].size.height - [[[self subviews] objectAtIndex:0]
+               return [self frame].size.height - [[self subviews][0]
 frame].size.height;
 }
 

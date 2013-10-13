@@ -18,8 +18,7 @@
         return nil;
     }
     
-    NSDictionary *dict = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:icon] 
-                                                     forKey:(NSString *)kQLThumbnailOptionIconModeKey];
+    NSDictionary *dict = @{(NSString *)kQLThumbnailOptionIconModeKey: @(icon)};
     CGImageRef ref = QLThumbnailImageCreate(kCFAllocatorDefault, 
                                             (__bridge CFURLRef)fileURL,
                                             CGSizeMake(size.width, size.height),

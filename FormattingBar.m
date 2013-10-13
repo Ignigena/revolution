@@ -30,7 +30,7 @@
 		unsigned index;
 	
 		for (index = 0; index <= [fontFamilies count]-1; index++)
-			[formattingFontFamily addItemWithTitle:[fontFamilies objectAtIndex: index]];
+			[formattingFontFamily addItemWithTitle:fontFamilies[index]];
 		
 		if (![[NSUserDefaults standardUserDefaults] objectForKey:@"Font Family"]) {
 			[formattingFontFamily selectItemWithTitle: @"Lucida Grande"];

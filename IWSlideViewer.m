@@ -79,8 +79,8 @@
 		}
 		
 		worshipSlideTextAttrs = [[NSMutableDictionary alloc] initWithCapacity: 3];
-		[worshipSlideTextAttrs setObject:[NSFont boldSystemFontOfSize:worshipSlideFontSize] forKey:NSFontAttributeName];
-		[worshipSlideTextAttrs setObject:worshipSlideTextPara forKey:NSParagraphStyleAttributeName];
+		worshipSlideTextAttrs[NSFontAttributeName] = [NSFont boldSystemFontOfSize:worshipSlideFontSize];
+		worshipSlideTextAttrs[NSParagraphStyleAttributeName] = worshipSlideTextPara;
 		
 		inslideTextEditor = [IWSlideEditor alloc];
 		inslideTextScroller = [NSScrollView alloc];
@@ -88,8 +88,8 @@
 		
 		// Text styles for the flag widgets
 		flagTextAttrs = [[NSMutableDictionary alloc] initWithCapacity: 3];
-		[flagTextAttrs setObject:[NSFont systemFontOfSize:11] forKey:NSFontAttributeName];
-		[flagTextAttrs setObject:[NSColor whiteColor] forKey:NSForegroundColorAttributeName];
+		flagTextAttrs[NSFontAttributeName] = [NSFont systemFontOfSize:11];
+		flagTextAttrs[NSForegroundColorAttributeName] = [NSColor whiteColor];
 		
 		// Shadow style for selected slide text
 		textShadow = [NSShadow alloc];
@@ -277,19 +277,19 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 			
 			float slideOpacity;
 			
-			if ([[slidesNotes objectAtIndex:index] isEqualToString: @"Skip"])
+			if ([slidesNotes[index] isEqualToString: @"Skip"])
 				slideOpacity = 0.5;
 			else
 				slideOpacity = 1.0;
 			
-			unsigned worshipTextViewHeight = heightForStringDrawing([worshipSlides objectAtIndex: index], [NSFont boldSystemFontOfSize:worshipSlideFontSize], 155.0)+5.0;
+			unsigned worshipTextViewHeight = heightForStringDrawing(worshipSlides[index], [NSFont boldSystemFontOfSize:worshipSlideFontSize], 155.0)+5.0;
 			if (worshipTextViewHeight >= slideRect.size.height-20)
 				worshipTextViewHeight = slideRect.size.height-20;
 			
 			// Draw the backgrounds depending on whether the slide is selected or not
-			if (clickedSlideAtIndex==index && [slidesNotes count]!=index && editSlideAtIndex!=index && [[mediaReferences objectAtIndex: index] isEqualToString: @""]) {
+			if (clickedSlideAtIndex==index && [slidesNotes count]!=index && editSlideAtIndex!=index && [mediaReferences[index] isEqualToString: @""]) {
 				[slideGradientActive drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
-			} else if (editSlideAtIndex!=index && [[mediaReferences objectAtIndex: index] isEqualToString: @""]) {
+			} else if (editSlideAtIndex!=index && [mediaReferences[index] isEqualToString: @""]) {
 				[slideGradientNormal drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 			} else if (editSlideAtIndex==index) {
 				NSImage *mediaMask = [[NSImage alloc] initWithSize: NSMakeSize(292, 276)];
@@ -301,9 +301,9 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				[mediaMask drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 				[slideGradientBlank drawInRect:NSMakeRect(backgroundRect.origin.x, backgroundRect.origin.y, 180, 170) fromRect:NSMakeRect(0, 0, 292, 276) operation:NSCompositeSourceOver fraction: slideOpacity];
 			} else {
-				NSArray *previewPathSplitter = [[NSArray alloc] initWithArray: [[mediaReferences objectAtIndex: index] componentsSeparatedByString:@"/"]];
-				NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[previewPathSplitter objectAtIndex: [previewPathSplitter count]-1] componentsSeparatedByString:@"."]];
-				NSImage *mediaFrame = [[NSImage alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [movieNameSplitter objectAtIndex: 0]] stringByExpandingTildeInPath]];
+				NSArray *previewPathSplitter = [[NSArray alloc] initWithArray: [mediaReferences[index] componentsSeparatedByString:@"/"]];
+				NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [previewPathSplitter[[previewPathSplitter count]-1] componentsSeparatedByString:@"."]];
+				NSImage *mediaFrame = [[NSImage alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", movieNameSplitter[0]] stringByExpandingTildeInPath]];
 				NSImage *mediaMask = [[NSImage alloc] initWithSize: NSMakeSize(292, 276)];
 				[mediaFrame setFlipped:YES];
 				[mediaMask lockFocus];
@@ -372,7 +372,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				
 					[inslideTextScroller setDocumentView:inslideTextEditor];
 			
-					[inslideTextEditor setString: [worshipSlides objectAtIndex: clickedSlideAtIndex]];
+					[inslideTextEditor setString: worshipSlides[clickedSlideAtIndex]];
 	
 					[self addSubview: inslideTextScroller];
 				
@@ -380,7 +380,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				}
 			} else {				
 				// Draw the slide text
-				if (clickedSlideAtIndex==index || ![[mediaReferences objectAtIndex: index] isEqualToString: @""]) {
+				if (clickedSlideAtIndex==index || ![mediaReferences[index] isEqualToString: @""]) {
 					[worshipSlideTextAttrs setValue: [NSColor colorWithCalibratedWhite:1.0 alpha:slideOpacity] forKey: NSForegroundColorAttributeName];
 					[worshipSlideTextAttrs setValue: textShadow forKey: NSShadowAttributeName];
 				} else {
@@ -391,7 +391,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				NSRect worshipTextView = [self rectCenteredInRect:NSMakeRect(slideRect.origin.x+1, slideRect.origin.y+21, slideRect.size.width-2, slideRect.size.height-10) withSize:NSMakeSize(slideRect.size.width-2, worshipTextViewHeight)];
 				//NSRect worshipTextView = [self rectCenteredInRect:NSMakeRect(slideRect.origin.x, slideRect.origin.y+20, slideRect.size.width, slideRect.size.height-10) withSize:NSMakeSize(155, worshipTextViewHeight)];
 			
-				[[worshipSlides objectAtIndex: index] drawInRect:worshipTextView withAttributes: worshipSlideTextAttrs];
+				[worshipSlides[index] drawInRect:worshipTextView withAttributes: worshipSlideTextAttrs];
 			}
 		
 			// Draw delete widget if the slide is being edited
@@ -399,8 +399,8 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 				[deleteWidget drawInRect: NSMakeRect(slideRect.origin.x-17, slideRect.origin.y-16, 30, 30) fromRect: NSMakeRect(0, 0, 30, 30) operation: NSCompositeSourceOver fraction: 1.0];
 		
 			// Draw the flag text in the upper part of the slide
-			if ([slidesNotes count] != 0 && [slidesNotes count] != index && ![[slidesNotes objectAtIndex: index] isEqualToString: @""])
-				[[slidesNotes objectAtIndex: index] drawInRect:NSMakeRect(slideRect.origin.x+10, slideRect.origin.y+2, 135, 15) withAttributes: flagTextAttrs];
+			if ([slidesNotes count] != 0 && [slidesNotes count] != index && ![slidesNotes[index] isEqualToString: @""])
+				[slidesNotes[index] drawInRect:NSMakeRect(slideRect.origin.x+10, slideRect.origin.y+2, 135, 15) withAttributes: flagTextAttrs];
 		}
 		
 		/*if (drawQuickCue==YES) {
@@ -418,10 +418,10 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		NSPrintInfo *info = [NSPrintInfo sharedPrintInfo];
 		NSRect pb = [info imageablePageBounds];
 		
-		unsigned printSlideHeight = heightForStringDrawing([worshipSlides objectAtIndex: 1], [NSFont boldSystemFontOfSize:13], pb.size.width);
+		unsigned printSlideHeight = heightForStringDrawing(worshipSlides[1], [NSFont boldSystemFontOfSize:13], pb.size.width);
 		NSRect printSlideRect = NSMakeRect(pb.origin.x, pb.origin.y, pb.size.width, printSlideHeight);
 		
-		NSString *printSlideText = [[NSString alloc] initWithString: [worshipSlides objectAtIndex: 1]];
+		NSString *printSlideText = [[NSString alloc] initWithString: worshipSlides[1]];
 		[printSlideText drawInRect:printSlideRect withAttributes: worshipSlideTextAttrs];
 		
 		NSLog(@"We're printing ... woohoo!");
@@ -493,7 +493,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	if (clickedIndex>=[worshipSlides count]) {
 		if (editSlideAtIndex != -1) {
-			[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+			worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 			editSlideAtIndex = -1;
 			[self saveAllSlidesForSong: nil];
 			
@@ -548,7 +548,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	if (slideHit) {
 		if (editSlideAtIndex != -1) {
-			[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+			worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 			editSlideAtIndex = -1;
 			[self saveAllSlidesForSong: nil];
 			
@@ -566,10 +566,10 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		if (presentSlide)
 			[self presentSlideAtIndex: clickedIndex];
 			
-		[editFlagField setStringValue: [slidesNotes objectAtIndex: clickedIndex]];
+		[editFlagField setStringValue: slidesNotes[clickedIndex]];
 	} else {
 		if (editSlideAtIndex != -1) {
-			[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+			worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 			editSlideAtIndex = -1;
 			[self saveAllSlidesForSong: nil];
 			
@@ -581,7 +581,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	if (clickedIndex >= [worshipSlides count]) {
 		if (editSlideAtIndex != -1) {
-			[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+			worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 			editSlideAtIndex = -1;
 			[self saveAllSlidesForSong: nil];
 			
@@ -597,10 +597,10 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		
 		[clickedImage drawInRect:NSMakeRect(0,0,[clickedImage size].width,[clickedImage size].height) fromRect:NSMakeRect(0,0,[clickedImage size].width,[clickedImage size].height) operation:NSCompositeCopy fraction:0.5];
 		
-		unsigned worshipTextViewHeight = heightForStringDrawing([worshipSlides objectAtIndex: clickedIndex], [NSFont boldSystemFontOfSize:13], 155.0)+5.0;
+		unsigned worshipTextViewHeight = heightForStringDrawing(worshipSlides[clickedIndex], [NSFont boldSystemFontOfSize:13], 155.0)+5.0;
 		NSRect worshipTextView = [self rectCenteredInRect:NSMakeRect(0,0,[clickedImage size].width,[clickedImage size].height) withSize:NSMakeSize(155, worshipTextViewHeight)];
 		
-		NSString *worshipSlideText = [[NSString alloc] initWithString: [worshipSlides objectAtIndex: clickedIndex]];
+		NSString *worshipSlideText = [[NSString alloc] initWithString: worshipSlides[clickedIndex]];
 		[worshipSlideTextAttrs setValue: [NSColor colorWithCalibratedWhite:0.0 alpha:0.5] forKey: NSForegroundColorAttributeName];
 		[worshipSlideText drawInRect:worshipTextView withAttributes: worshipSlideTextAttrs];
 		
@@ -665,7 +665,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		return;
 	
 	if (editSlideAtIndex!=-1) {
-		[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+		worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 		editSlideAtIndex = -1;
 		[self saveAllSlidesForSong: nil];
 		
@@ -740,9 +740,9 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 - (void)mouseUp:(NSEvent *)theEvent
 {		
 	if (iDidADrag) {
-		NSString *slideText = [[NSString alloc] initWithString: [worshipSlides objectAtIndex: clickedIndex]];
-		NSString *slideNoteText = [[NSString alloc] initWithString: [slidesNotes objectAtIndex: clickedIndex]];
-		NSString *mediaReferencesText = [[NSString alloc] initWithString: [mediaReferences objectAtIndex: clickedIndex]];
+		NSString *slideText = [[NSString alloc] initWithString: worshipSlides[clickedIndex]];
+		NSString *slideNoteText = [[NSString alloc] initWithString: slidesNotes[clickedIndex]];
+		NSString *mediaReferencesText = [[NSString alloc] initWithString: mediaReferences[clickedIndex]];
 		
 		if (drawDropperForIndex!=clickedIndex) {
 			// Fixes a problem where dragging a slide back moves it one space too far
@@ -914,7 +914,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	if (editorState==NO) {
 		if (editSlideAtIndex!=-1) {
-			[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+			worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 			editSlideAtIndex = -1;
 			[self saveAllSlidesForSong: nil];
 		}
@@ -942,9 +942,9 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 - (void)setFlag:(id)sender
 {
 	if (![[sender title] isEqualToString: @"None"]) {
-		[slidesNotes replaceObjectAtIndex:clickedIndex withObject: [sender title]];
+		slidesNotes[clickedIndex] = [sender title];
 	} else {
-		[slidesNotes replaceObjectAtIndex:clickedIndex withObject: @""];
+		slidesNotes[clickedIndex] = @"";
 	}
 	
 	[self saveAllSlidesForSong: nil];
@@ -964,11 +964,11 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	if (slideIndex == -1 || slideIndex > [worshipSlides count]-1) {
 		[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
 		
-		[presentationNodeData setObject:@" " forKey:@"Slide Text"];
+		presentationNodeData[@"Slide Text"] = @" ";
 		
 		clickedSlideAtIndex = -1;
 	} else {
-		if ([[slidesNotes objectAtIndex: slideIndex] isEqualToString: @"Skip"] && !mouseDown) {
+		if ([slidesNotes[slideIndex] isEqualToString: @"Skip"] && !mouseDown) {
 			[self presentSlideAtIndex: slideIndex+1];
 			return;
 		}
@@ -985,28 +985,28 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 			[[[NSApp delegate] mainPresenterViewConnect] setRenderCCLI: NO];
 		}
 	
-		if ([[NSString stringWithString: [worshipSlides objectAtIndex: slideIndex]] length] != 0) {
-			[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: [NSString stringWithString: [worshipSlides objectAtIndex: slideIndex]]];
-			[presentationNodeData setObject:[NSString stringWithString: [worshipSlides objectAtIndex: slideIndex]] forKey:@"Slide Text"];
+		if ([[NSString stringWithString: worshipSlides[slideIndex]] length] != 0) {
+			[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: [NSString stringWithString: worshipSlides[slideIndex]]];
+			presentationNodeData[@"Slide Text"] = [NSString stringWithString: worshipSlides[slideIndex]];
 		} else {
 			[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
-			[presentationNodeData setObject:@" " forKey:@"Slide Text"];
+			presentationNodeData[@"Slide Text"] = @" ";
 		}
 		
-		if ([[NSString stringWithString: [mediaReferences objectAtIndex: slideIndex]] length] != 0) {
-			[[NSApp delegate] presentJuice: [[mediaReferences objectAtIndex: slideIndex] stringByExpandingTildeInPath]];
+		if ([[NSString stringWithString: mediaReferences[slideIndex]] length] != 0) {
+			[[NSApp delegate] presentJuice: [mediaReferences[slideIndex] stringByExpandingTildeInPath]];
 		}
 		
 		clickedSlideAtIndex = slideIndex;
 	}
 	
-	[presentationNodeData setObject:[NSString stringWithFormat:@"%i", layoutValue] forKey:@"Layout"];
-	[presentationNodeData setObject:[NSString stringWithFormat:@"%i", alignmentValue] forKey:@"Alignment"];
-	[presentationNodeData setObject:[NSString stringWithFormat:@"%f", speedValue] forKey:@"Transition"];
-	[presentationNodeData setObject:[NSString stringWithFormat:@"%f", fontSizeValue] forKey:@"Size"];
+	presentationNodeData[@"Layout"] = [NSString stringWithFormat:@"%i", layoutValue];
+	presentationNodeData[@"Alignment"] = [NSString stringWithFormat:@"%i", alignmentValue];
+	presentationNodeData[@"Transition"] = [NSString stringWithFormat:@"%f", speedValue];
+	presentationNodeData[@"Size"] = [NSString stringWithFormat:@"%f", fontSizeValue];
 	
 	if (fontFamily)
-		[presentationNodeData setObject:fontFamily forKey:@"Font"];
+		presentationNodeData[@"Font"] = fontFamily;
 	
 	[[[NSDocumentController sharedDocumentController] currentDocument] sendDataToAllNodes: [NSArchiver archivedDataWithRootObject:presentationNodeData]];
 	
@@ -1019,7 +1019,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		slideIndex = clickedSlideAtIndex;
 		
 	if (editSlideAtIndex!=-1) {
-		[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+		worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 		editSlideAtIndex = -1;
 		[self saveAllSlidesForSong: nil];
 			
@@ -1033,7 +1033,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	NSShowAnimationEffect(NSAnimationEffectDisappearingItemDefault, screenPoint, NSMakeSize(100, 100), nil, nil, nil);
 	
-	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] insertNewSlide:[worshipSlides objectAtIndex:slideIndex] slideFlag:[slidesNotes objectAtIndex:slideIndex] slideMedia:[mediaReferences objectAtIndex:slideIndex] slideIndex:slideIndex];
+	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] insertNewSlide:worshipSlides[slideIndex] slideFlag:slidesNotes[slideIndex] slideMedia:mediaReferences[slideIndex] slideIndex:slideIndex];
 	
 	// Remove the slide and refresh the view
 	[worshipSlides removeObjectAtIndex: slideIndex];
@@ -1055,8 +1055,8 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		
 	[[[(MyDocument *)[[super window] delegate] undoManager] prepareWithInvocationTarget:self] deleteSlideAtIndex:index+1];
 	
-	[worshipSlides insertObject:[worshipSlides objectAtIndex:index] atIndex: index+1];
-	[slidesNotes insertObject:[slidesNotes objectAtIndex:index] atIndex: index+1];
+	[worshipSlides insertObject:worshipSlides[index] atIndex: index+1];
+	[slidesNotes insertObject:slidesNotes[index] atIndex: index+1];
 	
 	clickedSlideAtIndex = index+1;
 	[self saveAllSlidesForSong: nil];
@@ -1069,39 +1069,39 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	NSLog(@"saveAllSlidesForSong");
 	
 	if (editSlideAtIndex!=-1) {
-		[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+		worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 		editSlideAtIndex = -1;
 		[self setNeedsDisplay: YES];
 	}
 	
 	NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 	
-	[songFile setObject:[songTitle stringValue] forKey:@"Song Title"];
+	songFile[@"Song Title"] = [songTitle stringValue];
 	
 	if (![[songArtist stringValue] isEqualToString: @""])
-		[songFile setObject:[songArtist stringValue] forKey:@"CCLI Artist"];
+		songFile[@"CCLI Artist"] = [songArtist stringValue];
 	if (![[songCopyright stringValue] isEqualToString: @""])
-		[songFile setObject:[songCopyright stringValue] forKey:@"CCLI Copyright Year"];
+		songFile[@"CCLI Copyright Year"] = [songCopyright stringValue];
 	if (![[songPublisher stringValue] isEqualToString: @""])
-		[songFile setObject:[songPublisher stringValue] forKey:@"CCLI Publisher"];
+		songFile[@"CCLI Publisher"] = [songPublisher stringValue];
 	if (![[songNumber stringValue] isEqualToString: @""])
-		[songFile setObject:[songNumber stringValue] forKey:@"CCLI Song Number"];
+		songFile[@"CCLI Song Number"] = [songNumber stringValue];
 	
-	[songFile setObject:worshipSlides forKey:@"Slides"];
-	[songFile setObject:slidesNotes forKey:@"Flags"];
-	[songFile setObject:mediaReferences forKey:@"Media"];
-	[songFile setObject:[NSString stringWithFormat:@"%i", layoutValue] forKey:@"Presenter Layout"];
-	[songFile setObject:[NSString stringWithFormat:@"%i", alignmentValue] forKey:@"Presenter Alignment"];
-	[songFile setObject:[NSString stringWithFormat:@"%f", speedValue] forKey:@"Transition Speed"];
-	[songFile setObject:[NSString stringWithFormat:@"%f", fontSizeValue] forKey:@"Font Size"];
+	songFile[@"Slides"] = worshipSlides;
+	songFile[@"Flags"] = slidesNotes;
+	songFile[@"Media"] = mediaReferences;
+	songFile[@"Presenter Layout"] = [NSString stringWithFormat:@"%i", layoutValue];
+	songFile[@"Presenter Alignment"] = [NSString stringWithFormat:@"%i", alignmentValue];
+	songFile[@"Transition Speed"] = [NSString stringWithFormat:@"%f", speedValue];
+	songFile[@"Font Size"] = [NSString stringWithFormat:@"%f", fontSizeValue];
 	
 	if (fontFamily)
-		[songFile setObject:fontFamily forKey:@"Font Family"];
+		songFile[@"Font Family"] = fontFamily;
 	
 	if (slideFile)
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", slideFile] stringByExpandingTildeInPath] atomically:TRUE];
 	else
-		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [[(MyDocument *)[playlistTable dataSource] worshipPlaylist] objectAtIndex: [playlistTable selectedRow]]] stringByExpandingTildeInPath] atomically:TRUE];
+		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [(MyDocument *)[playlistTable dataSource] worshipPlaylist][[playlistTable selectedRow]]] stringByExpandingTildeInPath] atomically:TRUE];
 }
 
 //////////////////////////
@@ -1153,7 +1153,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 {
 	if (editSlideAtIndex!=-1) {
 		NSLog(@"Insert slide, editor on");
-		[worshipSlides replaceObjectAtIndex:editSlideAtIndex withObject: [inslideTextEditor string]];
+		worshipSlides[editSlideAtIndex] = [inslideTextEditor string];
 		editSlideAtIndex = -1;
 		[self saveAllSlidesForSong: nil];
 		
@@ -1179,24 +1179,24 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 
 - (IBAction)editFlagWithText:(id)sender
 {
-	[slidesNotes replaceObjectAtIndex:clickedSlideAtIndex withObject: [sender stringValue]];
+	slidesNotes[clickedSlideAtIndex] = [sender stringValue];
 	[self setNeedsDisplay: YES];
 	[self saveAllSlidesForSong: nil];
 }
 
 - (IBAction)assignMediaToSlide:(id)sender
 {
-	[mediaReferences replaceObjectAtIndex:clickedSlideAtIndex withObject: [[mediaBrowser mediaListing] objectAtIndex: [mediaBrowser clickedSlideAtIndex]]];
+	mediaReferences[clickedSlideAtIndex] = [mediaBrowser mediaListing][[mediaBrowser clickedSlideAtIndex]];
 	[self setNeedsDisplay: YES];
 	[self saveAllSlidesForSong: nil];
 }
 
 - (IBAction)applySkipSlide:(id)sender
 {
-	if ([[slidesNotes objectAtIndex: clickedSlideAtIndex] isEqualToString: @"Skip"]) {
-		[slidesNotes replaceObjectAtIndex:clickedSlideAtIndex withObject: @""];
+	if ([slidesNotes[clickedSlideAtIndex] isEqualToString: @"Skip"]) {
+		slidesNotes[clickedSlideAtIndex] = @"";
 	} else {
-		[slidesNotes replaceObjectAtIndex:clickedSlideAtIndex withObject: @"Skip"];
+		slidesNotes[clickedSlideAtIndex] = @"Skip";
 	}
 	
 	[self setNeedsDisplay: YES];
@@ -1205,7 +1205,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 
 - (IBAction)removeMediaTrigger:(id)sender
 {
-	[mediaReferences replaceObjectAtIndex:clickedSlideAtIndex withObject: @""];
+	mediaReferences[clickedSlideAtIndex] = @"";
 	
 	[self setNeedsDisplay: YES];
 	[self saveAllSlidesForSong: nil];
@@ -1259,7 +1259,7 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 
 - (void)setFontFamilySize:(float)fontSize
 {
-	[[[NSApp delegate] mainPresenterViewConnect] setFontSize: [[NSNumber numberWithFloat:fontSize] intValue]];
+	[[[NSApp delegate] mainPresenterViewConnect] setFontSize: [@(fontSize) intValue]];
 	fontSizeValue = fontSize;
 	[self saveAllSlidesForSong:nil];
 }
@@ -1279,16 +1279,16 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 - (void)copy:(id)sender
 {
     NSPasteboard *pb = [NSPasteboard generalPasteboard];
-	NSArray *types = [NSArray arrayWithObjects: NSStringPboardType, nil];
+	NSArray *types = @[NSStringPboardType];
 	[pb declareTypes:types owner:self];
 	
-	[pb setString:[worshipSlides objectAtIndex:clickedSlideAtIndex] forType:NSStringPboardType];
+	[pb setString:worshipSlides[clickedSlideAtIndex] forType:NSStringPboardType];
 }
 
 - (void)paste:(id)sender
 {
 	NSPasteboard *pb = [NSPasteboard generalPasteboard];
-	NSArray *pasteTypes = [NSArray arrayWithObjects: NSStringPboardType, nil];
+	NSArray *pasteTypes = @[NSStringPboardType];
 	NSString *bestType = [pb availableTypeFromArray:pasteTypes];
 	
 	if (bestType != nil) {
@@ -1316,13 +1316,13 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 		
 		NSMenu *theMenu = [[NSMenu alloc] initWithTitle:@"Contextual Menu"];
 		
-		if ([[slidesNotes objectAtIndex: clickedSlideAtIndex] isEqualToString: @"Skip"]) {
+		if ([slidesNotes[clickedSlideAtIndex] isEqualToString: @"Skip"]) {
 			[theMenu insertItemWithTitle:@"Remove Skip" action:@selector(applySkipSlide:) keyEquivalent: @"" atIndex:0];
 		} else {
 			[theMenu insertItemWithTitle:@"Skip Slide" action:@selector(applySkipSlide:) keyEquivalent: @"" atIndex:0];
 		}
 		
-		if (![[mediaReferences objectAtIndex: clickedSlideAtIndex] isEqualToString: @""]) {
+		if (![mediaReferences[clickedSlideAtIndex] isEqualToString: @""]) {
 			[theMenu insertItemWithTitle:@"Remove Media Trigger" action:@selector(removeMediaTrigger:) keyEquivalent: @"" atIndex:1];
 		}
 	

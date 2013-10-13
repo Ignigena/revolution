@@ -89,8 +89,8 @@
 {
 	if (![previewImagePath isEqualToString:@""]) {
 		NSArray *previewPathSplitter = [[NSArray alloc] initWithArray: [previewImagePath componentsSeparatedByString:@"/"]];
-		NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [[previewPathSplitter objectAtIndex: [previewPathSplitter count]-1] componentsSeparatedByString:@"."]];
-		mediaPreview = [[NSImage alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [movieNameSplitter objectAtIndex: 0]] stringByExpandingTildeInPath]];
+		NSArray *movieNameSplitter = [[NSArray alloc] initWithArray: [previewPathSplitter[[previewPathSplitter count]-1] componentsSeparatedByString:@"."]];
+		mediaPreview = [[NSImage alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", movieNameSplitter[0]] stringByExpandingTildeInPath]];
 		playPauseButton = [NSImage imageNamed:@"PreviewPause"];
 	} else {
 		mediaPreview = [[NSImage alloc] initWithSize: NSMakeSize(1, 1)];

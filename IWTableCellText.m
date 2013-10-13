@@ -19,7 +19,7 @@
 	BOOL isDir;
 	
 	NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [[self stringValue] componentsSeparatedByString:@"/"]];
-	NSString *songDisplayText = [songDisplaySplitter objectAtIndex: [songDisplaySplitter count]-1];
+	NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
 	
 	if ([[NSFileManager defaultManager] fileExistsAtPath:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [self stringValue]] stringByExpandingTildeInPath] isDirectory:&isDir] && isDir) {
 		attrs = [NSMutableDictionary dictionaryWithObjectsAndKeys: [NSFont boldSystemFontOfSize:11], NSFontAttributeName, nil];
@@ -39,7 +39,7 @@
 		}
 	}
 	
-	NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:[[songDisplayText componentsSeparatedByString:@"."] objectAtIndex: 0] attributes:attrs];
+	NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:[songDisplayText componentsSeparatedByString:@"."][0] attributes:attrs];
 
     [self setAttributedStringValue:attrStr];
 	
