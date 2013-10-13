@@ -21,8 +21,7 @@
     NSMutableArray *playlist;
 @public
     NSMutableArray * receiverList;
-
-	IBOutlet NSWindow *documentWindow;
+    
 	IBOutlet id worshipTitleBar;
 	IBOutlet id worshipCCLIBar;
 	IBOutlet id worshipCCLIButton;
@@ -62,6 +61,7 @@
 	int draggingTableRowStart;
 }
 
+@property NSWindow *documentWindow;
 @property (copy) NSMutableArray *playlist;
 
 - (void)playlistSelectWithID:(int)songID;

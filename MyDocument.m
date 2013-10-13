@@ -18,7 +18,7 @@
 
 @implementation MyDocument
 
-@synthesize playlist;
+@synthesize playlist, documentWindow;
 
 - (id)init
 {
@@ -43,6 +43,8 @@
 {
 	NSLog(@"creating new document ...");
 	[[[NSApp delegate] splasher] orderOut: nil];
+    
+    documentWindow = [[[self windowControllers] objectAtIndex:0] window];
 	
 	RSDarkScroller *darkScrollerLibrary = [[RSDarkScroller alloc] init];
 	[[libraryListing enclosingScrollView] setVerticalScroller: darkScrollerLibrary];
