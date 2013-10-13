@@ -9,11 +9,11 @@
 #import "MyDocument.h"
 #import "Controller.h"
 #import "Playlist.h"
-#import "PlaylistArrayController.h"
+#import "PlaylistController.h"
 
 #define PlaylistDataType @"RevolutionPlaylist"
 
-@implementation PlaylistArrayController
+@implementation PlaylistController
 
 - (void) awakeFromNib
 {

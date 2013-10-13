@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PlaylistArrayController : NSArrayController {
+@interface PlaylistController : NSArrayController {
 @private
     IBOutlet NSTableView* playlistTableView;
 }

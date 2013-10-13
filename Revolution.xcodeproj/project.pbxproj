@@ -124,7 +124,7 @@
 		50F0AA1B0BB7A08E007F9C82 /* MediaThumbnailBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F0AA1A0BB7A08E007F9C82 /* MediaThumbnailBrowser.m */; };
 		50F332150D0A98A30038EBDF /* ProWorshipHelp in Resources */ = {isa = PBXBuildFile; fileRef = 50F331CE0D0A98A30038EBDF /* ProWorshipHelp */; };
 		8607C029180B2818003C9212 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C028180B2818003C9212 /* Playlist.m */; };
-		8607C02D180B3ACA003C9212 /* PlaylistArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C02C180B3ACA003C9212 /* PlaylistArrayController.m */; };
+		8607C02D180B3ACA003C9212 /* PlaylistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C02C180B3ACA003C9212 /* PlaylistController.m */; };
 		862B0FB40E9AB43B00C50042 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862B0FB30E9AB43B00C50042 /* QuickLook.framework */; };
 		864319E00E7E03CD0088D644 /* SlideBevel.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DE0E7E03CD0088D644 /* SlideBevel.tiff */; };
 		864319E10E7E03CD0088D644 /* SlideSelection.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DF0E7E03CD0088D644 /* SlideSelection.tiff */; };
@@ -326,8 +326,8 @@
 		50F331CF0D0A98A30038EBDF /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/ProWorshipHelp; sourceTree = "<group>"; };
 		8607C027180B2818003C9212 /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playlist.h; path = "Data Models/Playlist.h"; sourceTree = "<group>"; };
 		8607C028180B2818003C9212 /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playlist.m; path = "Data Models/Playlist.m"; sourceTree = "<group>"; };
-		8607C02B180B3ACA003C9212 /* PlaylistArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaylistArrayController.h; path = Controllers/PlaylistArrayController.h; sourceTree = "<group>"; };
-		8607C02C180B3ACA003C9212 /* PlaylistArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaylistArrayController.m; path = Controllers/PlaylistArrayController.m; sourceTree = "<group>"; };
+		8607C02B180B3ACA003C9212 /* PlaylistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaylistController.h; path = Controllers/PlaylistController.h; sourceTree = "<group>"; };
+		8607C02C180B3ACA003C9212 /* PlaylistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaylistController.m; path = Controllers/PlaylistController.m; sourceTree = "<group>"; };
 		862B0FB30E9AB43B00C50042 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 		864319DE0E7E03CD0088D644 /* SlideBevel.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideBevel.tiff; path = "New Resources/SlideBevel.tiff"; sourceTree = "<group>"; };
 		864319DF0E7E03CD0088D644 /* SlideSelection.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideSelection.tiff; path = "New Resources/SlideSelection.tiff"; sourceTree = "<group>"; };
@@ -456,8 +456,8 @@
 				864508A40EB3BBC3009DEAE7 /* RSHistogramView.m */,
 				8607C027180B2818003C9212 /* Playlist.h */,
 				8607C028180B2818003C9212 /* Playlist.m */,
-				8607C02B180B3ACA003C9212 /* PlaylistArrayController.h */,
-				8607C02C180B3ACA003C9212 /* PlaylistArrayController.m */,
+				8607C02B180B3ACA003C9212 /* PlaylistController.h */,
+				8607C02C180B3ACA003C9212 /* PlaylistController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -892,7 +892,7 @@
 				50E769FC0B5FE29100940090 /* IWSplitView.m in Sources */,
 				50E76ADE0B5FFFE600940090 /* IWSplitterHandle.m in Sources */,
 				507C37830B6558A200870D74 /* SlideTitleBar.m in Sources */,
-				8607C02D180B3ACA003C9212 /* PlaylistArrayController.m in Sources */,
+				8607C02D180B3ACA003C9212 /* PlaylistController.m in Sources */,
 				507C38E30B66951100870D74 /* FormattingBar.m in Sources */,
 				50B3DFED0B6FFC0F005BDFC1 /* IWSlideViewer.m in Sources */,
 				50B3E0230B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m in Sources */,
