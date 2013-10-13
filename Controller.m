@@ -13,20 +13,14 @@
 
 -(void)awakeFromNib
 {
-	// First and most importantly is check to see if there is a secondary monitor
-	if ([[NSScreen screens] count] < 2) {
-		NSRunCriticalAlertPanel(@"Secondary Monitor Required", @"ProWorship requires a secondary monitor, or projector connected to your graphics card, in order to present lyrics.  Without a secondary monitor, you will only be able to manage your library and playlist.", @"OK", nil, nil);
-		[NSApp requestUserAttention: 0];
-	}
-
-	// Setup presentation windows if more than one screen is present
+	// Setup presentation windows if more than one screen is present.
 	if ([[NSScreen screens] count] > 1) {
 		NSRect screenArea = [[[NSScreen screens] objectAtIndex:1] frame];
 		presentationWindow = [[NSWindow alloc] initWithContentRect:screenArea styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
 
 		mainPresenterView = [[Presenter alloc] initWithFrame: screenArea];
 
-		// Initialize the window containing the text layer
+		// Initialize the window containing the text layer.
 		[presentationWindow setLevel:NSScreenSaverWindowLevel+4];
 		[presentationWindow setOpaque:NO];
 		[presentationWindow setBackgroundColor:[NSColor clearColor]];
@@ -39,11 +33,16 @@
 
 	[networkNodeContent setFrameOrigin: NSMakePoint(660, 25)];
 
-	// Open up the splash screen window
+	// Open up the splash screen window.
 	[splasher center];
 	[splasher makeKeyAndOrderFront: nil];
+    
+    // If there isn't a second screen attached, let the user know.
+    if ([[NSScreen screens] count] < 2) {
+        NSBeginAlertSheet(@"Secondary Monitor Required", @"OK", nil, nil, splasher, self, NULL, NULL, nil, @"ProWorship requires a secondary monitor, or projector connected to your graphics card, in order to present lyrics.  Without a secondary monitor, you will only be able to manage your library and playlist.");
+    }
 
-	// Setup thumbnails for the media browser
+	// Setup thumbnails for the media browser.
 	[self runThumbnailSetup];
 }
 
