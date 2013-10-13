@@ -15,8 +15,6 @@
 #import "IWTableCellText.h"
 #import "LibraryListing.h"
 
-#define IWPlaylistDataType @"IWPlaylistDataType"
-
 @implementation MyDocument
 
 @synthesize playlist;
@@ -26,7 +24,6 @@
     self = [super init];
     if (self) {
         playlist = [NSMutableArray new];
-		worshipPlaylist = [NSMutableArray new];
 		
 		NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
 		[center addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:NULL];
@@ -46,11 +43,6 @@
 	NSLog(@"creating new document ...");
 	[[[NSApp delegate] splasher] orderOut: nil];
 	
-	RSDarkScroller *darkScrollerPlaylist = [[RSDarkScroller alloc] init];
-	[playlistTable registerForDraggedTypes: @[IWPlaylistDataType]];
-	[[playlistTable enclosingScrollView] setVerticalScroller: darkScrollerPlaylist];
-	[playlistTable reloadData];
-	
 	RSDarkScroller *darkScrollerLibrary = [[RSDarkScroller alloc] init];
 	[[libraryListing enclosingScrollView] setVerticalScroller: darkScrollerLibrary];
 	[libraryListing reloadData];
@@ -60,8 +52,6 @@
 	[[docSlideViewer enclosingScrollView] setVerticalScroller: darkScrollerSlides];
 	
 	[super windowControllerDidLoadNib:aController];
-	
-	draggingTableRowStart = -1;
 	
 	[documentWindow makeFirstResponder: [docSlideViewer enclosingScrollView]];
 	
@@ -167,64 +157,6 @@
     return printJob;
 }
 
-// Copies table row to pasteboard when it is determined a drag should begin
-- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard*)pboard
-{
-	[docSlideViewer setEditor: NO];
-	
-	NSArray *songTitle = @[worshipPlaylist[[rowIndexes firstIndex]]];
-	draggingTableRowStart = [rowIndexes firstIndex];
-	
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:songTitle];
-
-    [pboard declareTypes:@[IWPlaylistDataType] owner:self];
-    [pboard setData:data forType:IWPlaylistDataType];
-
-    return YES;
-}
-
-// Determines where the drop should be
-- (NSDragOperation)tableView:(NSTableView *)aTableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)operation
-{
-	NSDragOperation dragOp = NSDragOperationCopy;
-    
-    // if drag source is self, it's a move
-    if ([info draggingSource] == aTableView) {
-		dragOp =  NSDragOperationMove;
-    }
-    // we want to put the object at, not over,
-    // the current row (contrast NSTableViewDropOn) 
-    [aTableView setDropRow:row dropOperation:NSTableViewDropAbove];
-	
-    return dragOp;
-}
-
-// Drag is finished, update the table data
-- (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info row:(int)row dropOperation:(NSTableViewDropOperation)operation
-{
-	NSPasteboard* pboard = [info draggingPasteboard];
-    NSData* rowData = [pboard dataForType:IWPlaylistDataType];
-    NSArray* songTitle = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-	
-	if (row <= 0) row = 0;
-	
-	[worshipPlaylist insertObject:songTitle[[songTitle count]-1] atIndex:row];
-	
-	if (draggingTableRowStart!=-1 && draggingTableRowStart!=row) {
-		if (draggingTableRowStart>=row) { draggingTableRowStart++; }
-		else { row--; }
-		[worshipPlaylist removeObjectAtIndex:draggingTableRowStart];
-		draggingTableRowStart = -1;
-	}
-	
-	[playlistTable reloadData];
-	[playlistTable selectRow:row byExtendingSelection:NO];
-	
-	[self updateChangeCount: 0];
-	
-	return YES;
-}
-
 // Called whenever the table selection changes
 - (void)tableViewSelectionDidChange:(NSNotification *) notification
 {
@@ -233,7 +165,7 @@
 	
 	if ([[docSlideViewer worshipSlides] count] > 0)
 		[docSlideViewer saveAllSlidesForSong: previousSelectedPlaylist];
-		
+		/*
 	// Just make sure that the user is clicking on an actual row
 	if ([[notification object] selectedRow] < 0 || [[notification object] selectedRow] >= [worshipPlaylist count]) {
 		NSLog(@"User is clicking on empty row");
@@ -384,26 +316,13 @@
 		[alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
 		[alert setAlertStyle:NSCriticalAlertStyle];
 		[alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
-	}
+	}*/
 	
-}
-
-- (IBAction)removeFromPlaylist:(id)sender
-{
-	NSLog(@"Deleting %li", (long)[playlistTable selectedRow]);
-	
-	// Just make sure that the user is clicking on an actual row
-	if ([playlistTable selectedRow] < 0 || [playlistTable selectedRow] >= [worshipPlaylist count])
-		return;
-	
-	[worshipPlaylist removeObjectAtIndex:[playlistTable selectedRow]];
-	[playlistTable reloadData];
-	[self updateChangeCount: 0];
 }
 
 - (IBAction)editCCLIDetails:(id)sender
 {
-	if ([playlistTable selectedRow]>=0)
+//	if ([playlistTable selectedRow]>=0)
 		[NSApp beginSheet:ccliEditor modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
@@ -414,7 +333,7 @@
 	
 	[docSlideViewer saveAllSlidesForSong: nil];
 	
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]];
+/*	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]];
 	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
 	
 	NSString *ccliOverviewText = @"";
@@ -452,7 +371,7 @@
 		[worshipTitleBar setFrame:NSMakeRect([worshipTitleBar frame].origin.x, [worshipTitleBar frame].origin.y, [[worshipTitleBar cell] cellSize].width, [worshipTitleBar frame].size.height)];
 		[worshipCCLIBar setFrameOrigin:NSMakePoint([worshipTitleBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [[worshipTitleBar cell] cellSize].width] intValue], [worshipCCLIBar frame].origin.y)];
 		[worshipCCLIBar setFrame:NSMakeRect([worshipCCLIBar frame].origin.x, [worshipCCLIBar frame].origin.y, [[worshipCCLIBar cell] cellSize].width, [worshipCCLIBar frame].size.height)];
-		[worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];
+		[worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];*/
 }
 
 - (IBAction)closePlaylistSheet:(id)sender
@@ -465,14 +384,6 @@
 { 
     [NSApp endSheet:addFolderSheet];
 	[addFolderSheet orderOut: self];
-}
-
-- (IBAction)addSongToPlaylist:(id)sender
-{
-	[worshipPlaylist addObject: [libraryListing itemAtRow:[libraryListing selectedRow]]];
-	[playlistTable reloadData];
-    [NSApp endSheet:addSongSheet];
-	[self updateChangeCount: 0];
 }
 
 - (IBAction)toggleMediaMixer:(id)sender
@@ -492,11 +403,6 @@
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     [sheet orderOut:self];
-}
-
-- (NSMutableArray *)worshipPlaylist
-{
-	return worshipPlaylist;
 }
 
 - (IWVideoPreview *)videoPreviewDisplay
@@ -534,11 +440,6 @@
 	return mediaBoxContent;
 }
 
-- (NSTableView *)playlistTable
-{
-	return playlistTable;
-}
-
 - (NSTableView *)libraryListing
 {
 	return libraryListing;
@@ -547,9 +448,9 @@
 
 - (NSString *)songDetailsWithKey:(NSString *)key
 {
-	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]] stringByExpandingTildeInPath]];
+	/*NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]] stringByExpandingTildeInPath]];
 	
-	return readSlideFileContents[key];
+	return readSlideFileContents[key];*/
 }
 
 @end

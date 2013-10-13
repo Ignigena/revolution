@@ -21,8 +21,7 @@
     NSMutableArray *playlist;
 @public
     NSMutableArray * receiverList;
-	
-    IBOutlet id playlistTable;
+
 	IBOutlet NSWindow *documentWindow;
 	IBOutlet id worshipTitleBar;
 	IBOutlet id worshipCCLIBar;

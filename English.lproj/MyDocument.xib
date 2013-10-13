@@ -13,7 +13,6 @@
                 <outlet property="docSlideScroller" destination="664" id="665"/>
                 <outlet property="docSlideViewer" destination="657" id="658"/>
                 <outlet property="formatterToolbar" destination="694" id="703"/>
-                <outlet property="libraryListing" destination="680" id="693"/>
                 <outlet property="loopingToggle" destination="854" id="1144"/>
                 <outlet property="mediaBoxContent" destination="846" id="878"/>
                 <outlet property="rightSplitterView" destination="869" id="870"/>
@@ -36,12 +35,13 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application"/>
-        <arrayController objectClassName="Playlist" id="hjG-Eo-CY1" userLabel="Playlist">
+        <arrayController objectClassName="Playlist" id="hjG-Eo-CY1" userLabel="Playlist" customClass="PlaylistArrayController">
             <declaredKeys>
                 <string>playlistTitle</string>
             </declaredKeys>
             <connections>
                 <binding destination="-2" name="contentArray" keyPath="playlist" id="pvk-ql-MJi"/>
+                <outlet property="playlistTableView" destination="646" id="rB4-BG-jyg"/>
             </connections>
         </arrayController>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="MainDocument">
@@ -85,6 +85,10 @@
                                             </connections>
                                         </tableColumn>
                                     </tableColumns>
+                                    <connections>
+                                        <outlet property="dataSource" destination="hjG-Eo-CY1" id="Nbi-Ch-GY3"/>
+                                        <outlet property="delegate" destination="hjG-Eo-CY1" id="Orx-U8-JK9"/>
+                                    </connections>
                                 </tableView>
                             </subviews>
                             <color key="backgroundColor" name="gridColor" catalog="System" colorSpace="catalog"/>
