@@ -157,9 +157,6 @@
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-	//if ([[docSlideViewer worshipSlides] count] >= 0)
-	//	[docSlideViewer saveAllSlidesForSong: nil];
-	
 	NSMutableData *data;
 	NSKeyedArchiver *archiver;
 

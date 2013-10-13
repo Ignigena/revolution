@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A598" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
         <plugIn identifier="com.apple.QTKitIBPlugin" version="3336"/>
@@ -50,7 +50,7 @@
                     <scrollView borderType="none" horizontalLineScroll="20" horizontalPageScroll="0.0" verticalLineScroll="20" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="645">
                         <rect key="frame" x="0.0" y="326" width="250" height="341"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
-                        <clipView key="contentView" id="lXZ-Vi-xec">
+                        <clipView key="contentView" id="09c-aA-BH2">
                             <rect key="frame" x="0.0" y="0.0" width="250" height="341"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -113,7 +113,7 @@
                     <scrollView borderType="none" horizontalLineScroll="15" horizontalPageScroll="0.0" verticalLineScroll="15" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="679">
                         <rect key="frame" x="-5" y="30" width="255" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <clipView key="contentView" id="uhX-6m-e8t">
+                        <clipView key="contentView" id="vuv-dW-Dvh">
                             <rect key="frame" x="0.0" y="0.0" width="255" height="272"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
@@ -324,7 +324,7 @@
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" id="664">
                                         <rect key="frame" x="0.0" y="39" width="893" height="416"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <clipView key="contentView" autoresizesSubviews="NO" id="a1S-QO-AdR">
+                                        <clipView key="contentView" autoresizesSubviews="NO" id="TuM-NI-aA5">
                                             <rect key="frame" x="0.0" y="0.0" width="893" height="416"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
@@ -788,7 +788,7 @@ Gw
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectMediaTab:" target="846" id="7Tc-RV-WU3"/>
+                        <action selector="selectMediaTab:" target="846" id="mJt-Sh-79k"/>
                     </connections>
                 </button>
                 <button id="2004">
@@ -805,7 +805,7 @@ Gw
                 <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="952" customClass="RSDarkScrollView">
                     <rect key="frame" x="320" y="27" width="573" height="155"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                    <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="1kH-Ac-Phi">
+                    <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="lM9-TR-bwy">
                         <rect key="frame" x="0.0" y="0.0" width="573" height="155"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -865,18 +865,18 @@ Gw
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectMediaTab:" target="846" id="DdH-iT-OMl"/>
+                        <action selector="selectMediaTab:" target="846" id="8J3-7G-qB7"/>
                     </connections>
                 </button>
                 <button identifier="videos" toolTip="Video backgrounds" id="848">
                     <rect key="frame" x="290" y="147" width="30" height="34"/>
                     <autoresizingMask key="autoresizingMask"/>
-                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Videos" imagePosition="overlaps" alignment="center" alternateImage="Videos-On" inset="2" id="2376">
+                    <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="Videos" imagePosition="only" alignment="center" alternateImage="Videos-On" inset="2" id="2376">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system" size="10"/>
                     </buttonCell>
                     <connections>
-                        <action selector="selectMediaTab:" target="846" id="4Wg-4c-21o"/>
+                        <action selector="selectMediaTab:" target="846" id="x5x-ks-ZAb"/>
                     </connections>
                 </button>
                 <qtMovieView wantsLayer="YES" alphaValue="0.0" id="2459">
@@ -924,7 +924,7 @@ Gw
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
             <value key="minSize" type="size" width="213" height="107"/>
             <view key="contentView" id="1869">
-                <rect key="frame" x="0.0" y="0.0" width="415" height="201"/>
+                <rect key="frame" x="7" y="11" width="415" height="201"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button verticalHuggingPriority="750" id="1877">
@@ -1091,7 +1091,7 @@ DQ
                 <button id="2687">
                     <rect key="frame" x="4" y="5" width="203" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Multiple slides separated by verse" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="2688" customClass="BGHUDButtonCell">
+                    <buttonCell key="cell" type="check" title="Multiple slides separated by verse" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" imageScaling="proportionallyDown" inset="2" id="2688" customClass="BGHUDButtonCell">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
@@ -1107,17 +1107,16 @@ DQ
                 <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" id="2586" customClass="DarkScrollView">
                     <rect key="frame" x="0.0" y="27" width="573" height="130"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="yzf-vH-shQ">
+                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="1AK-kN-EMr">
                         <rect key="frame" x="0.0" y="0.0" width="573" height="130"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView drawsBackground="NO" importsGraphics="NO" findStyle="panel" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" smartInsertDelete="YES" id="2589">
+                            <textView drawsBackground="NO" importsGraphics="NO" findStyle="panel" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" spellingCorrection="YES" smartInsertDelete="YES" id="2589">
                                 <rect key="frame" x="0.0" y="0.0" width="573" height="130"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="573" height="130"/>
                                 <size key="maxSize" width="1146" height="10000000"/>
-                                <nil key="textStorage"/>
                                 <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <size key="minSize" width="573" height="130"/>
                                 <size key="maxSize" width="1146" height="10000000"/>

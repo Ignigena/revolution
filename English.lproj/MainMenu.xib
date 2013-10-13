@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A510d" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="4511" systemVersion="13A558" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment version="1050" identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="4511"/>
@@ -23,11 +23,7 @@
                                     <action selector="orderFrontStandardAboutPanel:" target="-2" id="142"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Check for updates..." id="425">
-                                <connections>
-                                    <action selector="checkForUpdates:" target="427" id="428"/>
-                                </connections>
-                            </menuItem>
+                            <menuItem title="Check for updates..." id="425"/>
                             <menuItem isSeparatorItem="YES" id="202">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
@@ -294,12 +290,9 @@
                 <outlet property="networkNodeReceiverListener" destination="646" id="674"/>
                 <outlet property="networkNodeReceiverToggle" destination="661" id="673"/>
                 <outlet property="networkNodeServices" destination="646" id="665"/>
-                <outlet property="registrationName" destination="430" id="431"/>
-                <outlet property="registrationNumber" destination="388" id="414"/>
                 <outlet property="splasher" destination="214" id="354"/>
                 <outlet property="videoPlaybackGLIncomingView" destination="581" id="582"/>
                 <outlet property="videoPlaybackGLView" destination="579" id="580"/>
-                <outlet property="welcomeRegisterSheet" destination="381" id="392"/>
             </connections>
         </customObject>
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="214" userLabel="Window">
@@ -351,22 +344,6 @@
                             <action selector="loadRecent:" target="212" id="415"/>
                         </connections>
                     </button>
-                    <button id="617">
-                        <rect key="frame" x="616" y="1" width="40" height="21"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="SwitchRight" imagePosition="overlaps" alignment="center" alternateImage="SwitchLeft" imageScaling="proportionallyDown" inset="2" id="618">
-                            <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="toggleNetworkNodeSettings:" target="212" id="621"/>
-                        </connections>
-                    </button>
-                    <imageView id="622">
-                        <rect key="frame" x="590" y="-2" width="21" height="28"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <imageCell key="cell" enabled="NO" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="NSBonjour" id="623"/>
-                    </imageView>
                     <customView id="626" customClass="NetworkNodeController">
                         <rect key="frame" x="165" y="25" width="159" height="317"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -481,126 +458,6 @@
                 <outlet property="initialFirstResponder" destination="218" id="442"/>
             </connections>
         </window>
-        <window title="Panel" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="381" userLabel="Unregistered" customClass="NSPanel">
-            <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
-            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="683" y="377" width="421" height="209"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1578"/>
-            <value key="minSize" type="size" width="213" height="107"/>
-            <view key="contentView" id="382">
-                <rect key="frame" x="0.0" y="0.0" width="421" height="209"/>
-                <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <imageView id="384">
-                        <rect key="frame" x="0.0" y="169" width="421" height="40"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="MediaTabBGActive" id="594"/>
-                    </imageView>
-                    <textField verticalHuggingPriority="750" id="383">
-                        <rect key="frame" x="20" y="159" width="212" height="42"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="Welcome to ProWorship!" id="593">
-                            <font key="font" metaFont="system" size="17"/>
-                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="386">
-                        <rect key="frame" x="17" y="118" width="387" height="43"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="justified" id="595">
-                            <font key="font" metaFont="smallSystem"/>
-                            <string key="title">Your copy of ProWorship does not appear to be registered.  You may enter your registration code or purchase one below. Or, experience ProWorship with a free, fully functional demo!</string>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="387">
-                        <rect key="frame" x="17" y="60" width="85" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Registration:" id="596">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="388">
-                        <rect key="frame" x="107" y="58" width="294" height="22"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="597">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <button verticalHuggingPriority="750" id="389">
-                        <rect key="frame" x="14" y="12" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="Demo" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="598">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="runDemo:" target="212" id="407"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="390">
-                        <rect key="frame" x="315" y="12" width="92" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="Register" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="599">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                            <string key="keyEquivalent" base64-UTF8="YES">
-DQ
-</string>
-                        </buttonCell>
-                        <connections>
-                            <action selector="validateRegistration:" target="212" id="408"/>
-                        </connections>
-                    </button>
-                    <button verticalHuggingPriority="750" id="391">
-                        <rect key="frame" x="233" y="12" width="82" height="32"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <buttonCell key="cell" type="push" title="Buy" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="600">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="buyOnline:" target="212" id="406"/>
-                        </connections>
-                    </button>
-                    <imageView id="401">
-                        <rect key="frame" x="0.0" y="170" width="1" height="40"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="FormatterSep" id="601"/>
-                    </imageView>
-                    <imageView id="403">
-                        <rect key="frame" x="420" y="169" width="1" height="40"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="FormatterSep" id="602"/>
-                    </imageView>
-                    <textField verticalHuggingPriority="750" id="429">
-                        <rect key="frame" x="17" y="90" width="85" height="17"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Name:" id="603">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField verticalHuggingPriority="750" id="430">
-                        <rect key="frame" x="107" y="88" width="294" height="22"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="604">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                </subviews>
-            </view>
-        </window>
-        <customObject id="427" userLabel="SUUpdater" customClass="SUUpdater"/>
         <customView id="504" userLabel="Initializing">
             <rect key="frame" x="0.0" y="0.0" width="291" height="62"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -639,9 +496,6 @@ DQ
     </objects>
     <resources>
         <image name="AlignRight-w" width="14" height="9"/>
-        <image name="FormatterSep" width="128" height="128"/>
-        <image name="MediaTabBGActive" width="10" height="40"/>
-        <image name="NSBonjour" width="32" height="32"/>
         <image name="Splash-Background" width="660" height="317"/>
         <image name="Splash-LoadPlaylist" width="120" height="26"/>
         <image name="Splash-LoadPlaylist-P" width="120" height="26"/>
@@ -649,7 +503,5 @@ DQ
         <image name="Splash-NewPlaylist-P" width="120" height="26"/>
         <image name="Splash-RecentPlaylist" width="120" height="26"/>
         <image name="Splash-RecentPlaylist-P" width="120" height="26"/>
-        <image name="SwitchLeft" width="40" height="21"/>
-        <image name="SwitchRight" width="40" height="21"/>
     </resources>
 </document>
