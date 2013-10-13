@@ -15,9 +15,11 @@
 #import "MediaThumbnailBrowser.h"
 #import "IWVideoPreview.h"
 #import "IWMediaBox.h"
+#import "Playlist.h"
 
 @interface MyDocument : NSDocument {
 @private
+    Playlist *selectedSong;
     NSMutableArray *playlist;
 @public
     NSMutableArray * receiverList;
@@ -61,10 +63,11 @@
 	int draggingTableRowStart;
 }
 
+- (void)playlistSelectWithID:(int)songID;
+
 @property NSWindow *documentWindow;
 @property (copy) NSMutableArray *playlist;
-
-- (void)playlistSelectWithID:(int)songID;
+@property Playlist *selectedSong;
 
 - (void)checkEmptyLibrary;
 - (IBAction)removeFromPlaylist:(id)sender;

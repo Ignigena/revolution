@@ -14,11 +14,10 @@
 #import "RSDarkScroller.h"
 #import "IWTableCellText.h"
 #import "LibraryListing.h"
-#import "Playlist.h"
 
 @implementation MyDocument
 
-@synthesize playlist, documentWindow;
+@synthesize playlist, selectedSong, documentWindow;
 
 - (id)init
 {
@@ -154,11 +153,6 @@
     // Blank out the presenter screen.
 	//[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
     
-    // Prevent data loss if the user is currently editing a slide.
-    /*if ([[docSlideViewer worshipSlides] count] > 0)
-        [docSlideViewer saveAllSlidesForSong: previousSelectedPlaylist];
-    previousSelectedPlaylist = songName;*/
-    
     if (songID == -1) {
         // Empty the slide viewer
         [docSlideViewer setWorshipSlides:nil notesSlides:nil mediaRefs:nil];
@@ -175,11 +169,11 @@
         [toolbarNextSlide setEnabled: NO];
         [toolbarPrevSlide setEnabled: NO];
     } else {
-        Playlist *selectedSong = playlist[songID];
+        selectedSong = playlist[songID];
         NSString *songName = selectedSong.playlistTitle;
         
         // Use the name of the song as the location of the song file
-        NSString *worshipSlideFile = [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", songName] stringByExpandingTildeInPath];
+        NSString *worshipSlideFile = [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", songName] stringByExpandingTildeInPath];
         
         // Check to see if the song file exists or not
         if (![[NSFileManager defaultManager] fileExistsAtPath: worshipSlideFile]) {
@@ -191,7 +185,7 @@
             [docSlideViewer setEditor: NO];
             NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [songName componentsSeparatedByString:@"/"]];
             NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
-            [worshipTitleBar setStringValue: [songDisplayText componentsSeparatedByString:@"."][0]];
+            [worshipTitleBar setStringValue: songDisplayText];
             
             NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: worshipSlideFile];
             
@@ -437,9 +431,9 @@
 
 - (NSString *)songDetailsWithKey:(NSString *)key
 {
-	/*NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]] stringByExpandingTildeInPath]];
+	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", selectedSong.playlistTitle] stringByExpandingTildeInPath]];
 	
-	return readSlideFileContents[key];*/
+	return readSlideFileContents[key];
 }
 
 @end
