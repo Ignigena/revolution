@@ -37,19 +37,6 @@
 		mediaWindowAlpha = 1.0;
     }
 
-	// Create all the necessary application support directories
-	NSFileManager *manager = [NSFileManager defaultManager];
-	
-	NSLog(@"%@", [[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources"] stringByAppendingPathComponent:@"Song Library"]);
-	
-	if ([manager fileExistsAtPath: [@"~/Library/Application Support/ProWorship/" stringByExpandingTildeInPath]] == NO) {
-		[manager createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/" stringByExpandingTildeInPath] attributes: nil];
-		[manager copyPath:[[[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"Resources"] stringByAppendingPathComponent:@"Song Library"] toPath: [@"~/Library/Application Support/ProWorship/Song Library/" stringByExpandingTildeInPath] handler:nil];
-		[manager copyPath:[[NSBundle mainBundle] pathForResource:@"Song Library" ofType:@""] toPath: [@"~/Library/Application Support/ProWorship/" stringByExpandingTildeInPath] handler:nil];
-	}
-	if ([manager fileExistsAtPath: [@"~/Movies/ProWorship/" stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[@"~/Movies/ProWorship/" stringByExpandingTildeInPath] attributes: nil]; }
-	if ([manager fileExistsAtPath: [@"~/Pictures/ProWorship/" stringByExpandingTildeInPath]] == NO) { [manager createDirectoryAtPath:[@"~/Pictures/ProWorship/" stringByExpandingTildeInPath] attributes: nil]; }
-
 	[networkNodeContent setFrameOrigin: NSMakePoint(660, 25)];
 
 	// Open up the splash screen window
