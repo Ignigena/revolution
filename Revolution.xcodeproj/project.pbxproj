@@ -127,8 +127,6 @@
 		50F0A7F80BB4F062007F9C82 /* Presentation Background Mixer.qtz in Resources */ = {isa = PBXBuildFile; fileRef = 50F0A7F70BB4F062007F9C82 /* Presentation Background Mixer.qtz */; };
 		50F0AA1B0BB7A08E007F9C82 /* MediaThumbnailBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F0AA1A0BB7A08E007F9C82 /* MediaThumbnailBrowser.m */; };
 		50F332150D0A98A30038EBDF /* ProWorshipHelp in Resources */ = {isa = PBXBuildFile; fileRef = 50F331CE0D0A98A30038EBDF /* ProWorshipHelp */; };
-		862B0F9E0E9839D500C50042 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 86431C460E8589170088D644 /* Sparkle.framework */; };
-		862B0FA50E983A0900C50042 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 86431C460E8589170088D644 /* Sparkle.framework */; };
 		862B0FB40E9AB43B00C50042 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862B0FB30E9AB43B00C50042 /* QuickLook.framework */; };
 		864319E00E7E03CD0088D644 /* SlideBevel.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DE0E7E03CD0088D644 /* SlideBevel.tiff */; };
 		864319E10E7E03CD0088D644 /* SlideSelection.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DF0E7E03CD0088D644 /* SlideSelection.tiff */; };
@@ -177,7 +175,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				862B0F9E0E9839D500C50042 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,7 +340,6 @@
 		864319DE0E7E03CD0088D644 /* SlideBevel.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideBevel.tiff; path = "New Resources/SlideBevel.tiff"; sourceTree = "<group>"; };
 		864319DF0E7E03CD0088D644 /* SlideSelection.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideSelection.tiff; path = "New Resources/SlideSelection.tiff"; sourceTree = "<group>"; };
 		86431AA50E8177070088D644 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = /System/Library/Frameworks/QuartzCore.framework; sourceTree = "<absolute>"; };
-		86431C460E8589170088D644 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		86431C920E858C540088D644 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		86431C990E858C880088D644 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/Preferences.xib; sourceTree = "<group>"; };
 		86431C9F0E858C9D0088D644 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
@@ -392,7 +388,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				862B0FA50E983A0900C50042 /* Sparkle.framework in Frameworks */,
 				8D15AC340486D014006FF6A4 /* Cocoa.framework in Frameworks */,
 				509D9E940B96CD8000767E64 /* QTKit.framework in Frameworks */,
 				50F0A7A10BB4EF04007F9C82 /* Quartz.framework in Frameworks */,
@@ -546,7 +541,6 @@
 				86E510F50ED1F2BD00501763 /* Carbon.framework */,
 				864508B70EB3C39A009DEAE7 /* Accelerate.framework */,
 				862B0FB30E9AB43B00C50042 /* QuickLook.framework */,
-				86431C460E8589170088D644 /* Sparkle.framework */,
 				86431AA50E8177070088D644 /* QuartzCore.framework */,
 				1058C7A6FEA54F5311CA2CBB /* Linked Frameworks */,
 				1058C7A8FEA54F5311CA2CBB /* Other Frameworks */,
