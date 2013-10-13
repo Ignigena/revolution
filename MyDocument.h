@@ -16,10 +16,10 @@
 #import "IWVideoPreview.h"
 #import "IWMediaBox.h"
 
-@interface MyDocument : NSDocument
-{
-	NSMutableArray *worshipPlaylist;
-	
+@interface MyDocument : NSDocument {
+@private
+    NSMutableArray *playlist;
+@public
     NSMutableArray * receiverList;
 	
     IBOutlet id playlistTable;
@@ -62,6 +62,8 @@
 	
 	int draggingTableRowStart;
 }
+
+@property (copy) NSMutableArray *playlist;
 
 - (void)checkEmptyLibrary;
 - (IBAction)removeFromPlaylist:(id)sender;

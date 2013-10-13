@@ -19,10 +19,13 @@
 
 @implementation MyDocument
 
+@synthesize playlist;
+
 - (id)init
 {
     self = [super init];
     if (self) {
+        playlist = [NSMutableArray new];
 		worshipPlaylist = [NSMutableArray new];
 		
 		NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
@@ -79,33 +82,9 @@
 	NSLog(@"done ...");
 }
 
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    if (![receiverList containsObject:aNetService]) {
-        [self willChangeValueForKey:@"receiverList"];
-        [receiverList addObject:aNetService];
-        [self didChangeValueForKey:@"receiverList"];
-    }
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    if ([receiverList containsObject:aNetService]) {
-        [self willChangeValueForKey:@"receiverList"];
-        [receiverList removeObject:aNetService];
-        [self didChangeValueForKey:@"receiverList"];
-    }
-}
-
 - (void)checkEmptyLibrary
 {
 	[(LibraryListing *)[libraryListing dataSource] loadReloadLibraryList];
-}
-
-- (void)windowWillClose:(NSNotification *)notification
-{
-	if ([[[NSDocumentController sharedDocumentController] documents] count] == 1)
-		[[[NSApp delegate] splasher] makeKeyAndOrderFront: nil];
-		
-	[[NSApp delegate] presentationGoToBlack: nil];
 }
 
 - (void)splitView:(IWSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize
@@ -157,31 +136,23 @@
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-	NSMutableData *data;
-	NSKeyedArchiver *archiver;
+	if (outError) {
+        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
+    }
 
-	data = [NSMutableData data];
-	archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-
-	// Archive the playlist file
-	[archiver encodeObject:worshipPlaylist forKey:@"PlaylistSongFiles"];
-	[archiver finishEncoding];
-
-	return data;
+	return [NSKeyedArchiver archivedDataWithRootObject:playlist];
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
-	NSKeyedUnarchiver *unarchiver;
-	unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-
-	// Unarchive the playlist file
-	[worshipPlaylist setArray: [unarchiver decodeObjectForKey:@"PlaylistSongFiles"]];
-	
-	[unarchiver finishDecoding];
-	
-	NSUserDefaults  *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:[NSString stringWithFormat: @"%@", [self fileURL]] forKey:@"LastOpenedDocument"];
+    if ([typeName isEqual: @"Playlist"]) {
+        self.playlist = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        
+        NSUserDefaults  *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSString stringWithFormat: @"%@", [self fileURL]] forKey:@"LastOpenedDocument"];
+    } else {
+        // Not a playlist, treat as a document for importing.
+    }
 	
 	return YES;
 }
@@ -194,18 +165,6 @@
     NSPrintOperation *printJob = [NSPrintOperation printOperationWithView:docSlideViewer printInfo: printInfo];
 
     return printJob;
-}
-
-/* Required method for the NSTableDataSource protocol. */
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-    return [worshipPlaylist count];
-}
-
-/* Required method for the NSTableDataSource protocol. */
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn*)aTableColumn row:(int)rowIndex
-{
-    return worshipPlaylist[rowIndex];
 }
 
 // Copies table row to pasteboard when it is determined a drag should begin
