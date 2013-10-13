@@ -69,13 +69,9 @@
 	NSAnimation *crossFadeAnimation;
 }
 
-- (QTCaptureLayer *)liveCameraView;
-
 - (void)setPresentationText:(NSString *)newPresentationText;
 
 - (void)setRenderCCLI:(BOOL)renderCCLIYesNo;
-
-//- (void)releaseVideo;
 
 - (NSDictionary *)presenterSlideTextAttrs;
 - (NSDictionary *)outgoingPresenterSlideTextAttrs;

@@ -1008,8 +1008,6 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	if (fontFamily)
 		presentationNodeData[@"Font"] = fontFamily;
 	
-	[[[NSDocumentController sharedDocumentController] currentDocument] sendDataToAllNodes: [NSArchiver archivedDataWithRootObject:presentationNodeData]];
-	
 	[self setNeedsDisplay: YES];
 }
 

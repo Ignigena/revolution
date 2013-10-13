@@ -2,7 +2,7 @@
 
 @implementation DarkSlider
 
-- (float)knobThickness
+- (double)knobThickness
 {
 	return 13;
 }

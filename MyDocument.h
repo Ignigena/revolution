@@ -63,8 +63,6 @@
 	int draggingTableRowStart;
 }
 
-- (void)sendDataToAllNodes:(NSData *)data;
-
 - (void)checkEmptyLibrary;
 - (IBAction)removeFromPlaylist:(id)sender;
 - (IBAction)closePlaylistSheet:(id)sender;

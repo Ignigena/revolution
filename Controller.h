@@ -57,9 +57,6 @@
 
 @property (readonly) NSMutableArray *serviceList;
 
-- (IBAction)toggleNetworkNodeSettings:(id)sender;
-- (IBAction)toggleNetworkNodeReceiver:(id)sender;
-
 - (void)runThumbnailSetup;
 
 - (IBAction)newPlaylist:(id)sender;

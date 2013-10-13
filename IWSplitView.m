@@ -18,7 +18,7 @@
 	[NSBezierPath fillRect:aRect];
 }
 
-- (float)dividerThickness
+- (double)dividerThickness
 {
 	return 1;
 }

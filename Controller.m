@@ -5,7 +5,6 @@
 #import "MediaThumbnailBrowser.h"
 #import "PreferencesController.h"
 #import "NSImage+QuickLook.h"
-#import "IPAddress.h"
 
 @implementation Controller
 
