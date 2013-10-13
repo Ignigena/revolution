@@ -45,9 +45,6 @@
 
 	// Setup thumbnails for the media browser
 	[self runThumbnailSetup];
-
-	// Register for notifications
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceDidMount:) name:NSWorkspaceDidMountNotification object:NULL];
 }
 
 - (void)runThumbnailSetup
