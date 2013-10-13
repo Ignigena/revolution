@@ -31,7 +31,7 @@
 	NSFileManager *manager = [NSFileManager defaultManager];
 	NSString *library = @"~/Library/Application Support/ProWorship";
 		
-	libraryListing = [[NSMutableArray alloc] initWithArray: [manager directoryContentsAtPath:[library stringByExpandingTildeInPath]]];
+	libraryListing = [[NSMutableArray alloc] initWithArray: [manager contentsOfDirectoryAtPath:[library stringByExpandingTildeInPath] error:nil]];
 	libraryListingText = [[NSMutableDictionary alloc] init];
 
 	unsigned index;
@@ -72,12 +72,10 @@
 		BOOL isDir;
 		NSString *currentPath = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [libraryListing objectAtIndex:index]];
 		
-		NSArray *songLibrarySplitter = [[NSArray alloc] initWithArray: [[libraryListing objectAtIndex:index] componentsSeparatedByString:@"."]];
-		//NSString *actualLibraryListing = [[NSString alloc] initWithString: [songLibrarySplitter objectAtIndex: 0]];
 		NSString *actualLibraryListing = [libraryListing objectAtIndex:index];
 			
 		if ([manager fileExistsAtPath:[currentPath stringByExpandingTildeInPath] isDirectory:&isDir] && isDir && ![[libraryListing objectAtIndex:index] isEqualToString: @"Thumbnails"]) {
-			NSMutableArray *subLibraryListing = [[NSMutableArray alloc] initWithArray: [manager directoryContentsAtPath:[currentPath stringByExpandingTildeInPath]]];
+			NSMutableArray *subLibraryListing = [[NSMutableArray alloc] initWithArray: [manager contentsOfDirectoryAtPath:[currentPath stringByExpandingTildeInPath] error:nil]];
 			
 			if ([subLibraryListing count]!=0) {
 				unsigned subIndex;
@@ -86,9 +84,7 @@
 					if ([[subLibraryListing objectAtIndex:subIndex] isEqualToString:@".DS_Store"]) {
 						[subLibraryListing removeObjectAtIndex:subIndex];
 					} else {
-						//NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [[[subLibraryListing objectAtIndex:subIndex] componentsSeparatedByString:@"."] objectAtIndex: 0]]];
 						NSString *subActualLibraryListing = [[NSString alloc] initWithString: [NSString stringWithFormat: @"%@/%@", [libraryListing objectAtIndex:index], [subLibraryListing objectAtIndex:subIndex]]];
-						//[subLibraryListing replaceObjectAtIndex:subIndex withObject: ];
 						[subLibraryListing replaceObjectAtIndex:subIndex withObject:subActualLibraryListing];
 					
 						if (filterResults) {
@@ -169,16 +165,6 @@
 	return NO;
 }
 
-/*- (void)outlineViewSelectionDidChange:(NSNotification *)notification
-{
-	if ([[notification object] selectedRow]>=0 && ![[notification object] isExpandable:[[notification object] itemAtRow:[[notification object] selectedRow]]]) {
-		NSLog(@"%@", [[notification object] itemAtRow:[[notification object] selectedRow]]);
-		[chooseButton setEnabled: YES];
-	} else {
-		[chooseButton setEnabled: NO];
-	}
-}*/
-
 // Copies table row to pasteboard when it is determined a drag should begin
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
@@ -186,7 +172,7 @@
 	if ([outlineView isExpandable:[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]])
 		return NO;
 	
-	if ([outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]]==@"[empty]")
+	if ([[outlineView itemAtRow:[outlineView rowForItem:[items objectAtIndex:0]]] isEqual:@"[empty]"])
 		return NO;
 	
 	NSLog(@"%@", items);

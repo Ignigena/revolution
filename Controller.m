@@ -9,8 +9,6 @@
 
 @implementation Controller
 
-@synthesize serviceList=_serviceList;
-
 -(void)awakeFromNib
 {
 	// Setup presentation windows if more than one screen is present.
@@ -113,57 +111,6 @@
 	
 	NSLog(@"----------------------------");
 }
-
-
-#pragma mark Network Node Methods
-	
-- (IBAction)toggleNetworkNodeSettings:(id)sender
-{
-	if ([networkNodeContent frame].origin.x != 501) {
-		[[networkNodeContent animator] setFrameOrigin: NSMakePoint(501, 25)];
-	} else {
-		[[networkNodeContent animator] setFrameOrigin: NSMakePoint(660, 25)];
-	}
-}
-
-- (IBAction)toggleNetworkNodeReceiver:(id)sender
-{
-	if ([[sender title] isEqualToString: @"Turn On Node"]) {
-		[sender setTitle: @"Turn Off Node"];
-	} else {
-		[sender setTitle: @"Turn On Node"];
-	}
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    if (![_serviceList containsObject:aNetService]) {
-        [self willChangeValueForKey:@"serviceList"];
-        [_serviceList addObject:aNetService];
-        [self didChangeValueForKey:@"serviceList"];
-    }
-	
-	if ([_serviceList count] >= 1) {
-		[networkNodeReceiverToggle setEnabled: YES];
-	} else {
-		[networkNodeReceiverToggle setEnabled: NO];
-	}
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    if ([_serviceList containsObject:aNetService]) {
-        [self willChangeValueForKey:@"serviceList"];
-        [_serviceList removeObject:aNetService];
-        [self didChangeValueForKey:@"serviceList"];
-    }
-	
-	if ([_serviceList count] >= 1) {
-		[networkNodeReceiverToggle setEnabled: YES];
-	} else {
-		[networkNodeReceiverToggle setEnabled: NO];
-	}
-}
-
-//
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
 {

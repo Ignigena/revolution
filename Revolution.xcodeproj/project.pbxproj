@@ -437,10 +437,12 @@
 			children = (
 				506564770B40FCBB00670737 /* Controller.h */,
 				506564780B40FCBB00670737 /* Controller.m */,
-				864502740EAE9106009DEAE7 /* NSImage+QuickLook.m */,
-				864502750EAE9106009DEAE7 /* NSImage+QuickLook.h */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
+				5024B1210B4C379200D4249E /* Presenter.h */,
+				5024B1220B4C379200D4249E /* Presenter.m */,
+				864502740EAE9106009DEAE7 /* NSImage+QuickLook.m */,
+				864502750EAE9106009DEAE7 /* NSImage+QuickLook.h */,
 				50B3E1C70B708F6F005BDFC1 /* LibraryListing.h */,
 				50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */,
 				503173C40CF6D00800EEFF79 /* IWLibrarySearch.h */,
@@ -456,8 +458,6 @@
 		2A37F4AFFDCFA73011CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				5024B1210B4C379200D4249E /* Presenter.h */,
-				5024B1220B4C379200D4249E /* Presenter.m */,
 				2A37F4B0FDCFA73011CA2CEA /* main.m */,
 				507C37810B6558A200870D74 /* SlideTitleBar.h */,
 				507C37820B6558A200870D74 /* SlideTitleBar.m */,
