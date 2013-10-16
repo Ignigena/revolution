@@ -8,8 +8,6 @@
 
 #import "Library.h"
 
-#define PlaylistDataType @"RevolutionPlaylist"
-
 @implementation Library
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
@@ -43,8 +41,8 @@
 	if ([outlineView isExpandable:[outlineView itemAtRow:[outlineView rowForItem:items[0]]]])
 		return NO;
 	
-    [pboard declareTypes:@[PlaylistDataType] owner:self];
-    [pboard setData:[NSKeyedArchiver archivedDataWithRootObject:items] forType:PlaylistDataType];
+    [pboard declareTypes:@[LibraryDataType] owner:self];
+    [pboard setData:[NSKeyedArchiver archivedDataWithRootObject:items] forType:LibraryDataType];
     
     return YES;
 }

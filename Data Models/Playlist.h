@@ -17,4 +17,6 @@
 @property (copy) NSString *playlistTitle;
 @property (copy) NSString *type;
 
+- (id)initWithTitle:(NSString *)title andType:(NSString *)t;
+
 @end

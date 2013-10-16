@@ -161,7 +161,7 @@
         NSString *songName = selectedSong.playlistTitle;
         
         // Use the name of the song as the location of the song file
-        NSString *worshipSlideFile = [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", songName] stringByExpandingTildeInPath];
+        NSString *worshipSlideFile = [[NSString stringWithFormat: @"~/Library/Application Support/Revolution/%@", songName] stringByExpandingTildeInPath];
         
         // Check to see if the song file exists or not
         if (![[NSFileManager defaultManager] fileExistsAtPath: worshipSlideFile]) {

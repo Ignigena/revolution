@@ -21,6 +21,16 @@
     return self;
 }
 
+- (id)initWithTitle:(NSString *)title andType:(NSString *)t
+{
+    self = [super init];
+    if (self) {
+		playlistTitle = title;
+        type = t;
+    }
+    return self;
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];

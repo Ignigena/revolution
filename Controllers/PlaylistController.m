@@ -10,6 +10,7 @@
 #import "Controller.h"
 #import "Playlist.h"
 #import "PlaylistController.h"
+#import "Library.h"
 
 #define PlaylistDataType @"RevolutionPlaylist"
 
@@ -17,7 +18,7 @@
 
 - (void) awakeFromNib
 {
-	[playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PlaylistDataType, nil]];
+	[playlistTableView registerForDraggedTypes:[NSArray arrayWithObjects:PlaylistDataType, LibraryDataType, nil]];
 }
 
 // Called whenever the table selection changes
@@ -34,28 +35,17 @@
     }	
 }
 
-- (BOOL)draggingEnabled
-{
-    return YES;
-}
-
 - (BOOL)tableView:(NSTableView *)aTableView writeRows:(NSArray *)rows toPasteboard:(NSPasteboard*)pboard
 {
-	if ([self draggingEnabled] == YES) {
-		[pboard declareTypes:@[PlaylistDataType] owner:self];
-		[pboard setPropertyList:rows forType:PlaylistDataType];
-	}
+    [pboard declareTypes:@[PlaylistDataType] owner:self];
+    [pboard setPropertyList:rows forType:PlaylistDataType];
 	
-    return [self draggingEnabled];
+    return YES;
 }
 
 - (NSDragOperation)tableView:(NSTableView*)aTableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(NSInteger)row proposedDropOperation:(NSTableViewDropOperation)op
 {
-    NSDragOperation dragOp = NSDragOperationNone;
-
-    if ([info draggingSource] == aTableView) {
-		dragOp =  NSDragOperationMove;
-    }
+    NSDragOperation dragOp = NSDragOperationMove;
 	
     [aTableView setDropRow:row dropOperation:NSTableViewDropAbove];
 	
@@ -79,6 +69,14 @@
 		[self setSelectionIndexes:indexSet];
 		
 		return YES;
+    } else {
+        NSArray *rows = [NSKeyedUnarchiver unarchiveObjectWithData:[[info draggingPasteboard] dataForType:LibraryDataType]];
+        
+        for (int i = 0; i <= [rows count]-1; i++) {
+            LibraryItem *draggedItem = rows[i];
+            Playlist *droppedItem = [[Playlist alloc] initWithTitle:[draggedItem relativePath] andType:nil];
+            [self insertObject:droppedItem atArrangedObjectIndex:row];
+        }
     }
 	
     return NO;

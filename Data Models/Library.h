@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#define LibraryDataType @"RevolutionLibraryItem"
+
 @interface Library : NSObject
 
 - (NSInteger)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item;
