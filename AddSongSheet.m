@@ -1,5 +1,4 @@
 #import "AddSongSheet.h"
-#import "LibraryListing.h"
 #import "MyDocument.h"
 #import "ImportSongFromFile.h"
 
@@ -71,7 +70,6 @@
 {
 	[[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [folderTitleField stringValue]] stringByExpandingTildeInPath] attributes:nil];
 	
-	[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 	[importerLibraryView reloadData];
 	
 	[NSApp endSheet:newFolderSheet];
@@ -106,8 +104,7 @@
 			songFile[@"Flags"] = blankNotes;
 			
 			[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
-	
-			[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
+
 			[importerLibraryView reloadData];
 			[documentPlaylistTable reloadData];
 			
@@ -136,7 +133,6 @@
 	
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 		
-		[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 		[importerLibraryView reloadData];
 		[documentPlaylistTable reloadData];
 	

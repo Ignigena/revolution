@@ -44,6 +44,7 @@
                 <outlet property="playlistTableView" destination="646" id="rB4-BG-jyg"/>
             </connections>
         </arrayController>
+        <customObject id="yBt-Ww-Mc7" customClass="Library"/>
         <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="5" userLabel="MainDocument">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" texturedBackground="YES" unifiedTitleAndToolbar="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -58,17 +59,17 @@
                         <rect key="frame" x="0.0" y="326" width="250" height="341"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
                         <clipView key="contentView" id="09c-aA-BH2">
-                            <rect key="frame" x="0.0" y="0.0" width="234" height="341"/>
+                            <rect key="frame" x="0.0" y="0.0" width="250" height="341"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <tableView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="18" id="646" customClass="IWTableView">
-                                    <rect key="frame" x="0.0" y="0.0" width="234" height="341"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="250" height="341"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" red="0.23999999" green="0.23999999" blue="0.23999999" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="gridColor" red="0.84695202000000003" green="0.84998857999999999" blue="0.82421606999999997" alpha="1" colorSpace="calibratedRGB"/>
                                     <tableColumns>
-                                        <tableColumn width="230.7842" minWidth="41.784179999999999" maxWidth="1000" id="647">
+                                        <tableColumn width="246.7842" minWidth="41.784179999999999" maxWidth="1000" id="647">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Playlist">
                                                 <font key="font" metaFont="label"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -124,17 +125,17 @@
                         <rect key="frame" x="-5" y="30" width="255" height="272"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <clipView key="contentView" id="vuv-dW-Dvh">
-                            <rect key="frame" x="0.0" y="0.0" width="239" height="272"/>
+                            <rect key="frame" x="0.0" y="0.0" width="255" height="272"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <outlineView focusRingType="none" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="13" indentationPerLevel="16" outlineTableColumn="681" id="680" customClass="IWOutlineView">
-                                    <rect key="frame" x="0.0" y="0.0" width="239" height="272"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="255" height="272"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <size key="intercellSpacing" width="3" height="2"/>
                                     <color key="backgroundColor" red="0.23999999" green="0.23999999" blue="0.23999999" alpha="1" colorSpace="deviceRGB"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn editable="NO" width="236" minWidth="16" maxWidth="1000" id="681">
+                                        <tableColumn editable="NO" width="252" minWidth="16" maxWidth="1000" id="681">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left">
                                                 <font key="font" metaFont="label"/>
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
@@ -149,8 +150,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <outlet property="dataSource" destination="336" id="682"/>
-                                        <outlet property="delegate" destination="336" id="683"/>
+                                        <outlet property="dataSource" destination="yBt-Ww-Mc7" id="8zQ-Xq-90R"/>
                                     </connections>
                                 </outlineView>
                             </subviews>
@@ -695,15 +695,6 @@ Gw
                 <outlet property="storeInPopup" destination="832" id="838"/>
             </connections>
         </window>
-        <customObject id="336" userLabel="LibraryListing" customClass="LibraryListing">
-            <connections>
-                <outlet property="addButton" destination="2784" id="2786"/>
-                <outlet property="addButtonHelpText" destination="2431" id="2436"/>
-                <outlet property="chooseButton" destination="532" id="537"/>
-                <outlet property="librarySearchField" destination="1335" id="1338"/>
-                <outlet property="parentPanel" destination="285" id="473"/>
-            </connections>
-        </customObject>
         <customObject id="422" userLabel="ImportSongFromFile" customClass="ImportSongFromFile">
             <connections>
                 <outlet property="addSongController" destination="285" id="588"/>

@@ -7,7 +7,6 @@
 //
 
 #import "ImportSongFromFile.h"
-#import "LibraryListing.h"
 #import "MyDocument.h"
 #import "AddSongSheet.h"
 
@@ -119,8 +118,7 @@
 	songFile[@"Flags"] = blankNotes;
 	
 	[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [songTitle stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
-	
-	[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
+
 	[importerLibraryView reloadData];
 	[documentPlaylistTable reloadData];
 	

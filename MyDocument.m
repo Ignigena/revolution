@@ -13,7 +13,6 @@
 #import "ToolbarMain.h"
 #import "RSDarkScroller.h"
 #import "IWTableCellText.h"
-#import "LibraryListing.h"
 
 @implementation MyDocument
 
@@ -33,14 +32,11 @@
 
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"MyDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
-	NSLog(@"creating new document ...");
 	[[[NSApp delegate] splasher] orderOut: nil];
     
     documentWindow = [[[self windowControllers] objectAtIndex:0] window];
@@ -69,14 +65,6 @@
 	[thumbnailScroller setMovieListing: [[NSApp delegate] moviesMediaListing]];
 	[thumbnailScroller setPictureListing: [[NSApp delegate] picturesMediaListing]];
 	[thumbnailScroller setMediaListing: 0];
-	
-	[self performSelector: @selector(checkEmptyLibrary) withObject: nil afterDelay: 0.1];
-	NSLog(@"done ...");
-}
-
-- (void)checkEmptyLibrary
-{
-	[(LibraryListing *)[libraryListing dataSource] loadReloadLibraryList];
 }
 
 - (void)splitView:(IWSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize

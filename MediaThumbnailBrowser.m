@@ -2,7 +2,6 @@
 #import "NSImage+QuickLook.h"
 #import "IWMediaTabButtonCell.h"
 #import "Controller.h"
-#import "RSHistogramView.h"
 
 @implementation MediaThumbnailBrowser
 
