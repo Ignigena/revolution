@@ -84,11 +84,9 @@ static NSMutableArray *leafNode = nil;
     if (children == nil) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *fullPath = [self fullPath];
-        BOOL isDir, valid;
+        BOOL isDir;
         
-        valid = [fileManager fileExistsAtPath:fullPath isDirectory:&isDir];
-        
-        if (valid && isDir) {
+        if ([fileManager fileExistsAtPath:fullPath isDirectory:&isDir] && isDir) {
             NSArray *array = [fileManager contentsOfDirectoryAtPath:fullPath error:NULL];
             
             NSUInteger numChildren, i;
@@ -98,8 +96,7 @@ static NSMutableArray *leafNode = nil;
             
             for (i = 0; i < numChildren; i++) {
                 if (![[array objectAtIndex:i] isEqualToString:@".DS_Store"] && ![[array objectAtIndex:i] isEqualToString:@"Thumbnails"]) {
-                    LibraryItem *newChild = [[LibraryItem alloc]
-                                            initWithPath:[array objectAtIndex:i] parent:self];
+                    LibraryItem *newChild = [[LibraryItem alloc] initWithPath:[array objectAtIndex:i] parent:self];
                     [children addObject:newChild];
                 }
             }
