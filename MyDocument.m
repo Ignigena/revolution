@@ -16,7 +16,7 @@
 
 @implementation MyDocument
 
-@synthesize playlist, selectedSong, documentWindow;
+@synthesize playlist, selectedSong, documentWindow, slidesController;
 
 - (id)init
 {
@@ -57,8 +57,7 @@
 	// Fix the Interface Builder mess
 	[rightSplitterView setFrame: NSMakeRect(250,20,893,671)];
 	[[rightSplitterView subviews][0] addSubview: mediaBoxContent];
-	//[worshipTitleBarContainer setOrigin: NSMakePoint(0, 452)
-	[worshipTitleBarContainer setFrame: NSMakeRect(0, 452, [worshipTitleBarContainer bounds].size.width, [worshipTitleBarContainer bounds].size.height+1)];
+
 	[docSlideScroller setFrame: NSMakeRect(0, [docSlideScroller frame].origin.y, [docSlideScroller frame].size.width, 413)];
 	
 	// 
@@ -140,150 +139,6 @@
 + (BOOL)autosavesInPlace
 {
     return YES;
-}
-
-- (void)playlistSelectWithID:(int)songID {
-    // Blank out the presenter screen.
-	//[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
-    
-    if (songID == -1) {
-        // Empty the slide viewer
-        [docSlideViewer setWorshipSlides:nil notesSlides:nil mediaRefs:nil];
-        
-        // Reset the title bar
-        [worshipTitleBar setStringValue: @""];
-        
-        // Hide the CCLI bar and button
-        [worshipCCLIBar setHidden: YES];
-        [worshipCCLIButton setHidden: YES];
-        
-        // Disable the toolbar buttons
-        [toolbarNewSlide setEnabled: NO];
-        [toolbarNextSlide setEnabled: NO];
-        [toolbarPrevSlide setEnabled: NO];
-    } else {
-        selectedSong = playlist[songID];
-        NSString *songName = selectedSong.playlistTitle;
-        
-        // Use the name of the song as the location of the song file
-        NSString *worshipSlideFile = [[NSString stringWithFormat: @"~/Library/Application Support/Revolution/%@", songName] stringByExpandingTildeInPath];
-        
-        // Check to see if the song file exists or not
-        if (![[NSFileManager defaultManager] fileExistsAtPath: worshipSlideFile]) {
-            NSBeginAlertSheet([NSString stringWithFormat: @"\"%@\" Not Found", songName], @"OK", nil, nil, documentWindow, self, NULL, NULL, nil, @"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist.");
-        } else {
-            [docSlideViewer setWorshipSlides: nil notesSlides: nil mediaRefs: nil];
-            
-            // The song file exists, process the file
-            [docSlideViewer setEditor: NO];
-            NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [songName componentsSeparatedByString:@"/"]];
-            NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
-            [worshipTitleBar setStringValue: songDisplayText];
-            
-            NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: worshipSlideFile];
-            
-            [docSlideViewer setWorshipSlides:readSlideFileContents[@"Slides"] notesSlides:readSlideFileContents[@"Flags"] mediaRefs:readSlideFileContents[@"Media"]];
-            
-            NSLog(@"READ: CCLI information");
-            
-            // Read CCLI information
-            NSString *ccliOverviewText = @"";
-            
-            if (readSlideFileContents[@"CCLI Copyright Year"]) {
-                [songCopyright setStringValue: readSlideFileContents[@"CCLI Copyright Year"]];
-                ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", readSlideFileContents[@"CCLI Copyright Year"]]];
-            } else {
-                [songCopyright setStringValue: @""];
-            }
-            
-            if (readSlideFileContents[@"CCLI Artist"]) {
-                [songArtist setStringValue: readSlideFileContents[@"CCLI Artist"]];
-                ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", readSlideFileContents[@"CCLI Artist"]]];
-            } else {
-                [songArtist setStringValue: @""];
-            }
-            
-            if (readSlideFileContents[@"CCLI Publisher"]) {
-                [songPublisher setStringValue: readSlideFileContents[@"CCLI Publisher"]];
-                ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", readSlideFileContents[@"CCLI Publisher"]]];
-            } else {
-                [songPublisher setStringValue: @""];
-            }
-            
-            if (readSlideFileContents[@"CCLI Song Number"]) {
-                [songNumber setStringValue: readSlideFileContents[@"CCLI Song Number"]];
-            } else {
-                [songNumber setStringValue: @""];
-            }
-            
-            [worshipCCLIBar setStringValue: ccliOverviewText];
-            
-            // Autosize and reposition the title bar and CCLI information
-            [worshipTitleBar setFrame:NSMakeRect([worshipTitleBar frame].origin.x, [worshipTitleBar frame].origin.y, [[worshipTitleBar cell] cellSize].width, [worshipTitleBar frame].size.height)];
-            [worshipCCLIBar setFrameOrigin:NSMakePoint([worshipTitleBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [[worshipTitleBar cell] cellSize].width] intValue], [worshipCCLIBar frame].origin.y)];
-            [worshipCCLIBar setFrame:NSMakeRect([worshipCCLIBar frame].origin.x, [worshipCCLIBar frame].origin.y, [[worshipCCLIBar cell] cellSize].width, [worshipCCLIBar frame].size.height)];
-            [worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];
-            
-            [worshipCCLIBar setHidden: NO];
-            [worshipCCLIButton setHidden: NO];
-            
-            [[worshipTitleBar superview] setNeedsDisplay: YES];
-            
-            // Set up the slide viewer pane
-            [docSlideScroller setHasVerticalScroller: YES];
-            [docSlideViewer setClickedSlideAtIndex: -1];
-            
-            // Enable the toolbar buttons
-            [toolbarNewSlide setEnabled: YES];
-            [toolbarNextSlide setEnabled: YES];
-            [toolbarPrevSlide setEnabled: YES];
-            
-            // Reset the undo manager
-            [[self undoManager] removeAllActions];
-            
-            if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"0"]) {
-                [formatterToolbar placeTop: self];
-            } else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"2"]) {
-                [formatterToolbar placeBottom: self];
-            } else {
-                [formatterToolbar placeCentre: self];
-            }
-            
-            if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"0"]) {
-                [formatterToolbar alignLeft: self];
-            } else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"1"]) {
-                [formatterToolbar alignRight: self];
-            } else {
-                [formatterToolbar alignCentre: self];
-            }
-            
-            // Try to read the transition speed
-            // If not set, apply a default
-            if (!readSlideFileContents[@"Transition Speed"]) {
-                [formatterToolbar transitionSpeed: 1.0];
-            } else {
-                [formatterToolbar transitionSpeed: [readSlideFileContents[@"Transition Speed"] floatValue]];
-            }
-            
-            if (!readSlideFileContents[@"Font Family"]) {
-                [formatterToolbar fontFamily: @"default"];
-            } else {
-                [formatterToolbar fontFamily: [NSString stringWithFormat: @"%@", readSlideFileContents[@"Font Family"]]];
-            }
-            
-            if (!readSlideFileContents[@"Font Size"]) {
-                if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
-                    [formatterToolbar setFormatFontSize: [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]];
-                else
-                    [formatterToolbar setFormatFontSize: 72.0];
-            } else {
-                [formatterToolbar setFormatFontSize: [readSlideFileContents[@"Font Size"] floatValue]];
-            }
-            
-            //[songDisplaySplitter release];
-            //[readSlideFileContents release];
-        }
-    }
 }
 
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError

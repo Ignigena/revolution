@@ -123,6 +123,7 @@
 		8607C029180B2818003C9212 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C028180B2818003C9212 /* Playlist.m */; };
 		8607C02D180B3ACA003C9212 /* PlaylistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C02C180B3ACA003C9212 /* PlaylistController.m */; };
 		8607C038180F4463003C9212 /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C037180F4463003C9212 /* Library.m */; };
+		8607C03B180F7536003C9212 /* SlidesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C03A180F7536003C9212 /* SlidesController.m */; };
 		862B0FB40E9AB43B00C50042 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862B0FB30E9AB43B00C50042 /* QuickLook.framework */; };
 		864319E00E7E03CD0088D644 /* SlideBevel.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DE0E7E03CD0088D644 /* SlideBevel.tiff */; };
 		864319E10E7E03CD0088D644 /* SlideSelection.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DF0E7E03CD0088D644 /* SlideSelection.tiff */; };
@@ -323,6 +324,8 @@
 		8607C02C180B3ACA003C9212 /* PlaylistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaylistController.m; path = Controllers/PlaylistController.m; sourceTree = "<group>"; };
 		8607C036180F4463003C9212 /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Library.h; path = "Data Models/Library.h"; sourceTree = "<group>"; };
 		8607C037180F4463003C9212 /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Library.m; path = "Data Models/Library.m"; sourceTree = "<group>"; };
+		8607C039180F7536003C9212 /* SlidesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidesController.h; path = Controllers/SlidesController.h; sourceTree = "<group>"; };
+		8607C03A180F7536003C9212 /* SlidesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlidesController.m; path = Controllers/SlidesController.m; sourceTree = "<group>"; };
 		862B0FB30E9AB43B00C50042 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 		864319DE0E7E03CD0088D644 /* SlideBevel.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideBevel.tiff; path = "New Resources/SlideBevel.tiff"; sourceTree = "<group>"; };
 		864319DF0E7E03CD0088D644 /* SlideSelection.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideSelection.tiff; path = "New Resources/SlideSelection.tiff"; sourceTree = "<group>"; };
@@ -435,6 +438,8 @@
 				506564780B40FCBB00670737 /* Controller.m */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
+				8607C039180F7536003C9212 /* SlidesController.h */,
+				8607C03A180F7536003C9212 /* SlidesController.m */,
 				503173C40CF6D00800EEFF79 /* IWLibrarySearch.h */,
 				503173C50CF6D00800EEFF79 /* IWLibrarySearch.m */,
 				8607C027180B2818003C9212 /* Playlist.h */,
@@ -873,6 +878,7 @@
 				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				506564790B40FCBB00670737 /* Controller.m in Sources */,
+				8607C03B180F7536003C9212 /* SlidesController.m in Sources */,
 				5024B1230B4C379200D4249E /* Presenter.m in Sources */,
 				50E760BC0B5D963400940090 /* IWTableView.m in Sources */,
 				50E760DB0B5D97D700940090 /* IWTableCellText.m in Sources */,

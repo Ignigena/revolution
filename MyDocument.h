@@ -16,6 +16,7 @@
 #import "IWVideoPreview.h"
 #import "IWMediaBox.h"
 #import "Playlist.h"
+#import "SlidesController.h"
 
 @interface MyDocument : NSDocument {
 @private
@@ -24,10 +25,8 @@
 @public
     NSMutableArray * receiverList;
     
-	IBOutlet id worshipTitleBar;
-	IBOutlet id worshipCCLIBar;
-	IBOutlet id worshipCCLIButton;
-	IBOutlet id worshipTitleBarContainer;
+    IBOutlet SlidesController *slidesController;
+    
 	IBOutlet id mediaBoxContent;
 	IBOutlet IWSlideViewer *docSlideViewer;
 	IBOutlet id docSlideScroller;
@@ -55,25 +54,16 @@
 	
 	IBOutlet id rightSplitterView;
 	
-	// Toolbar buttons (in song title bar)
-	IBOutlet id toolbarNewSlide;
-	IBOutlet id toolbarNextSlide;
-	IBOutlet id toolbarPrevSlide;
-	
 	int draggingTableRowStart;
 }
-
-- (void)playlistSelectWithID:(int)songID;
 
 @property NSWindow *documentWindow;
 @property (copy) NSMutableArray *playlist;
 @property Playlist *selectedSong;
+@property SlidesController *slidesController;
 
-- (void)checkEmptyLibrary;
-- (IBAction)removeFromPlaylist:(id)sender;
 - (IBAction)closePlaylistSheet:(id)sender;
 - (IBAction)closeFolderSheet:(id)sender;
-- (IBAction)addSongToPlaylist:(id)sender;
 
 - (IBAction)editCCLIDetails:(id)sender;
 - (IBAction)applyCCLIDetails:(id)sender;
@@ -82,8 +72,6 @@
 - (IBAction)docWindowGoToBlack:(id)sender;
 
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-
-- (NSMutableArray *)worshipPlaylist;
 
 - (IWMediaBox *)mediaBox;
 
@@ -94,7 +82,6 @@
 - (QTMovieView *)videoPreviewController2;
 - (MediaThumbnailBrowser *)thumbnailScroller;
 - (IWSlideViewer *)docSlideViewer;
-- (NSTableView *)playlistTable;
 - (NSTableView *)libraryListing;
 
 - (NSString *)songDetailsWithKey:(NSString *)key;

@@ -25,14 +25,14 @@
 - (void)tableViewSelectionDidChange:(NSNotification *)notification
 {
     MyDocument *sharedDocument = [[NSDocumentController sharedDocumentController] currentDocument];
+    int selectedRow = [[notification object] selectedRow];
     
     // Just make sure that the user is clicking on an actual row
-    if ([[notification object] selectedRow] < 0 ||
-        [[notification object] selectedRow] >= [self.arrangedObjects count]) {
-        [sharedDocument playlistSelectWithID: -1];
+    if (selectedRow < 0 || selectedRow >= [self.arrangedObjects count]) {
+        [[sharedDocument slidesController] loadSongFromPlaylist: nil];
     } else {
-        [sharedDocument playlistSelectWithID: [[notification object] selectedRow]];
-    }	
+        [[sharedDocument slidesController] loadSongFromPlaylist: [[self arrangedObjects] objectAtIndex: selectedRow]];
+    }
 }
 
 - (BOOL)tableView:(NSTableView *)aTableView writeRows:(NSArray *)rows toPasteboard:(NSPasteboard*)pboard
