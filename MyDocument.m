@@ -137,6 +137,11 @@
 	return YES;
 }
 
++ (BOOL)autosavesInPlace
+{
+    return YES;
+}
+
 - (void)playlistSelectWithID:(int)songID {
     // Blank out the presenter screen.
 	//[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
