@@ -87,7 +87,7 @@
 		NSString *clipboard = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
 	
 		if (clipboard) {
-			[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
+            [[[[[documentPlaylistTable window] windowController] document] playlist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
 			
 			NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 			NSArray *songSlides = [self runCleanupScript: clipboard];
@@ -122,7 +122,7 @@
 	
 		[importerController runImportFromFile: self];
 	} else {
-		[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
+        [[[[[documentPlaylistTable window] windowController] document] playlist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
 	
 		NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 		NSArray *blankArray = @[@""];

@@ -104,7 +104,7 @@
 
 - (IBAction)doInsertIntoActiveDocument:(id)sender
 {
-	[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [songTitle stringValue]];
+    [[[[[documentPlaylistTable window] windowController] document] playlist] addObject: [songTitle stringValue]];
 	
 	NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 	NSMutableArray *blankNotes = [[NSMutableArray alloc] init];
