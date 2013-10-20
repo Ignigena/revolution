@@ -72,6 +72,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
+                                        <outlet property="arrayController" destination="hjG-Eo-CY1" id="CLl-W9-GqC"/>
                                         <outlet property="dataSource" destination="hjG-Eo-CY1" id="Nbi-Ch-GY3"/>
                                         <outlet property="delegate" destination="hjG-Eo-CY1" id="Orx-U8-JK9"/>
                                     </connections>

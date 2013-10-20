@@ -4,5 +4,6 @@
 
 @interface IWTableView : NSTableView
 {
+    IBOutlet NSArrayController *arrayController;
 }
 @end
