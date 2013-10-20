@@ -92,4 +92,6 @@
 
 - (NSSize)presentationWindowSize;
 
+@property BOOL renderCCLI;
+
 @end

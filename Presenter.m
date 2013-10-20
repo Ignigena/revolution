@@ -14,54 +14,34 @@
 
 @implementation Presenter
 
+@synthesize renderCCLI;
+
 - (id)initWithFrame:(NSRect)frameRect
 {
 	if ((self = [super initWithFrame:frameRect]) != nil) {
-		NSLog(@" ");
-		NSLog(@"----------------------------------------");
-		NSLog(@"PRESENTATION WINDOW SETUP/INITIALIZATION");
+        CALayer *backgroundLayer = [CALayer layer];
+        backgroundLayer.backgroundColor = [NSColor blackColor].CGColor;
+        backgroundLayer.layoutManager = [CAConstraintLayoutManager layoutManager];
 		
-		CALayer *masterLayer = [CALayer layer];
-		presentationTextLayer = [CATextLayer layer];
-		presentationTextLayerOutgoing = [CATextLayer layer];
-		
-		[self setLayer:masterLayer]; 
+		[self setLayer:backgroundLayer];
 		[self setWantsLayer:YES];
 		
 		[self layer].layoutManager = [CAConstraintLayoutManager layoutManager];
-		
-		NSLog(@"PRESENTATION: Live video layer initializing");
-		liveCameraView = [QTCaptureLayer layer];
-		liveCameraView.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
-		
-		[[self layer] addSublayer: liveCameraView];
-		
-		/*presentationVideoLayer = [[[QTMovieLayer alloc] initWithMovie: nil] retain];
-		presentationVideoLayer.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
-		presentationVideoLayer.opacity = 0.0;
-		
-		[[self layer] addSublayer: presentationVideoLayer];
-		
-		presentationVideoLayer2 = [[QTMovieLayer alloc] initWithMovie: nil];
-		presentationVideoLayer2.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
-		presentationVideoLayer.opacity = 0.0;
-		
-		[[self layer] addSublayer: presentationVideoLayer2];*/
-		
-		NSLog(@"PRESENTATION: Text layer initializing");
-		//presentationTextLayer.wrapped = YES;
-		presentationTextLayer.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
-		presentationTextLayerOutgoing.frame = CGRectMake(0, 0, frameRect.size.width, frameRect.size.height);
+        
+        presentationTextLayer = [CATextLayer layer];
+        presentationTextLayer.position = CGPointMake(0, 0);
+        
+		presentationTextLayerOutgoing = [CATextLayer layer];
+        presentationTextLayerOutgoing.position = CGPointMake(0, 0);
 		
 		[[self layer] addSublayer: presentationTextLayer];
 		[[self layer] addSublayer: presentationTextLayerOutgoing];
 		
-		NSLog(@"PRESENTATION: CCLI licensing layer initializing");
 		ccliLayer = [CALayer layer];
 		ccliLayer.cornerRadius = 8;
 		ccliLayer.borderWidth = 1;
-		ccliLayer.borderColor = kCGColorWhite;
-		ccliLayer.backgroundColor = kCGColorBlack;
+		ccliLayer.borderColor = [NSColor whiteColor].CGColor;
+		ccliLayer.backgroundColor = [NSColor blackColor].CGColor;
 		ccliLayer.opacity = 0.8;
 		ccliLayer.frame = CGRectMake(0, 0, frameRect.size.width-[[NSUserDefaults standardUserDefaults] integerForKey:@"BoundsW"], frameRect.size.height-[[NSUserDefaults standardUserDefaults] integerForKey:@"BoundsH"]);
 		[ccliLayer addConstraint:[CAConstraint constraintWithAttribute:kCAConstraintMinY relativeTo:@"superlayer" attribute:kCAConstraintMinY]];
@@ -74,8 +54,7 @@
 		
 		[[self layer] addSublayer: ccliLayer];
 		
-		NSLog(@"PRESENTATION: Registering defaults");
-		presentationText = @" ";
+        presentationText = @"";
 		outgoingPresentationText = @" ";
 		
 		presentationTextAlpha = 1.0;
@@ -90,38 +69,14 @@
 		outgoingPresenterSlideTextAttrs = [[NSMutableDictionary alloc] init];
 		
 		presenterSlideLayout = 1;
-		
-		NSLog(@"----------------------------------------");
 	}
 	
 	return self;
 }
 
-float heightForStringDrawingPresenter(NSAttributedString *myString, float desiredWidth)
-{
-	NSTextStorage *textStorage = [[NSTextStorage alloc] initWithAttributedString:myString];
-	NSTextContainer *textContainer = [[NSTextContainer alloc] initWithContainerSize: NSMakeSize(desiredWidth, FLT_MAX)];
-	NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-
-	[textContainer setLineFragmentPadding: 0.0];
-
-	[layoutManager addTextContainer: textContainer];
-	[textStorage addLayoutManager: layoutManager];
-	
-	[layoutManager setTypesetterBehavior:NSTypesetterBehavior_10_2_WithCompatibility];
-	
-	(void)[layoutManager glyphRangeForTextContainer: textContainer]; // force layout
-	return [layoutManager usedRectForTextContainer: textContainer].size.height;
-}
-
 - (BOOL)isFlipped
 {
 	return YES;
-}
-
-- (void)setRenderCCLI:(BOOL)renderCCLIYesNo
-{
-	renderCCLI = renderCCLIYesNo;
 }
 
 - (void)setTextFormatting
@@ -197,7 +152,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 - (void)setPresentationText:(NSString *)newPresentationText
 {
 	if (![newPresentationText isEqualToString: presentationText]) {		
-		[self setTextFormatting];
+		//[self setTextFormatting];
 		
 		[CATransaction begin];
 		[CATransaction setValue:@0.0f forKey:kCATransactionAnimationDuration];
@@ -209,10 +164,6 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 		
 		presentationTextLayer.opacity = 0.0;
 		presentationTextLayer.string = [[NSAttributedString alloc] initWithString: newPresentationText attributes:presenterSlideTextAttrs];
-		
-		// Resize the height of the layer ... not being done automatically with wrapping
-		presentationTextLayer.frame = CGRectMake(0, 0, [self layer].frame.size.width, heightForStringDrawingPresenter([presentationTextLayer string], [self layer].frame.size.width));
-		presentationTextLayerOutgoing.frame = CGRectMake(0, 0, [self layer].frame.size.width, heightForStringDrawingPresenter([presentationTextLayer string], [self layer].frame.size.width));
 		
 		[CATransaction commit];
 		
@@ -327,7 +278,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	}
 }*/
 
-/*- (void)crossFadeSlides:(NSTimer *)timer
+- (void)crossFadeSlides:(NSTimer *)timer
 {
 
 	// 50 secTrack == 1 elapsed second	
@@ -352,7 +303,7 @@ float heightForStringDrawingPresenter(NSAttributedString *myString, float desire
 	//outgoingPresentationTextAlpha -= (1/transitionTime)*0.12;
 	
 	[self setNeedsDisplay: YES];
-}*/
+}
 
 
 - (void)setAlignment:(unsigned)alignment
