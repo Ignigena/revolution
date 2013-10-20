@@ -83,7 +83,7 @@
 		worshipSlideTextAttrs[NSParagraphStyleAttributeName] = worshipSlideTextPara;
 		
 		inslideTextEditor = [IWSlideEditor alloc];
-		inslideTextScroller = [NSScrollView alloc];
+		inslideTextScroller = [IWSlideEditScroller alloc];
 		scrollerOverlay = [NSWindow alloc];
 		
 		// Text styles for the flag widgets
@@ -1095,11 +1095,11 @@ float heightForStringDrawing(NSString *myString, NSFont *desiredFont, float desi
 	
 	if (fontFamily)
 		songFile[@"Font Family"] = fontFamily;
-	
-	if (slideFile)
+    
+    if (slideFile)
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", slideFile] stringByExpandingTildeInPath] atomically:TRUE];
 	else
-		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [(MyDocument *)[playlistTable dataSource] worshipPlaylist][[playlistTable selectedRow]]] stringByExpandingTildeInPath] atomically:TRUE];
+		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [(MyDocument *)[playlistTable dataSource] playlist][[playlistTable selectedRow]]] stringByExpandingTildeInPath] atomically:TRUE];
 }
 
 //////////////////////////

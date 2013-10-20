@@ -1,7 +1,6 @@
 #import "IWOutlineView.h"
 #import "IWTableCellText.h"
 #import "MyDocument.h"
-#import "LibraryListing.h"
 
 @implementation IWOutlineView
 
@@ -61,7 +60,6 @@
 
 		[[NSWorkspace sharedWorkspace] performFileOperation: NSWorkspaceRecycleOperation source: [worshipSongPath stringByExpandingTildeInPath] destination: @"" files: deleteFile tag: 0];
 		
-		[(LibraryListing *)[self delegate] loadReloadLibraryList];
 		[self reloadData];
 	}
 }

@@ -13,17 +13,16 @@
 #import "ToolbarMain.h"
 #import "RSDarkScroller.h"
 #import "IWTableCellText.h"
-#import "LibraryListing.h"
-
-#define IWPlaylistDataType @"IWPlaylistDataType"
 
 @implementation MyDocument
+
+@synthesize playlist, selectedSong, documentWindow, slidesController;
 
 - (id)init
 {
     self = [super init];
     if (self) {
-		worshipPlaylist = [NSMutableArray new];
+        playlist = [NSMutableArray new];
 		
 		NSNotificationCenter *center = [[NSWorkspace sharedWorkspace] notificationCenter];
 		[center addObserver:self selector:@selector(windowWillClose:) name:NSWindowWillCloseNotification object:NULL];
@@ -33,20 +32,14 @@
 
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"MyDocument";
 }
 
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
-	NSLog(@"creating new document ...");
 	[[[NSApp delegate] splasher] orderOut: nil];
-	
-	RSDarkScroller *darkScrollerPlaylist = [[RSDarkScroller alloc] init];
-	[playlistTable registerForDraggedTypes: @[IWPlaylistDataType]];
-	[[playlistTable enclosingScrollView] setVerticalScroller: darkScrollerPlaylist];
-	[playlistTable reloadData];
+    
+    documentWindow = [[[self windowControllers] objectAtIndex:0] window];
 	
 	RSDarkScroller *darkScrollerLibrary = [[RSDarkScroller alloc] init];
 	[[libraryListing enclosingScrollView] setVerticalScroller: darkScrollerLibrary];
@@ -58,54 +51,19 @@
 	
 	[super windowControllerDidLoadNib:aController];
 	
-	draggingTableRowStart = -1;
-	
 	[documentWindow makeFirstResponder: [docSlideViewer enclosingScrollView]];
 	
 	// Set up the split view that will open up the media panel
 	// Fix the Interface Builder mess
 	[rightSplitterView setFrame: NSMakeRect(250,20,893,671)];
 	[[rightSplitterView subviews][0] addSubview: mediaBoxContent];
-	//[worshipTitleBarContainer setOrigin: NSMakePoint(0, 452)
-	[worshipTitleBarContainer setFrame: NSMakeRect(0, 452, [worshipTitleBarContainer bounds].size.width, [worshipTitleBarContainer bounds].size.height+1)];
+
 	[docSlideScroller setFrame: NSMakeRect(0, [docSlideScroller frame].origin.y, [docSlideScroller frame].size.width, 413)];
 	
 	// 
 	[thumbnailScroller setMovieListing: [[NSApp delegate] moviesMediaListing]];
 	[thumbnailScroller setPictureListing: [[NSApp delegate] picturesMediaListing]];
 	[thumbnailScroller setMediaListing: 0];
-	
-	[self performSelector: @selector(checkEmptyLibrary) withObject: nil afterDelay: 0.1];
-	NSLog(@"done ...");
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didFindService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    if (![receiverList containsObject:aNetService]) {
-        [self willChangeValueForKey:@"receiverList"];
-        [receiverList addObject:aNetService];
-        [self didChangeValueForKey:@"receiverList"];
-    }
-}
-
-- (void)netServiceBrowser:(NSNetServiceBrowser *)aNetServiceBrowser didRemoveService:(NSNetService *)aNetService moreComing:(BOOL)moreComing {
-    if ([receiverList containsObject:aNetService]) {
-        [self willChangeValueForKey:@"receiverList"];
-        [receiverList removeObject:aNetService];
-        [self didChangeValueForKey:@"receiverList"];
-    }
-}
-
-- (void)checkEmptyLibrary
-{
-	[(LibraryListing *)[libraryListing dataSource] loadReloadLibraryList];
-}
-
-- (void)windowWillClose:(NSNotification *)notification
-{
-	if ([[[NSDocumentController sharedDocumentController] documents] count] == 1)
-		[[[NSApp delegate] splasher] makeKeyAndOrderFront: nil];
-		
-	[[NSApp delegate] presentationGoToBlack: nil];
 }
 
 - (void)splitView:(IWSplitView *)sender resizeSubviewsWithOldSize:(NSSize)oldSize
@@ -157,33 +115,30 @@
 
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-	NSMutableData *data;
-	NSKeyedArchiver *archiver;
+	if (outError) {
+        *outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
+    }
 
-	data = [NSMutableData data];
-	archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
-
-	// Archive the playlist file
-	[archiver encodeObject:worshipPlaylist forKey:@"PlaylistSongFiles"];
-	[archiver finishEncoding];
-
-	return data;
+	return [NSKeyedArchiver archivedDataWithRootObject:playlist];
 }
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
-	NSKeyedUnarchiver *unarchiver;
-	unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-
-	// Unarchive the playlist file
-	[worshipPlaylist setArray: [unarchiver decodeObjectForKey:@"PlaylistSongFiles"]];
-	
-	[unarchiver finishDecoding];
-	
-	NSUserDefaults  *defaults = [NSUserDefaults standardUserDefaults];
-	[defaults setObject:[NSString stringWithFormat: @"%@", [self fileURL]] forKey:@"LastOpenedDocument"];
+    if ([typeName isEqual: @"Playlist"]) {
+        self.playlist = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+        
+        NSUserDefaults  *defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[NSString stringWithFormat: @"%@", [self fileURL]] forKey:@"LastOpenedDocument"];
+    } else {
+        // Not a playlist, treat as a document for importing.
+    }
 	
 	return YES;
+}
+
++ (BOOL)autosavesInPlace
+{
+    return YES;
 }
 
 - (NSPrintOperation *)printOperationWithSettings:(NSDictionary *)printSettings error:(NSError **)outError
@@ -196,255 +151,9 @@
     return printJob;
 }
 
-/* Required method for the NSTableDataSource protocol. */
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
-{
-    return [worshipPlaylist count];
-}
-
-/* Required method for the NSTableDataSource protocol. */
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn*)aTableColumn row:(int)rowIndex
-{
-    return worshipPlaylist[rowIndex];
-}
-
-// Copies table row to pasteboard when it is determined a drag should begin
-- (BOOL)tableView:(NSTableView *)aTableView writeRowsWithIndexes:(NSIndexSet *)rowIndexes toPasteboard:(NSPasteboard*)pboard
-{
-	[docSlideViewer setEditor: NO];
-	
-	NSArray *songTitle = @[worshipPlaylist[[rowIndexes firstIndex]]];
-	draggingTableRowStart = [rowIndexes firstIndex];
-	
-	NSData *data = [NSKeyedArchiver archivedDataWithRootObject:songTitle];
-
-    [pboard declareTypes:@[IWPlaylistDataType] owner:self];
-    [pboard setData:data forType:IWPlaylistDataType];
-
-    return YES;
-}
-
-// Determines where the drop should be
-- (NSDragOperation)tableView:(NSTableView *)aTableView validateDrop:(id <NSDraggingInfo>)info proposedRow:(int)row proposedDropOperation:(NSTableViewDropOperation)operation
-{
-	NSDragOperation dragOp = NSDragOperationCopy;
-    
-    // if drag source is self, it's a move
-    if ([info draggingSource] == aTableView) {
-		dragOp =  NSDragOperationMove;
-    }
-    // we want to put the object at, not over,
-    // the current row (contrast NSTableViewDropOn) 
-    [aTableView setDropRow:row dropOperation:NSTableViewDropAbove];
-	
-    return dragOp;
-}
-
-// Drag is finished, update the table data
-- (BOOL)tableView:(NSTableView *)aTableView acceptDrop:(id <NSDraggingInfo>)info row:(int)row dropOperation:(NSTableViewDropOperation)operation
-{
-	NSPasteboard* pboard = [info draggingPasteboard];
-    NSData* rowData = [pboard dataForType:IWPlaylistDataType];
-    NSArray* songTitle = [NSKeyedUnarchiver unarchiveObjectWithData:rowData];
-	
-	if (row <= 0) row = 0;
-	
-	[worshipPlaylist insertObject:songTitle[[songTitle count]-1] atIndex:row];
-	
-	if (draggingTableRowStart!=-1 && draggingTableRowStart!=row) {
-		if (draggingTableRowStart>=row) { draggingTableRowStart++; }
-		else { row--; }
-		[worshipPlaylist removeObjectAtIndex:draggingTableRowStart];
-		draggingTableRowStart = -1;
-	}
-	
-	[playlistTable reloadData];
-	[playlistTable selectRow:row byExtendingSelection:NO];
-	
-	[self updateChangeCount: 0];
-	
-	return YES;
-}
-
-// Called whenever the table selection changes
-- (void)tableViewSelectionDidChange:(NSNotification *) notification
-{
-	// Blank out the presenter screen
-	[[[NSApp delegate] mainPresenterViewConnect] setPresentationText: @" "];
-	
-	if ([[docSlideViewer worshipSlides] count] > 0)
-		[docSlideViewer saveAllSlidesForSong: previousSelectedPlaylist];
-		
-	// Just make sure that the user is clicking on an actual row
-	if ([[notification object] selectedRow] < 0 || [[notification object] selectedRow] >= [worshipPlaylist count]) {
-		NSLog(@"User is clicking on empty row");
-		
-		// Empty the slide viewer
-		[docSlideViewer setWorshipSlides:nil notesSlides:nil mediaRefs:nil];
-		
-		// Reset the title bar
-		[worshipTitleBar setStringValue: @""];
-		
-		// Hide the CCLI bar and button
-		[worshipCCLIBar setHidden: YES];
-		[worshipCCLIButton setHidden: YES];
-		
-		// Disable the toolbar buttons
-		[toolbarNewSlide setEnabled: NO];
-		[toolbarNextSlide setEnabled: NO];
-		[toolbarPrevSlide setEnabled: NO];
-		
-		return;
-	}
-	
-	previousSelectedPlaylist = worshipPlaylist[[[notification object] selectedRow]];
-	
-	// Use the name of the song as the location of the song file
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", worshipPlaylist[[[notification object] selectedRow]]];
-	
-	//[self sendDataToAllNodes: [[worshipPlaylist objectAtIndex: [[notification object] selectedRow]] dataUsingEncoding: NSUTF8StringEncoding]];
-	
-	// Check to see if the song file exists or not
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [worshipSlideFile stringByExpandingTildeInPath]]) {
-		NSLog(@"The song in the playlist has a valid file");
-		[docSlideViewer setWorshipSlides: nil notesSlides: nil mediaRefs: nil];
-	
-		// The song file exists, process the file
-		[docSlideViewer setEditor: NO];
-		NSArray *songDisplaySplitter = [[NSArray alloc] initWithArray: [worshipPlaylist[[[notification object] selectedRow]] componentsSeparatedByString:@"/"]];
-		NSString *songDisplayText = songDisplaySplitter[[songDisplaySplitter count]-1];
-		[worshipTitleBar setStringValue: [songDisplayText componentsSeparatedByString:@"."][0]];
-		
-		NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
-		
-		[docSlideViewer setWorshipSlides:readSlideFileContents[@"Slides"] notesSlides:readSlideFileContents[@"Flags"] mediaRefs:readSlideFileContents[@"Media"]];
-		
-		NSLog(@"READ: CCLI information");
-		
-		// Read CCLI information
-		NSString *ccliOverviewText = @"";
-			
-		if (readSlideFileContents[@"CCLI Copyright Year"]) {
-			[songCopyright setStringValue: readSlideFileContents[@"CCLI Copyright Year"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@"© %@", readSlideFileContents[@"CCLI Copyright Year"]]];
-		} else {
-			[songCopyright setStringValue: @""];
-		}
-		
-		if (readSlideFileContents[@"CCLI Artist"]) {
-			[songArtist setStringValue: readSlideFileContents[@"CCLI Artist"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@" %@", readSlideFileContents[@"CCLI Artist"]]];
-		} else {
-			[songArtist setStringValue: @""];
-		}
-			
-		if (readSlideFileContents[@"CCLI Publisher"]) {
-			[songPublisher setStringValue: readSlideFileContents[@"CCLI Publisher"]];
-			ccliOverviewText = [ccliOverviewText stringByAppendingString: [NSString stringWithFormat:@", %@", readSlideFileContents[@"CCLI Publisher"]]];
-		} else {
-			[songPublisher setStringValue: @""];
-		}
-			
-		if (readSlideFileContents[@"CCLI Song Number"]) {
-			[songNumber setStringValue: readSlideFileContents[@"CCLI Song Number"]];
-		} else {
-			[songNumber setStringValue: @""];
-		}
-		
-		[worshipCCLIBar setStringValue: ccliOverviewText];
-		
-		// Autosize and reposition the title bar and CCLI information
-		[worshipTitleBar setFrame:NSMakeRect([worshipTitleBar frame].origin.x, [worshipTitleBar frame].origin.y, [[worshipTitleBar cell] cellSize].width, [worshipTitleBar frame].size.height)];
-		[worshipCCLIBar setFrameOrigin:NSMakePoint([worshipTitleBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [[worshipTitleBar cell] cellSize].width] intValue], [worshipCCLIBar frame].origin.y)];
-		[worshipCCLIBar setFrame:NSMakeRect([worshipCCLIBar frame].origin.x, [worshipCCLIBar frame].origin.y, [[worshipCCLIBar cell] cellSize].width, [worshipCCLIBar frame].size.height)];
-		[worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];
-		
-		[worshipCCLIBar setHidden: NO];
-		[worshipCCLIButton setHidden: NO];
-		
-		[[worshipTitleBar superview] setNeedsDisplay: YES];
-		
-		// Set up the slide viewer pane
-		[docSlideScroller setHasVerticalScroller: YES];
-		[docSlideViewer setClickedSlideAtIndex: -1];
-		
-		// Enable the toolbar buttons
-		[toolbarNewSlide setEnabled: YES];
-		[toolbarNextSlide setEnabled: YES];
-		[toolbarPrevSlide setEnabled: YES];
-		
-		// Reset the undo manager
-		[[self undoManager] removeAllActions];
-		
-		if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"0"]) {
-			[formatterToolbar placeTop: self];
-		} else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Layout"]] isEqualToString: @"2"]) {
-			[formatterToolbar placeBottom: self];
-		} else {
-			[formatterToolbar placeCentre: self];
-		}
-		
-		if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"0"]) {
-			[formatterToolbar alignLeft: self];
-		} else if ([[NSString stringWithFormat:@"%@", readSlideFileContents[@"Presenter Alignment"]] isEqualToString: @"1"]) {
-			[formatterToolbar alignRight: self];
-		} else {
-			[formatterToolbar alignCentre: self];
-		}
-		
-		// Try to read the transition speed
-		// If not set, apply a default
-		if (!readSlideFileContents[@"Transition Speed"]) {
-			[formatterToolbar transitionSpeed: 1.0];
-		} else {
-			[formatterToolbar transitionSpeed: [readSlideFileContents[@"Transition Speed"] floatValue]];
-		}
-			
-		if (!readSlideFileContents[@"Font Family"]) {
-			[formatterToolbar fontFamily: @"default"];
-		} else {
-			[formatterToolbar fontFamily: [NSString stringWithFormat: @"%@", readSlideFileContents[@"Font Family"]]];
-		}
-		
-		if (!readSlideFileContents[@"Font Size"]) {
-			if ([[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"]!=nil)
-				[formatterToolbar setFormatFontSize: [[[NSUserDefaults standardUserDefaults] objectForKey:@"Text Size"] floatValue]];
-			else
-				[formatterToolbar setFormatFontSize: 72.0];
-		} else {
-			[formatterToolbar setFormatFontSize: [readSlideFileContents[@"Font Size"] floatValue]];
-		}
-			
-		//[songDisplaySplitter release];
-		//[readSlideFileContents release];
-	} else {
-		// The song file does not exist
-		NSAlert *alert = [[NSAlert alloc] init];
-		[alert addButtonWithTitle:@"OK"];
-		[alert setMessageText:[NSString stringWithFormat: @"\"%@\" Not Found", worshipPlaylist[[[notification object] selectedRow]]]];
-		[alert setInformativeText:@"The song could not be found in the library.  This could be because the song has been deleted or renamed since you last loaded this playlist."];
-		[alert setAlertStyle:NSCriticalAlertStyle];
-		[alert beginSheetModalForWindow:documentWindow modalDelegate:nil didEndSelector:nil contextInfo: nil];
-	}
-	
-}
-
-- (IBAction)removeFromPlaylist:(id)sender
-{
-	NSLog(@"Deleting %li", (long)[playlistTable selectedRow]);
-	
-	// Just make sure that the user is clicking on an actual row
-	if ([playlistTable selectedRow] < 0 || [playlistTable selectedRow] >= [worshipPlaylist count])
-		return;
-	
-	[worshipPlaylist removeObjectAtIndex:[playlistTable selectedRow]];
-	[playlistTable reloadData];
-	[self updateChangeCount: 0];
-}
-
 - (IBAction)editCCLIDetails:(id)sender
 {
-	if ([playlistTable selectedRow]>=0)
+//	if ([playlistTable selectedRow]>=0)
 		[NSApp beginSheet:ccliEditor modalForWindow:[NSApp keyWindow] modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
@@ -455,7 +164,7 @@
 	
 	[docSlideViewer saveAllSlidesForSong: nil];
 	
-	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]];
+/*	NSString *worshipSlideFile = [NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]];
 	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [worshipSlideFile stringByExpandingTildeInPath]];
 	
 	NSString *ccliOverviewText = @"";
@@ -493,7 +202,7 @@
 		[worshipTitleBar setFrame:NSMakeRect([worshipTitleBar frame].origin.x, [worshipTitleBar frame].origin.y, [[worshipTitleBar cell] cellSize].width, [worshipTitleBar frame].size.height)];
 		[worshipCCLIBar setFrameOrigin:NSMakePoint([worshipTitleBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [[worshipTitleBar cell] cellSize].width] intValue], [worshipCCLIBar frame].origin.y)];
 		[worshipCCLIBar setFrame:NSMakeRect([worshipCCLIBar frame].origin.x, [worshipCCLIBar frame].origin.y, [[worshipCCLIBar cell] cellSize].width, [worshipCCLIBar frame].size.height)];
-		[worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];
+		[worshipCCLIButton setFrameOrigin:NSMakePoint([worshipCCLIBar frame].origin.x+[[[NSNumber alloc] initWithFloat: [worshipCCLIBar frame].size.width] intValue]+8, [worshipCCLIButton frame].origin.y)];*/
 }
 
 - (IBAction)closePlaylistSheet:(id)sender
@@ -506,14 +215,6 @@
 { 
     [NSApp endSheet:addFolderSheet];
 	[addFolderSheet orderOut: self];
-}
-
-- (IBAction)addSongToPlaylist:(id)sender
-{
-	[worshipPlaylist addObject: [libraryListing itemAtRow:[libraryListing selectedRow]]];
-	[playlistTable reloadData];
-    [NSApp endSheet:addSongSheet];
-	[self updateChangeCount: 0];
 }
 
 - (IBAction)toggleMediaMixer:(id)sender
@@ -533,11 +234,6 @@
 - (void)didEndSheet:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo
 {
     [sheet orderOut:self];
-}
-
-- (NSMutableArray *)worshipPlaylist
-{
-	return worshipPlaylist;
 }
 
 - (IWVideoPreview *)videoPreviewDisplay
@@ -575,11 +271,6 @@
 	return mediaBoxContent;
 }
 
-- (NSTableView *)playlistTable
-{
-	return playlistTable;
-}
-
 - (NSTableView *)libraryListing
 {
 	return libraryListing;
@@ -588,7 +279,7 @@
 
 - (NSString *)songDetailsWithKey:(NSString *)key
 {
-	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", worshipPlaylist[[playlistTable selectedRow]]] stringByExpandingTildeInPath]];
+	NSDictionary *readSlideFileContents = [[NSDictionary alloc] initWithContentsOfFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", selectedSong.playlistTitle] stringByExpandingTildeInPath]];
 	
 	return readSlideFileContents[key];
 }

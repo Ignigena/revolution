@@ -20,11 +20,20 @@
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
-	
-	// Delete the row ... ummm, duh!
-	if (key == NSDeleteCharacter || key == NSDeleteFunctionKey)
-		[[[NSDocumentController sharedDocumentController] currentDocument] removeFromPlaylist: self];
+    unichar key = [[theEvent charactersIgnoringModifiers] characterAtIndex:0];
+    
+    if(key == NSDeleteCharacter) {
+        if([self selectedRow] == -1) {
+            NSBeep();
+        }
+        
+        if (![[self.window firstResponder] isKindOfClass:[NSText class]]) {
+            [arrayController remove:nil];
+            return;
+        }
+    }
+
+    [super keyDown:theEvent];
 }
 
 @end

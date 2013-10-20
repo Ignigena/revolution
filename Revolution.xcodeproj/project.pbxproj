@@ -16,8 +16,6 @@
 		5008D2390C77F1BE003D870C /* SlideHighlight-ST.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D2310C77F1BE003D870C /* SlideHighlight-ST.tiff */; };
 		5008D23A0C77F1BE003D870C /* SlideHighlight-SR.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D2320C77F1BE003D870C /* SlideHighlight-SR.tiff */; };
 		5008D23B0C77F1BE003D870C /* SlideHighlight-SL.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D2330C77F1BE003D870C /* SlideHighlight-SL.tiff */; };
-		5008D5E50C784045003D870C /* Disclosure.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D5E30C784045003D870C /* Disclosure.tiff */; };
-		5008D5E60C784045003D870C /* Disclosure-P.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D5E40C784045003D870C /* Disclosure-P.tiff */; };
 		5008D6F20C784FF4003D870C /* RSDarkScroller.m in Sources */ = {isa = PBXBuildFile; fileRef = 5008D6F00C784FF4003D870C /* RSDarkScroller.m */; };
 		5008D6F90C78503D003D870C /* DarkScrollerTrack.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D6F80C78503D003D870C /* DarkScrollerTrack.tiff */; };
 		5008D71C0C78516C003D870C /* DarkScrollerCap.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 5008D71B0C78516C003D870C /* DarkScrollerCap.tiff */; };
@@ -111,7 +109,6 @@
 		50A6DEDD0CE9676A00A7E1C9 /* App.icns in Resources */ = {isa = PBXBuildFile; fileRef = 50A6DEDC0CE9676A00A7E1C9 /* App.icns */; };
 		50B3DFED0B6FFC0F005BDFC1 /* IWSlideViewer.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3DFEC0B6FFC0F005BDFC1 /* IWSlideViewer.m */; };
 		50B3E0230B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E0210B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m */; };
-		50B3E1C90B708F6F005BDFC1 /* LibraryListing.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */; };
 		50B3E6C70B7BBEA9005BDFC1 /* Credits.bak.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 50B3E6C50B7BBEA9005BDFC1 /* Credits.bak.rtf */; };
 		50D3904B0CD983DC00A19A3F /* BP.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 50D3904A0CD983DC00A19A3F /* BP.tiff */; };
 		50E760BC0B5D963400940090 /* IWTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 50E760BB0B5D963400940090 /* IWTableView.m */; };
@@ -123,6 +120,10 @@
 		50F0A7A10BB4EF04007F9C82 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50F0A7A00BB4EF04007F9C82 /* Quartz.framework */; };
 		50F0AA1B0BB7A08E007F9C82 /* MediaThumbnailBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 50F0AA1A0BB7A08E007F9C82 /* MediaThumbnailBrowser.m */; };
 		50F332150D0A98A30038EBDF /* ProWorshipHelp in Resources */ = {isa = PBXBuildFile; fileRef = 50F331CE0D0A98A30038EBDF /* ProWorshipHelp */; };
+		8607C029180B2818003C9212 /* Playlist.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C028180B2818003C9212 /* Playlist.m */; };
+		8607C02D180B3ACA003C9212 /* PlaylistController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C02C180B3ACA003C9212 /* PlaylistController.m */; };
+		8607C038180F4463003C9212 /* Library.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C037180F4463003C9212 /* Library.m */; };
+		8607C03B180F7536003C9212 /* SlidesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8607C03A180F7536003C9212 /* SlidesController.m */; };
 		862B0FB40E9AB43B00C50042 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 862B0FB30E9AB43B00C50042 /* QuickLook.framework */; };
 		864319E00E7E03CD0088D644 /* SlideBevel.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DE0E7E03CD0088D644 /* SlideBevel.tiff */; };
 		864319E10E7E03CD0088D644 /* SlideSelection.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864319DF0E7E03CD0088D644 /* SlideSelection.tiff */; };
@@ -140,7 +141,6 @@
 		864506CF0EB153D6009DEAE7 /* InsertPlaylist.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864506CE0EB153D6009DEAE7 /* InsertPlaylist.tiff */; };
 		864506E50EB22C70009DEAE7 /* ShowOnScreen.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864506E40EB22C70009DEAE7 /* ShowOnScreen.tiff */; };
 		864506ED0EB22FEA009DEAE7 /* MediaTabBGActive.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 864506EC0EB22FEA009DEAE7 /* MediaTabBGActive.tiff */; };
-		864508A50EB3BBC3009DEAE7 /* RSHistogramView.m in Sources */ = {isa = PBXBuildFile; fileRef = 864508A40EB3BBC3009DEAE7 /* RSHistogramView.m */; };
 		864508B80EB3C39A009DEAE7 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 864508B70EB3C39A009DEAE7 /* Accelerate.framework */; };
 		8669F1E50ECA39C100640634 /* NetworkNodeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8669F1E40ECA39C100640634 /* NetworkNodeController.m */; };
 		868DEE920EC752F900C001A7 /* RSDarkButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 868DEE910EC752F900C001A7 /* RSDarkButtonCell.m */; };
@@ -189,8 +189,6 @@
 		5008D2310C77F1BE003D870C /* SlideHighlight-ST.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "SlideHighlight-ST.tiff"; path = "Resources/SlideHighlight-ST.tiff"; sourceTree = "<group>"; };
 		5008D2320C77F1BE003D870C /* SlideHighlight-SR.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "SlideHighlight-SR.tiff"; path = "Resources/SlideHighlight-SR.tiff"; sourceTree = "<group>"; };
 		5008D2330C77F1BE003D870C /* SlideHighlight-SL.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "SlideHighlight-SL.tiff"; path = "Resources/SlideHighlight-SL.tiff"; sourceTree = "<group>"; };
-		5008D5E30C784045003D870C /* Disclosure.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = Disclosure.tiff; path = Resources/Disclosure.tiff; sourceTree = "<group>"; };
-		5008D5E40C784045003D870C /* Disclosure-P.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = "Disclosure-P.tiff"; path = "Resources/Disclosure-P.tiff"; sourceTree = "<group>"; };
 		5008D6F00C784FF4003D870C /* RSDarkScroller.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = RSDarkScroller.m; sourceTree = "<group>"; };
 		5008D6F10C784FF4003D870C /* RSDarkScroller.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = RSDarkScroller.h; sourceTree = "<group>"; };
 		5008D6F80C78503D003D870C /* DarkScrollerTrack.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = DarkScrollerTrack.tiff; path = Resources/DarkScroller/DarkScrollerTrack.tiff; sourceTree = "<group>"; };
@@ -302,8 +300,6 @@
 		50B3DFEC0B6FFC0F005BDFC1 /* IWSlideViewer.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = IWSlideViewer.m; sourceTree = "<group>"; };
 		50B3E0210B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = IWNoFocusRingTextField.m; sourceTree = "<group>"; };
 		50B3E0220B6FFDE3005BDFC1 /* IWNoFocusRingTextField.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IWNoFocusRingTextField.h; sourceTree = "<group>"; };
-		50B3E1C70B708F6F005BDFC1 /* LibraryListing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LibraryListing.h; sourceTree = "<group>"; };
-		50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LibraryListing.m; sourceTree = "<group>"; };
 		50B3E6C60B7BBEA9005BDFC1 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = English; path = English.lproj/Credits.bak.rtf; sourceTree = "<group>"; };
 		50D3904A0CD983DC00A19A3F /* BP.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = BP.tiff; path = Resources/BP.tiff; sourceTree = "<group>"; };
 		50E760BA0B5D963400940090 /* IWTableView.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = IWTableView.h; sourceTree = "<group>"; };
@@ -322,6 +318,14 @@
 		50F0AA190BB7A08E007F9C82 /* MediaThumbnailBrowser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = MediaThumbnailBrowser.h; sourceTree = "<group>"; };
 		50F0AA1A0BB7A08E007F9C82 /* MediaThumbnailBrowser.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = MediaThumbnailBrowser.m; sourceTree = "<group>"; };
 		50F331CF0D0A98A30038EBDF /* English */ = {isa = PBXFileReference; lastKnownFileType = folder; name = English; path = English.lproj/ProWorshipHelp; sourceTree = "<group>"; };
+		8607C027180B2818003C9212 /* Playlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Playlist.h; path = "Data Models/Playlist.h"; sourceTree = "<group>"; };
+		8607C028180B2818003C9212 /* Playlist.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Playlist.m; path = "Data Models/Playlist.m"; sourceTree = "<group>"; };
+		8607C02B180B3ACA003C9212 /* PlaylistController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlaylistController.h; path = Controllers/PlaylistController.h; sourceTree = "<group>"; };
+		8607C02C180B3ACA003C9212 /* PlaylistController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlaylistController.m; path = Controllers/PlaylistController.m; sourceTree = "<group>"; };
+		8607C036180F4463003C9212 /* Library.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Library.h; path = "Data Models/Library.h"; sourceTree = "<group>"; };
+		8607C037180F4463003C9212 /* Library.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Library.m; path = "Data Models/Library.m"; sourceTree = "<group>"; };
+		8607C039180F7536003C9212 /* SlidesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SlidesController.h; path = Controllers/SlidesController.h; sourceTree = "<group>"; };
+		8607C03A180F7536003C9212 /* SlidesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SlidesController.m; path = Controllers/SlidesController.m; sourceTree = "<group>"; };
 		862B0FB30E9AB43B00C50042 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 		864319DE0E7E03CD0088D644 /* SlideBevel.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideBevel.tiff; path = "New Resources/SlideBevel.tiff"; sourceTree = "<group>"; };
 		864319DF0E7E03CD0088D644 /* SlideSelection.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = SlideSelection.tiff; path = "New Resources/SlideSelection.tiff"; sourceTree = "<group>"; };
@@ -342,8 +346,6 @@
 		864506CE0EB153D6009DEAE7 /* InsertPlaylist.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = InsertPlaylist.tiff; path = "Resources/Media Panel/InsertPlaylist.tiff"; sourceTree = "<group>"; };
 		864506E40EB22C70009DEAE7 /* ShowOnScreen.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = ShowOnScreen.tiff; path = "Resources/Media Panel/ShowOnScreen.tiff"; sourceTree = "<group>"; };
 		864506EC0EB22FEA009DEAE7 /* MediaTabBGActive.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; name = MediaTabBGActive.tiff; path = Resources/MediaTabBGActive.tiff; sourceTree = "<group>"; };
-		864508A30EB3BBC3009DEAE7 /* RSHistogramView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RSHistogramView.h; sourceTree = "<group>"; };
-		864508A40EB3BBC3009DEAE7 /* RSHistogramView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RSHistogramView.m; sourceTree = "<group>"; };
 		864508B70EB3C39A009DEAE7 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = /System/Library/Frameworks/Accelerate.framework; sourceTree = "<absolute>"; };
 		8669F1E30ECA39C100640634 /* NetworkNodeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkNodeController.h; sourceTree = "<group>"; };
 		8669F1E40ECA39C100640634 /* NetworkNodeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkNodeController.m; sourceTree = "<group>"; };
@@ -421,6 +423,7 @@
 				509DA3900B98008F00767E64 /* Subclassed Interface */,
 				2A37F4AFFDCFA73011CA2CEA /* Other Sources */,
 				5097CE770B996F2300F19063 /* Wizard */,
+				8607C02A180B288C003C9212 /* Interface */,
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
@@ -435,18 +438,20 @@
 				506564780B40FCBB00670737 /* Controller.m */,
 				2A37F4AEFDCFA73011CA2CEA /* MyDocument.h */,
 				2A37F4ACFDCFA73011CA2CEA /* MyDocument.m */,
-				5024B1210B4C379200D4249E /* Presenter.h */,
-				5024B1220B4C379200D4249E /* Presenter.m */,
-				864502740EAE9106009DEAE7 /* NSImage+QuickLook.m */,
-				864502750EAE9106009DEAE7 /* NSImage+QuickLook.h */,
-				50B3E1C70B708F6F005BDFC1 /* LibraryListing.h */,
-				50B3E1C80B708F6F005BDFC1 /* LibraryListing.m */,
+				8607C039180F7536003C9212 /* SlidesController.h */,
+				8607C03A180F7536003C9212 /* SlidesController.m */,
 				503173C40CF6D00800EEFF79 /* IWLibrarySearch.h */,
 				503173C50CF6D00800EEFF79 /* IWLibrarySearch.m */,
+				8607C027180B2818003C9212 /* Playlist.h */,
+				8607C028180B2818003C9212 /* Playlist.m */,
+				8607C02B180B3ACA003C9212 /* PlaylistController.h */,
+				8607C02C180B3ACA003C9212 /* PlaylistController.m */,
+				5024B1210B4C379200D4249E /* Presenter.h */,
+				5024B1220B4C379200D4249E /* Presenter.m */,
+				8607C036180F4463003C9212 /* Library.h */,
+				8607C037180F4463003C9212 /* Library.m */,
 				50EA44FD0BF9524700685860 /* PreferencesController.h */,
 				50EA44FE0BF9524700685860 /* PreferencesController.m */,
-				864508A30EB3BBC3009DEAE7 /* RSHistogramView.h */,
-				864508A40EB3BBC3009DEAE7 /* RSHistogramView.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -483,8 +488,6 @@
 				507CF4D00C8BE725004E4E0B /* Splash Screen */,
 				5044E97B0D07B94A00A57AB0 /* SafeBorders.tiff */,
 				503CDA560CD4283C0045BE3D /* QuickCue-Close.tiff */,
-				5008D5E30C784045003D870C /* Disclosure.tiff */,
-				5008D5E40C784045003D870C /* Disclosure-P.tiff */,
 				507CF4A80C8BE173004E4E0B /* SlideNext-P.tiff */,
 				507CF4A90C8BE173004E4E0B /* SlideNext.tiff */,
 				507CF4AA0C8BE173004E4E0B /* SlidePrevious-P.tiff */,
@@ -500,9 +503,6 @@
 				5031737B0CF69F0700EEFF79 /* Icon-SongFile.tiff */,
 				864506EC0EB22FEA009DEAE7 /* MediaTabBGActive.tiff */,
 				50B3E6C50B7BBEA9005BDFC1 /* Credits.bak.rtf */,
-				86431C910E858C540088D644 /* MainMenu.xib */,
-				86431C980E858C880088D644 /* Preferences.xib */,
-				86431C9E0E858C9D0088D644 /* MyDocument.xib */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
 				089C165FFE840EACC02AAC07 /* InfoPlist.strings */,
 				506A17060DAEB0A400BA10CC /* Sample Library */,
@@ -629,6 +629,8 @@
 		509DA3900B98008F00767E64 /* Subclassed Interface */ = {
 			isa = PBXGroup;
 			children = (
+				864502740EAE9106009DEAE7 /* NSImage+QuickLook.m */,
+				864502750EAE9106009DEAE7 /* NSImage+QuickLook.h */,
 				868DEE900EC752F900C001A7 /* RSDarkButtonCell.h */,
 				868DEE910EC752F900C001A7 /* RSDarkButtonCell.m */,
 				5008D6F10C784FF4003D870C /* RSDarkScroller.h */,
@@ -700,6 +702,16 @@
 			name = Preferences;
 			sourceTree = "<group>";
 		};
+		8607C02A180B288C003C9212 /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				86431C910E858C540088D644 /* MainMenu.xib */,
+				86431C980E858C880088D644 /* Preferences.xib */,
+				86431C9E0E858C9D0088D644 /* MyDocument.xib */,
+			);
+			name = Interface;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -769,8 +781,6 @@
 				5008D2390C77F1BE003D870C /* SlideHighlight-ST.tiff in Resources */,
 				5008D23A0C77F1BE003D870C /* SlideHighlight-SR.tiff in Resources */,
 				5008D23B0C77F1BE003D870C /* SlideHighlight-SL.tiff in Resources */,
-				5008D5E50C784045003D870C /* Disclosure.tiff in Resources */,
-				5008D5E60C784045003D870C /* Disclosure-P.tiff in Resources */,
 				5008D6F90C78503D003D870C /* DarkScrollerTrack.tiff in Resources */,
 				5008D71C0C78516C003D870C /* DarkScrollerCap.tiff in Resources */,
 				5008D7450C785365003D870C /* DarkScrollerKnob.tif in Resources */,
@@ -868,16 +878,17 @@
 				8D15AC310486D014006FF6A4 /* MyDocument.m in Sources */,
 				8D15AC320486D014006FF6A4 /* main.m in Sources */,
 				506564790B40FCBB00670737 /* Controller.m in Sources */,
+				8607C03B180F7536003C9212 /* SlidesController.m in Sources */,
 				5024B1230B4C379200D4249E /* Presenter.m in Sources */,
 				50E760BC0B5D963400940090 /* IWTableView.m in Sources */,
 				50E760DB0B5D97D700940090 /* IWTableCellText.m in Sources */,
 				50E769FC0B5FE29100940090 /* IWSplitView.m in Sources */,
 				50E76ADE0B5FFFE600940090 /* IWSplitterHandle.m in Sources */,
 				507C37830B6558A200870D74 /* SlideTitleBar.m in Sources */,
+				8607C02D180B3ACA003C9212 /* PlaylistController.m in Sources */,
 				507C38E30B66951100870D74 /* FormattingBar.m in Sources */,
 				50B3DFED0B6FFC0F005BDFC1 /* IWSlideViewer.m in Sources */,
 				50B3E0230B6FFDE3005BDFC1 /* IWNoFocusRingTextField.m in Sources */,
-				50B3E1C90B708F6F005BDFC1 /* LibraryListing.m in Sources */,
 				509F04DE0BB20EE100C4C308 /* ImportSongFromFile.m in Sources */,
 				50F0AA1B0BB7A08E007F9C82 /* MediaThumbnailBrowser.m in Sources */,
 				50ECBAF20BBCB3570070D7F8 /* AddSongSheet.m in Sources */,
@@ -894,10 +905,11 @@
 				50A6DDE60CE8FC6F00A7E1C9 /* IWSlideEditScroller.m in Sources */,
 				503173C60CF6D00800EEFF79 /* IWLibrarySearch.m in Sources */,
 				504D76DB0D41F4240083C6A3 /* IWVideoPreview.m in Sources */,
+				8607C029180B2818003C9212 /* Playlist.m in Sources */,
+				8607C038180F4463003C9212 /* Library.m in Sources */,
 				86C8001C0EA2ACA60060793F /* MAAttachedWindow.m in Sources */,
 				864502760EAE9106009DEAE7 /* NSImage+QuickLook.m in Sources */,
 				864504DD0EAF902F009DEAE7 /* XMLTree.m in Sources */,
-				864508A50EB3BBC3009DEAE7 /* RSHistogramView.m in Sources */,
 				86E321B00EC2797F005B03AA /* ImportController.m in Sources */,
 				868DEE920EC752F900C001A7 /* RSDarkButtonCell.m in Sources */,
 				8669F1E50ECA39C100640634 /* NetworkNodeController.m in Sources */,

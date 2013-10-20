@@ -8,7 +8,6 @@
 
 #import "ImportController.h"
 #import "MyDocument.h"
-#import "LibraryListing.h"
 
 @implementation ImportController
 
@@ -26,14 +25,7 @@
 	if ([[NSFileManager defaultManager] fileExistsAtPath: [@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/Scripture/" stringByExpandingTildeInPath] attributes: nil]; }
 		
 	[scriptureFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Scripture/%@.iwsf", ref] stringByExpandingTildeInPath] atomically:TRUE];
-		
-	[(LibraryListing *)[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] dataSource] loadReloadLibraryList];
-	[[[[NSDocumentController sharedDocumentController] currentDocument] libraryListing] reloadData];
-	
-	[[[[NSDocumentController sharedDocumentController] currentDocument] worshipPlaylist] addObject: [NSString stringWithFormat: @"Scripture/%@.iwsf", ref]];
-	
-	[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] reloadData];
-	[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] selectRow:[[[[NSDocumentController sharedDocumentController] currentDocument] playlistTable] numberOfRows]-1 byExtendingSelection:NO];
+    [[[[NSDocumentController sharedDocumentController] currentDocument] playlist] addObject: [NSString stringWithFormat: @"Scripture/%@.iwsf", ref]];
 }
 
 @end

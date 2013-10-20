@@ -13,25 +13,18 @@
                 <outlet property="docSlideScroller" destination="664" id="665"/>
                 <outlet property="docSlideViewer" destination="657" id="658"/>
                 <outlet property="formatterToolbar" destination="694" id="703"/>
-                <outlet property="libraryListing" destination="680" id="693"/>
                 <outlet property="loopingToggle" destination="854" id="1144"/>
                 <outlet property="mediaBoxContent" destination="846" id="878"/>
-                <outlet property="playlistTable" destination="646" id="648"/>
                 <outlet property="rightSplitterView" destination="869" id="870"/>
+                <outlet property="slidesController" destination="sJu-uj-qbf" id="b7d-BZ-HXC"/>
                 <outlet property="songArtist" destination="1900" id="1911"/>
                 <outlet property="songCopyright" destination="1874" id="1912"/>
                 <outlet property="songNumber" destination="1907" id="1914"/>
                 <outlet property="songPublisher" destination="1903" id="1913"/>
                 <outlet property="thumbnailScroller" destination="949" id="954"/>
-                <outlet property="toolbarNewSlide" destination="2454" id="2697"/>
-                <outlet property="toolbarNextSlide" destination="640" id="687"/>
-                <outlet property="toolbarPrevSlide" destination="639" id="686"/>
                 <outlet property="videoPreviewController" destination="2437" id="2461"/>
                 <outlet property="videoPreviewController2" destination="2459" id="2460"/>
                 <outlet property="window" destination="5" id="18"/>
-                <outlet property="worshipCCLIBar" destination="1787" id="1789"/>
-                <outlet property="worshipCCLIButton" destination="1790" id="1792"/>
-                <outlet property="worshipTitleBar" destination="638" id="641"/>
                 <outlet property="worshipTitleBarContainer" destination="637" id="872"/>
             </connections>
         </customObject>
@@ -73,11 +66,15 @@
                                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
+                                            <connections>
+                                                <binding destination="hjG-Eo-CY1" name="value" keyPath="arrangedObjects.playlistTitle" id="cVG-1O-qCR"/>
+                                            </connections>
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <outlet property="dataSource" destination="-2" id="649"/>
-                                        <outlet property="delegate" destination="-2" id="650"/>
+                                        <outlet property="arrayController" destination="hjG-Eo-CY1" id="CLl-W9-GqC"/>
+                                        <outlet property="dataSource" destination="hjG-Eo-CY1" id="Nbi-Ch-GY3"/>
+                                        <outlet property="delegate" destination="hjG-Eo-CY1" id="Orx-U8-JK9"/>
                                     </connections>
                                 </tableView>
                             </subviews>
@@ -139,8 +136,7 @@
                                         </tableColumn>
                                     </tableColumns>
                                     <connections>
-                                        <outlet property="dataSource" destination="336" id="682"/>
-                                        <outlet property="delegate" destination="336" id="683"/>
+                                        <outlet property="dataSource" destination="yBt-Ww-Mc7" id="8zQ-Xq-90R"/>
                                     </connections>
                                 </outlineView>
                             </subviews>
@@ -341,7 +337,6 @@
                                                         <outlet property="songCopyright" destination="1874" id="1919"/>
                                                         <outlet property="songNumber" destination="1907" id="1921"/>
                                                         <outlet property="songPublisher" destination="1903" id="1920"/>
-                                                        <outlet property="songTitle" destination="638" id="684"/>
                                                         <outlet property="speedArea" destination="717" id="794"/>
                                                         <outlet property="speedSlider" destination="718" id="795"/>
                                                     </connections>
@@ -370,6 +365,7 @@
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="newSlide:" target="657" id="2456"/>
+                                                    <binding destination="sJu-uj-qbf" name="enabled" keyPath="self.buttonsEnabled" id="cdy-BS-vmW"/>
                                                 </connections>
                                             </button>
                                             <segmentedControl toolTip="Select which elements appear live on the screen" verticalHuggingPriority="750" id="2452">
@@ -394,6 +390,11 @@
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="editCCLIDetails:" target="-2" id="1915"/>
+                                                    <binding destination="sJu-uj-qbf" name="hidden" keyPath="self.buttonsEnabled" id="4VR-Wj-h6P">
+                                                        <dictionary key="options">
+                                                            <string key="NSValueTransformerName">NSNegateBoolean</string>
+                                                        </dictionary>
+                                                    </binding>
                                                 </connections>
                                             </button>
                                             <textField verticalHuggingPriority="750" id="2782">
@@ -406,13 +407,21 @@
                                                 </textFieldCell>
                                             </textField>
                                             <textField hidden="YES" verticalHuggingPriority="750" id="1787">
-                                                <rect key="frame" x="181" y="10" width="204" height="14"/>
+                                                <rect key="frame" x="181" y="10" width="165" height="14"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                 <textFieldCell key="cell" title="© 1987 Jude Del Hierro, Mercy / Vineyard" id="2348">
                                                     <font key="font" metaFont="system" size="10"/>
                                                     <color key="textColor" red="0.098039216999999998" green="0.098039216999999998" blue="0.098039216999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <binding destination="sJu-uj-qbf" name="hidden" keyPath="self.ccliDisplayLine" id="C2X-ir-rOk">
+                                                        <dictionary key="options">
+                                                            <string key="NSValueTransformerName">NSIsNotNil</string>
+                                                        </dictionary>
+                                                    </binding>
+                                                    <binding destination="sJu-uj-qbf" name="value" keyPath="self.ccliDisplayLine" id="biG-wi-Fpe"/>
+                                                </connections>
                                             </textField>
                                             <button toolTip="Toggle the media panel" verticalHuggingPriority="750" id="642">
                                                 <rect key="frame" x="697" y="4" width="29" height="25"/>
@@ -434,6 +443,7 @@
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="presentSlideNext:" target="657" id="740"/>
+                                                    <binding destination="sJu-uj-qbf" name="enabled" keyPath="self.buttonsEnabled" id="OhI-Si-3Iz"/>
                                                 </connections>
                                             </button>
                                             <button id="639">
@@ -445,16 +455,20 @@
                                                 </buttonCell>
                                                 <connections>
                                                     <action selector="presentSlidePrevious:" target="657" id="739"/>
+                                                    <binding destination="sJu-uj-qbf" name="enabled" keyPath="self.buttonsEnabled" id="Uej-0A-aSm"/>
                                                 </connections>
                                             </button>
                                             <textField verticalHuggingPriority="750" id="638">
-                                                <rect key="frame" x="12" y="6" width="416" height="22"/>
+                                                <rect key="frame" x="12" y="6" width="165" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                                 <textFieldCell key="cell" id="2343">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </textFieldCell>
+                                                <connections>
+                                                    <binding destination="sJu-uj-qbf" name="value" keyPath="self.songTitle" id="I5X-u8-4aT"/>
+                                                </connections>
                                             </textField>
                                         </subviews>
                                     </customView>
@@ -550,6 +564,17 @@
                 <outlet property="delegate" destination="-2" id="17"/>
             </connections>
         </window>
+        <arrayController objectClassName="Playlist" id="hjG-Eo-CY1" userLabel="Playlist" customClass="PlaylistController">
+            <declaredKeys>
+                <string>playlistTitle</string>
+            </declaredKeys>
+            <connections>
+                <binding destination="-2" name="contentArray" keyPath="playlist" id="pvk-ql-MJi"/>
+                <outlet property="playlistTableView" destination="646" id="rB4-BG-jyg"/>
+            </connections>
+        </arrayController>
+        <customObject id="yBt-Ww-Mc7" customClass="Library"/>
+        <customObject id="sJu-uj-qbf" customClass="SlidesController"/>
         <window title="Panel" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" wantsToBeColor="NO" visibleAtLaunch="NO" animationBehavior="default" id="285" userLabel="AddSongSheetWindow" customClass="AddSongSheet">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
@@ -685,21 +710,11 @@ Gw
                 <outlet property="storeInPopup" destination="832" id="838"/>
             </connections>
         </window>
-        <customObject id="336" userLabel="LibraryListing" customClass="LibraryListing">
-            <connections>
-                <outlet property="addButton" destination="2784" id="2786"/>
-                <outlet property="addButtonHelpText" destination="2431" id="2436"/>
-                <outlet property="chooseButton" destination="532" id="537"/>
-                <outlet property="librarySearchField" destination="1335" id="1338"/>
-                <outlet property="parentPanel" destination="285" id="473"/>
-            </connections>
-        </customObject>
         <customObject id="422" userLabel="ImportSongFromFile" customClass="ImportSongFromFile">
             <connections>
                 <outlet property="addSongController" destination="285" id="588"/>
                 <outlet property="documentPlaylistTable" destination="646" id="690"/>
                 <outlet property="documentSlideViewer" destination="657" id="691"/>
-                <outlet property="documentSongTitle" destination="638" id="692"/>
                 <outlet property="documentWindow" destination="5" id="583"/>
                 <outlet property="importerLibraryView" destination="680" id="689"/>
                 <outlet property="importerParentWindow" destination="285" id="424"/>
@@ -1091,7 +1106,7 @@ DQ
                 <button id="2687">
                     <rect key="frame" x="4" y="5" width="203" height="18"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="check" title="Multiple slides separated by verse" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" imageScaling="proportionallyDown" inset="2" id="2688" customClass="BGHUDButtonCell">
+                    <buttonCell key="cell" type="check" title="Multiple slides separated by verse" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="2688" customClass="BGHUDButtonCell">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>

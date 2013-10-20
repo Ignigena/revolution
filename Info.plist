@@ -14,7 +14,7 @@
 			<key>CFBundleTypeIconFile</key>
 			<string>Playlist.icns</string>
 			<key>CFBundleTypeName</key>
-			<string>ProWorship Playlist</string>
+			<string>Playlist</string>
 			<key>CFBundleTypeOSTypes</key>
 			<array>
 				<string>IWPL</string>

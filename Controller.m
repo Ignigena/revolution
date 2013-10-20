@@ -8,6 +8,11 @@
 
 @implementation Controller
 
+static NSString *pathMovies = @"~/Movies/Revolution/";
+static NSString *pathPictures = @"~/Pictures/Revolution/";
+static NSString *thumbnailsPathMovies = @"~/Library/Application Support/Revolution/Thumbnails/Movies/";
+static NSString *thumbnailsPathPictures = @"~/Library/Application Support/Revolution/Thumbnails/Pictures/";
+
 -(void)awakeFromNib
 {
 	// Setup presentation windows if more than one screen is present.
@@ -45,34 +50,32 @@
 
 - (void)runThumbnailSetup
 {
-	NSLog(@" ");
-	NSLog(@"----------------------------");
-	NSLog(@"THUMBNAIL SETUP AND CREATION");
-	
 	NSString *currentPath;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
 	unsigned index;
 	
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [@"~/Library/Application Support/ProWorship/Thumbnails/" stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/Thumbnails/" stringByExpandingTildeInPath] attributes: nil]; }
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [@"~/Library/Application Support/ProWorship/Thumbnails/Movies/" stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/Thumbnails/Movies/" stringByExpandingTildeInPath] attributes: nil]; }
-	if ([[NSFileManager defaultManager] fileExistsAtPath: [@"~/Library/Application Support/ProWorship/Thumbnails/Pictures/" stringByExpandingTildeInPath]] == NO) { [[NSFileManager defaultManager] createDirectoryAtPath:[@"~/Library/Application Support/ProWorship/Thumbnails/Pictures/" stringByExpandingTildeInPath] attributes: nil]; }	
+	if (![fileManager fileExistsAtPath: [thumbnailsPathMovies stringByExpandingTildeInPath]]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:[thumbnailsPathMovies stringByExpandingTildeInPath] withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    if (![fileManager fileExistsAtPath: [thumbnailsPathPictures stringByExpandingTildeInPath]]) {
+        [[NSFileManager defaultManager] createDirectoryAtPath:[thumbnailsPathPictures stringByExpandingTildeInPath] withIntermediateDirectories:YES attributes:nil error:nil];
+    }
 	
 	// Build all the thumbnails for movies in the users Movies directory
-	NSMutableArray *moviesListing = [NSMutableArray arrayWithArray: [[NSFileManager defaultManager] directoryContentsAtPath:[@"~/Movies/ProWorship" stringByExpandingTildeInPath]]];
+	NSMutableArray *moviesListing = [NSMutableArray arrayWithArray: [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[pathMovies stringByExpandingTildeInPath] error:nil]];
 	NSMutableArray *moviesPathListing = [NSMutableArray arrayWithCapacity: [moviesListing count]];
-	
-	NSLog(@"THUMBNAILS: Movie files");
 	
 	if ([moviesListing count] >= 1) {
 		for (index = 0; index <= [moviesListing count]-1; index++) {
-			currentPath = [NSString stringWithFormat: @"~/Movies/ProWorship/%@", moviesListing[index]];
+			currentPath = [NSString stringWithFormat: @"%@%@", pathMovies, moviesListing[index]];
 			NSString *movieType = [[currentPath pathExtension] lowercaseString];
 			
 			if ([movieType isEqualToString: @"mov"] || [movieType isEqualToString: @"avi"] || [movieType isEqualToString: @"mpg"] || [movieType isEqualToString: @"mpeg"] || [movieType isEqualToString: @"mp4"] || [movieType isEqualToString: @"qtz"]) {
-				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
+				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"%@%@.tiff", thumbnailsPathMovies, [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Movies/%@.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"%@%@.tiff", thumbnailsPathMovies, [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/Revolution/Thumbnails/%@-PREVIEW.tiff", [moviesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[moviesPathListing addObject: currentPath];
@@ -83,22 +86,20 @@
 	moviesMediaListing = [NSArray arrayWithArray: moviesPathListing];
 	
 	// Build all the thumbnails for pictures in the users Pictures directory
-	NSMutableArray *picturesListing = [NSMutableArray arrayWithArray: [[NSFileManager defaultManager] directoryContentsAtPath:[@"~/Pictures/ProWorship" stringByExpandingTildeInPath]]];
+	NSMutableArray *picturesListing = [NSMutableArray arrayWithArray: [[NSFileManager defaultManager] contentsOfDirectoryAtPath:[pathPictures stringByExpandingTildeInPath] error:nil]];
 	NSMutableArray *picturesPathListing = [NSMutableArray arrayWithCapacity: [picturesListing count]];
-	
-	NSLog(@"THUMBNAILS: Picture files");
 	
 	if ([picturesListing count] >= 1) {
 		for (index = 0; index <= [picturesListing count]-1; index++) {
-			currentPath = [NSString stringWithFormat: @"~/Pictures/ProWorship/%@", picturesListing[index]];
+			currentPath = [NSString stringWithFormat: @"%@%@", pathPictures, picturesListing[index]];
 			NSString *pictureType = [[currentPath pathExtension] lowercaseString];
 			
 			if ([pictureType isEqualToString: @"tiff"] || [pictureType isEqualToString: @"tif"] || [pictureType isEqualToString: @"jpg"] || [pictureType isEqualToString: @"jpeg"] || [pictureType isEqualToString: @"png"]) {
-				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
+				if (![[NSFileManager defaultManager] fileExistsAtPath: [[NSString stringWithFormat: @"%@%@.tiff", thumbnailsPathPictures, [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath]]) {
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(70, 70) asIcon:YES] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/Pictures/%@.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"%@%@.tiff", thumbnailsPathMovies, [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 					[[[NSImage imageWithPreviewOfFileAtPath:[currentPath stringByExpandingTildeInPath] ofSize:NSMakeSize(288, 163) asIcon:NO] TIFFRepresentation]
-					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/Thumbnails/%@-PREVIEW.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
+					 writeToFile: [[NSString stringWithFormat: @"~/Library/Application Support/Revolution/Thumbnails/%@-PREVIEW.tiff", [picturesListing[index] stringByDeletingPathExtension]] stringByExpandingTildeInPath] atomically:YES];
 				}
 				
 				[picturesPathListing addObject: currentPath];
@@ -107,8 +108,6 @@
 	}
 	
 	picturesMediaListing = [NSArray arrayWithArray: picturesPathListing];
-	
-	NSLog(@"----------------------------");
 }
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender

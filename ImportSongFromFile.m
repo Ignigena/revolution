@@ -7,7 +7,6 @@
 //
 
 #import "ImportSongFromFile.h"
-#import "LibraryListing.h"
 #import "MyDocument.h"
 #import "AddSongSheet.h"
 
@@ -105,7 +104,7 @@
 
 - (IBAction)doInsertIntoActiveDocument:(id)sender
 {
-	[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [songTitle stringValue]];
+    [[[[[documentPlaylistTable window] windowController] document] playlist] addObject: [songTitle stringValue]];
 	
 	NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 	NSMutableArray *blankNotes = [[NSMutableArray alloc] init];
@@ -119,8 +118,7 @@
 	songFile[@"Flags"] = blankNotes;
 	
 	[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@.iwsf", [songTitle stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
-	
-	[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
+
 	[importerLibraryView reloadData];
 	[documentPlaylistTable reloadData];
 	

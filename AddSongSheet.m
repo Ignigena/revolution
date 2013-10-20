@@ -1,5 +1,4 @@
 #import "AddSongSheet.h"
-#import "LibraryListing.h"
 #import "MyDocument.h"
 #import "ImportSongFromFile.h"
 
@@ -71,7 +70,6 @@
 {
 	[[NSFileManager defaultManager] createDirectoryAtPath:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@", [folderTitleField stringValue]] stringByExpandingTildeInPath] attributes:nil];
 	
-	[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 	[importerLibraryView reloadData];
 	
 	[NSApp endSheet:newFolderSheet];
@@ -89,7 +87,7 @@
 		NSString *clipboard = [[NSPasteboard generalPasteboard] stringForType:NSStringPboardType];
 	
 		if (clipboard) {
-			[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
+            [[[[[documentPlaylistTable window] windowController] document] playlist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
 			
 			NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 			NSArray *songSlides = [self runCleanupScript: clipboard];
@@ -106,8 +104,7 @@
 			songFile[@"Flags"] = blankNotes;
 			
 			[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
-	
-			[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
+
 			[importerLibraryView reloadData];
 			[documentPlaylistTable reloadData];
 			
@@ -125,7 +122,7 @@
 	
 		[importerController runImportFromFile: self];
 	} else {
-		[[[[[documentPlaylistTable window] windowController] document] worshipPlaylist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
+        [[[[[documentPlaylistTable window] windowController] document] playlist] addObject: [NSString stringWithFormat: @"%@%@.iwsf", saveSongFolder, [songTitleField stringValue]]];
 	
 		NSMutableDictionary *songFile = [[NSMutableDictionary alloc] init];
 		NSArray *blankArray = @[@""];
@@ -136,7 +133,6 @@
 	
 		[songFile writeToFile:[[NSString stringWithFormat: @"~/Library/Application Support/ProWorship/%@%@.iwsf", saveSongFolder, [songTitleField stringValue]] stringByExpandingTildeInPath] atomically:TRUE];
 		
-		[(LibraryListing *)[importerLibraryView dataSource] loadReloadLibraryList];
 		[importerLibraryView reloadData];
 		[documentPlaylistTable reloadData];
 	
